@@ -1,3 +1,4 @@
+/* In style.css */
 * {
   margin: 0;
   padding: 0;
@@ -62,6 +63,7 @@ a {
   background: var(--secondary-accent);
 }
 
+/* --- Navbar Styles --- */
 .navbar {
   position: fixed;
   top: 0;
@@ -77,7 +79,7 @@ a {
 .nav-content {
   max-width: 1400px;
   margin: 0 auto;
-  padding: 1.2rem 2rem;
+  padding: 1.2rem 2rem; /* Default padding for larger screens */
 }
 
 .nav-links {
@@ -89,7 +91,7 @@ a {
 .nav-links a.nav-link-item {
   font-family: var(--font-heading);
   font-weight: 700;
-  font-size: 1.1rem;
+  font-size: 1.1rem; /* Default font size for larger screens */
   transition: color 0.3s ease, transform 0.2s ease;
   position: relative;
   padding-bottom: 5px;
@@ -116,11 +118,12 @@ a {
   width: 100%;
 }
 
+/* --- Hero Section --- */
 .hero {
   position: relative;
   width: 100%;
   height: 100vh;
-  background: url('assets/hero-bg.jpg') no-repeat center center/cover;
+  background: url('https://via.placeholder.com/1920x1080/1a1a1a/ffffff?text=Hero+Background') no-repeat center center/cover;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -169,6 +172,7 @@ a {
 
 .delay-1 { animation-delay: 0.2s; }
 .delay-2 { animation-delay: 0.4s; }
+.delay-3 { animation-delay: 0.6s; } /* Added for buttons */
 
 @keyframes fadeInUp {
   to {
@@ -178,7 +182,7 @@ a {
 }
 
 main {
-  padding-top: 80px;
+  padding-top: 80px; /* Base padding to clear fixed navbar */
 }
 
 .section-container {
@@ -202,15 +206,16 @@ main {
   margin-bottom: 5rem;
 }
 
+/* --- Coverflow Slider (General) --- */
 .coverflow-slider {
   position: relative;
   width: calc(100% - 4rem);
   max-width: 1600px;
-  height: 500px;
+  height: 500px; /* Base height for larger screens */
   margin: 0 auto;
   overflow: hidden;
-  padding-bottom: 50px;
-  touch-action: pan-y;
+  padding-bottom: 50px; /* Space for dots */
+  touch-action: pan-y; /* Improves touch scrolling behavior */
 }
 
 .slider-track {
@@ -238,7 +243,7 @@ main {
   padding: 2.5rem;
   opacity: 0;
   visibility: hidden;
-  pointer-events: none;
+  pointer-events: none; /* Prevents interaction when not active */
   transition: opacity 0.6s ease-out, transform 0.6s ease-out,
               border-color 0.3s ease, box-shadow 0.3s ease;
 }
@@ -247,23 +252,24 @@ main {
     opacity: 1;
     visibility: visible;
     pointer-events: auto;
-    transform: translateX(0);
+    transform: translateX(0); /* Ensure it's centered */
     border-color: var(--primary-accent);
     box-shadow: 0 0 30px var(--shadow-color-strong), 0 0 10px rgba(var(--primary-accent), 0.5);
-    z-index: 1;
+    z-index: 1; /* Bring active slide to front */
 }
 
+/* Slide in/out animation classes */
 .slide-item.slide-in-right {
     transform: translateX(100%);
     opacity: 0;
-    visibility: visible;
+    visibility: visible; /* Temporarily visible for transition */
     pointer-events: none;
 }
 
 .slide-item.slide-in-left {
     transform: translateX(-100%);
     opacity: 0;
-    visibility: visible;
+    visibility: visible; /* Temporarily visible for transition */
     pointer-events: none;
 }
 
@@ -283,22 +289,22 @@ main {
   position: relative;
   width: 90%;
   max-width: 700px;
-  height: auto; /* Changed from fixed height */
-  min-height: 180px; /* Added min-height */
+  height: auto; /* Allow height to adjust based on content */
+  min-height: 180px; /* Minimum height to prevent collapse */
   overflow: hidden;
   border-radius: 12px;
   margin-bottom: 1.5rem;
   box-shadow: 0 0 18px rgba(0, 0, 0, 0.6);
-  display: flex; /* Added flex for centering content */
+  display: flex; /* Use flexbox to center image/iframe */
   align-items: center;
   justify-content: center;
-  background-color: rgba(0,0,0,0.5); /* Added for visibility of object-fit: contain */
+  background-color: rgba(0,0,0,0.5); /* Background to show 'contain' effect */
 }
 
 .slide-image-wrapper img {
   width: 100%;
-  height: auto; /* Changed to auto to maintain aspect ratio */
-  object-fit: contain; /* CRUCIAL CHANGE: Ensures the whole image is visible */
+  height: auto; /* Crucial: scales height proportionally */
+  object-fit: contain; /* CRUCIAL: Ensures whole image is visible, no cropping */
   border-radius: 12px;
   border: 5px solid var(--primary-accent);
   transition: border-color 0.3s ease, box-shadow 0.3s ease;
@@ -311,7 +317,7 @@ main {
 
 .slide-image-wrapper iframe {
   width: 100%;
-  height: 100%;
+  height: 100%; /* For iframes, usually want to fill parent */
   border: none;
   border-radius: 12px;
   border: 5px solid var(--primary-accent);
@@ -333,8 +339,8 @@ main {
   color: var(--text-light);
   text-shadow: 0 0 10px rgba(0,0,0,0.9), 0 0 4px rgba(var(--primary-accent), 0.4);
   margin-bottom: 0.8rem;
-  word-wrap: break-word;
-  hyphens: auto;
+  word-wrap: break-word; /* Prevents long words from overflowing */
+  hyphens: auto; /* Allows words to break for better wrapping */
 }
 
 .slide-content p {
@@ -396,6 +402,7 @@ main {
   box-shadow: 0 0 10px rgba(var(--primary-accent), 0.6);
 }
 
+/* --- Developer Team Grid --- */
 .dev-grid {
   display: flex;
   justify-content: center;
@@ -453,6 +460,7 @@ main {
   line-height: 1.5;
 }
 
+/* --- YouTube Section --- */
 .youtube-content {
   display: flex;
   flex-direction: column;
@@ -485,7 +493,7 @@ main {
 
 .video-embed-container {
   position: relative;
-  padding-bottom: 56.25%;
+  padding-bottom: 56.25%; /* 16:9 Aspect Ratio (9 / 16 * 100) */
   height: 0;
   overflow: hidden;
   border-radius: 12px;
@@ -510,29 +518,30 @@ main {
 }
 
 .trailer-section {
-    margin-top: 0;
+    margin-top: 0; /* Already part of overall section-container */
 }
 
+/* Trailer Slider Specifics */
 .trailer-slider {
     width: calc(100% - 4rem);
-    height: 450px;
+    height: 450px; /* Base height for larger screens */
 }
 .trailer-slider .slide-item {
     height: 100%;
 }
 .trailer-slider .slide-item .slide-image-wrapper {
-    height: auto; /* Changed to auto */
-    min-height: 220px; /* Added min-height */
+    height: auto; /* Allow height to adjust for iframes too */
+    min-height: 220px; /* Min height for iframe wrapper */
 }
 .trailer-slider .slide-image-wrapper iframe {
-    border-color: var(--tertiary-accent);
+    border-color: var(--tertiary-accent); /* Different accent color for trailers */
 }
 .trailer-slider .slide-item.active .slide-image-wrapper iframe {
     border-color: var(--tertiary-accent);
     box-shadow: 0 0 15px rgba(var(--tertiary-accent), 0.6);
 }
 .trailer-slider .slide-content h3 {
-    color: var(--text-light);
+    color: var(--text-light); /* Trailer titles can be text-light */
     text-shadow: 0 0 10px rgba(0,0,0,0.9), 0 0 4px rgba(var(--tertiary-accent), 0.4);
 }
 .trailer-slider .slider-nav-btn {
@@ -549,6 +558,7 @@ main {
     box-shadow: 0 0 10px rgba(var(--tertiary-accent), 0.6);
 }
 
+/* --- Discord Community Section --- */
 .discord-widget-container {
   display: flex;
   flex-direction: column;
@@ -574,6 +584,7 @@ main {
   text-align: center;
 }
 
+/* --- Buttons --- */
 .buttons {
   display: flex;
   justify-content: center;
@@ -627,6 +638,7 @@ main {
 .social-btn.youtube-channel-btn { background: var(--quaternary-accent); border-color: var(--quaternary-accent); }
 .social-btn.youtube-channel-btn:hover { background: #B0901A; border-color: #B0901A; }
 
+/* --- Fade-in on Scroll Animation --- */
 .fade {
   opacity: 0;
   transform: translateY(40px);
@@ -638,6 +650,19 @@ main {
   transform: translateY(0);
 }
 
+/* --- Footer --- */
+footer {
+    padding: 2rem;
+    text-align: center;
+    color: var(--text-dim);
+    font-size: 0.9rem;
+    border-top: 1px solid var(--border-color-light);
+}
+
+/* ========================================= */
+/* --- Media Queries for Responsiveness --- */
+/* ========================================= */
+
 @media (max-width: 1400px) {
     .coverflow-slider {
         width: calc(100% - 4rem);
@@ -647,21 +672,37 @@ main {
         padding: 2rem;
     }
     .slide-image-wrapper {
-        min-height: 150px; /* Adjusted min-height */
+        min-height: 150px;
     }
     .trailer-slider {
         width: calc(100% - 4rem);
         height: 400px;
     }
     .trailer-slider .slide-item .slide-image-wrapper {
-        min-height: 180px; /* Adjusted min-height */
+        min-height: 180px;
     }
 }
 
 @media (max-width: 1024px) {
+  /* Navbar */
+  .nav-content {
+    padding: 1rem 1.5rem; /* Reduced padding */
+  }
+  .nav-links {
+    gap: 2rem; /* Reduced gap */
+  }
+  .nav-links a.nav-link-item {
+    font-size: 1rem; /* Slightly smaller font */
+  }
+
+  /* Hero */
   .hero h1 { font-size: 4.5rem; }
   .hero p { font-size: 1.6rem; }
+
+  /* Sections */
   .section-title { font-size: 3.5rem; margin-bottom: 4rem;}
+
+  /* Sliders */
   .coverflow-slider {
     height: 420px;
   }
@@ -669,7 +710,7 @@ main {
     padding: 1.8rem;
   }
   .slide-image-wrapper {
-      min-height: 120px; /* Adjusted min-height */
+      min-height: 120px;
   }
   .slide-content h3 { font-size: 1.8rem; }
   .slide-content p { font-size: 0.9rem; }
@@ -677,105 +718,147 @@ main {
       height: 350px;
   }
   .trailer-slider .slide-item .slide-image-wrapper {
-      min-height: 150px; /* Adjusted min-height */
+      min-height: 150px;
   }
   .slider-nav-btn { width: 50px; height: 50px; font-size: 1.6rem; }
   .slider-nav-btn.prev-btn { left: 0.5rem; }
   .slider-nav-btn.next-btn { right: 0.5rem; }
+  .dot { width: 12px; height: 12px; } /* Slightly smaller dots */
+
+  /* Dev Team */
   .dev-grid { gap: 3rem; }
   .dev-card { padding: 2rem; max-width: 380px; }
   .dev-card img { width: 160px; height: 160px; margin-bottom: 1rem; }
   .dev-info .dev-name { font-size: 1.5rem; }
   .dev-info .dev-role { font-size: 0.95rem; }
+
+  /* YouTube */
   .youtube-content { gap: 2.5rem; }
   .youtube-content h3 { font-size: 2.2rem; }
   .latest-video { padding: 1.5rem; }
+
+  /* Buttons */
   .btn { padding: 1rem 2.2rem; font-size: 1.1rem; }
 }
 
 @media (max-width: 768px) {
-  .navbar .nav-content { padding: 0.8rem 1rem; }
-  .nav-links { gap: 1rem; }
-  .nav-links a.nav-link-item { font-size: 0.85rem; }
-  .nav-links a.nav-link-item::after { height: 1px; }
+  /* Navbar */
+  .nav-content { padding: 0.8rem 1rem; } /* Significantly reduced padding */
+  .nav-links { gap: 1rem; } /* Further reduced gap */
+  .nav-links a.nav-link-item {
+    font-size: 0.85rem; /* Smaller font */
+    padding-bottom: 3px; /* Smaller underline padding */
+    text-align: center; /* Ensures text is centered if it wraps or is short */
+  }
+  .nav-links a.nav-link-item::after { height: 1px; } /* Thinner underline */
+  main { padding-top: 60px; } /* Adjusted to clear a smaller navbar */
+
+  /* Hero */
   .hero { height: 70vh; }
   .hero-overlay { padding: 2rem 1.5rem; border-radius: 10px; }
   .hero h1 { font-size: 3rem; letter-spacing: 1px; text-shadow: none; }
   .hero p { font-size: 1.1rem; margin-bottom: 2rem; }
   .hero .btn.play-now { padding: 0.8rem 1.8rem; font-size: 1rem; gap: 8px; box-shadow: none;}
-  main { padding-top: 60px; }
+
+  /* Sections */
   .section-container { padding: 4rem 1rem; }
   .section-title { font-size: 2.5rem; margin-bottom: 3rem; text-shadow: none; }
+
+  /* Sliders */
   .coverflow-slider {
     width: 95vw;
     margin: 0 auto;
-    height: auto; /* Changed to auto */
-    min-height: 380px;
+    height: auto; /* Let content define height */
+    min-height: 380px; /* Minimum height for screenshots slider */
     padding-bottom: 40px;
     overflow: hidden;
   }
   .slide-item {
     width: 100%;
     height: 100%;
-    min-height: 300px;
+    min-height: 300px; /* Minimum height for individual slide item */
     padding: 1.5rem;
   }
   .slide-image-wrapper {
       width: 95%;
       max-width: none;
-      height: auto; /* Changed to auto */
-      min-height: 100px; /* Adjusted min-height */
+      height: auto;
+      min-height: 100px;
       margin: 0 auto 1rem auto;
   }
   .slide-image-wrapper img,
   .slide-image-wrapper iframe {
-      border-width: 3px; /* Adjusted border-width */
+      border-width: 3px; /* Slightly thinner border */
   }
   .trailer-slider {
     width: 95vw;
     margin: 0 auto;
-    height: auto; /* Changed to auto */
-    min-height: 320px;
+    height: auto;
+    min-height: 320px; /* Minimum height for trailers slider */
   }
   .trailer-slider .slide-item { height: 100%; min-height: 280px; }
-  .trailer-slider .slide-item .slide-image-wrapper { 
-      height: auto; /* Changed to auto */
-      min-height: 80px; /* Adjusted min-height */
+  .trailer-slider .slide-item .slide-image-wrapper {
+      height: auto;
+      min-height: 80px;
   }
   .slider-nav-btn {
-    position: fixed;
-    top: calc(50% - 20px);
+    position: absolute; /* Kept absolute, but can consider fixed for tiny screens */
+    /* top: calc(50% - 20px); - Removed this to let top: 50% work with translateY correctly */
     z-index: 1200;
     width: 40px;
     height: 40px;
     font-size: 1.3rem;
-    transform: translateY(-50%);
+    transform: translateY(-50%); /* Ensures perfect vertical centering */
   }
   .slider-nav-btn.prev-btn { left: 0.5rem; }
   .slider-nav-btn.next-btn { right: 0.5rem; }
   .dot { width: 10px; height: 10px; }
+
+  /* Dev Team */
   .dev-grid { gap: 1.5rem; }
   .dev-card { padding: 1.5rem; max-width: 95%; border-width: 1px; box-shadow: none; }
   .dev-card img { width: 100px; height: 100px; border-width: 2px; margin-bottom: 1rem; box-shadow: none;}
   .dev-info .dev-name { font-size: 1.2rem; }
   .dev-info .dev-role { font-size: 0.85rem; }
+
+  /* YouTube */
   .youtube-content { gap: 2rem; }
   .youtube-content h3 { font-size: 2rem; }
   .latest-video { padding: 1.5rem; }
   .video-embed-container { margin-bottom: 0.8rem; }
   .video-caption { font-size: 0.9rem; }
+
+  /* Discord */
   .discord-widget-container { padding: 2rem; max-width: 95%; }
   .discord-widget-container iframe { width: 100%; height: 400px; }
   .join-discord-text { font-size: 1rem; }
+
+  /* Buttons */
   .buttons { gap: 1rem; }
   .btn { padding: 0.8rem 1.6rem; font-size: 0.95rem; gap: 8px; box-shadow: none;}
   .btn.pulse-btn:hover { animation: none; transform: translateY(-3px) scale(1.01); }
 }
 
 @media (max-width: 480px) {
+  /* Navbar */
+  .nav-content {
+    padding: 0.6rem 0.5rem; /* Even smaller padding */
+  }
+  .nav-links {
+    gap: 0.5rem; /* Minimal gap */
+  }
+  .nav-links a.nav-link-item {
+    font-size: 0.75rem; /* Smallest font size */
+  }
+
+  /* Hero */
   .hero h1 { font-size: 2.2rem; }
   .hero p { font-size: 0.9rem; }
+
+  /* Sections */
   .section-title { font-size: 2rem; }
+
+  /* Sliders */
   .coverflow-slider {
     width: 98vw;
     margin: 0 auto;
@@ -783,15 +866,17 @@ main {
   }
   .slide-item { padding: 1rem; }
   .slide-image-wrapper {
-    min-height: 80px; /* Adjusted min-height */
+    min-height: 80px;
   }
   .slide-content h3 { font-size: 1.2rem; }
   .slide-content p { font-size: 0.8rem; }
-  .youtube-content h3 { font-size: 1.8rem; }
   .trailer-slider {
     width: 98vw;
     margin: 0 auto;
     min-height: 260px;
   }
-  .trailer-slider .slide-item .slide-image-wrapper { min-height: 60px; } /* Adjusted min-height */
+  .trailer-slider .slide-item .slide-image-wrapper { min-height: 60px; }
+
+  /* YouTube */
+  .youtube-content h3 { font-size: 1.8rem; }
 }
