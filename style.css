@@ -150,6 +150,7 @@ a {
     border: 2px solid rgba(var(--primary-accent), 0.6);
     backdrop-filter: blur(8px);
     max-width: 1000px;
+    text-align: center; /* Ensure content is centered */
 }
 
 .hero h1 {
@@ -199,7 +200,7 @@ main {
 .section-container {
     padding: 8rem 2rem;
     max-width: 1800px;
-    margin: 0 auto;
+    margin: 0 auto; /* Ensures container is centered */
     text-align: center;
     position: relative;
     z-index: 1;
@@ -226,7 +227,7 @@ main {
     margin: 0 auto;
     overflow: hidden;
     padding-bottom: 50px;
-    touch-action: pan-y; /* Allows vertical scrolling on touch devices */
+    touch-action: pan-y;
 }
 
 .slider-track {
@@ -609,18 +610,17 @@ main {
     font-size: 1.2rem;
     display: inline-flex;
     align-items: center;
+    justify-content: center; /* Ensures text and icon are centered within the button */
     gap: 10px;
     transition: background 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease, color 0.3s ease, border-color 0.3s ease;
     border: 1px solid var(--border-color-light);
     box-shadow: 0 2px 12px var(--shadow-color-light);
-    /* Ensure button is always visible, overriding any potential animation issues */
-    opacity: 1 !important; /* Added !important for certainty */
-    visibility: visible !important; /* Added !important for certainty */
+    opacity: 1 !important;
+    visibility: visible !important;
     position: relative;
     z-index: 1;
 }
 
-/* For the pulse-btn, ensure opacity/visibility is not touched by the animation itself */
 @keyframes buttonPulse {
     from {
         box-shadow: 0 0 8px rgba(var(--button-pulse-color), 0.5), 0 0 0px transparent;
@@ -699,7 +699,6 @@ main {
 }
 
 /* --- Visibility Fade (Intersection Observer) --- */
-/* These styles remain as they are for other elements that use `fade` */
 .fade {
     opacity: 0;
     transform: translateY(40px);
@@ -811,7 +810,7 @@ main {
     }
 }
 
-/* Main Mobile Breakpoint (Phones, Portrait) - Significant changes for distinct mobile look */
+/* Main Mobile Breakpoint (Phones, Portrait) - IMPORTANT REVISIONS HERE */
 @media (max-width: 768px) {
     /* Navbar Adjustments */
     .navbar .nav-content {
@@ -833,79 +832,82 @@ main {
 
     /* Hero Section Adjustments */
     .hero {
-        height: 70vh; /* Reduced height to push content up more */
-        padding: 0 0.5rem; /* Less horizontal padding */
+        height: 70vh;
+        padding: 0 0.5rem;
     }
     .hero-overlay {
-        padding: 2rem 1rem; /* Even tighter padding */
+        padding: 2rem 1rem;
         border-radius: 10px;
+        /* Ensure these are explicitly centered */
+        text-align: center; 
+        margin: 0 auto; /* Make sure it's centered if it has a max-width */
+        max-width: 90%; /* Limit width to ensure padding works */
     }
     .hero h1 {
-        font-size: 2.5rem; /* Smaller heading for mobile */
-        letter-spacing: 0; /* Remove letter spacing */
+        font-size: 2.5rem;
+        letter-spacing: 0;
         line-height: 1.2;
     }
     .hero p {
-        font-size: 1rem; /* Smaller body text */
-        margin-bottom: 1.5rem; /* Reduced margin */
+        font-size: 1rem;
+        margin-bottom: 1.5rem;
     }
     .hero .btn.play-now {
-        padding: 0.7rem 1.5rem; /* Smaller button */
+        padding: 0.7rem 1.5rem;
         font-size: 0.9rem;
+        width: 90%; /* Make button span more width */
+        max-width: 300px; /* But not excessively wide */
+        margin: 0 auto; /* Center the button itself */
     }
 
     /* Main Content Sections */
     main {
-        padding-top: 50px; /* Adjust for potentially shorter navbar */
+        padding-top: 50px;
     }
     .section-container {
-        padding: 2.5rem 0.8rem; /* Significantly reduced vertical and horizontal padding */
+        padding: 2.5rem 0.8rem; /* Adjusted for better spacing */
+        /* Ensure it doesn't push content to the right */
+        width: 100%;
+        max-width: none;
+        margin: 0 auto; /* Re-center if any parent pushes it */
     }
     .section-title {
-        font-size: 2rem; /* Consistent smaller title */
+        font-size: 2rem;
         margin-bottom: 2rem;
     }
 
-    /* Slider Specific Mobile Layout - More distinct and simplified */
+    /* Slider Specific Mobile Layout */
     .coverflow-slider {
-        width: 100%; /* Full width for the slider container */
-        max-width: none; /* No max width */
+        width: 100%; /* Important: Use 100% of parent width */
+        max-width: none;
         height: auto;
-        min-height: 380px; /* Maintain a reasonable minimum height */
-        padding-bottom: 30px; /* Reduced padding for dots */
-        margin: 0; /* No auto margin, let parents handle alignment if needed */
-        overflow: hidden; /* Ensure content stays within bounds */
-        /* Removed complex transforms that might cause cutoff */
-        transform: none !important;
-    }
-
-    .slider-track {
-        /* On mobile, we only want one slide visible at a time */
-        /* JS handles the 'active' class, CSS simply styles it */
+        min-height: 380px;
+        padding-bottom: 30px;
+        /* Crucial for centering and preventing horizontal offset */
+        left: 0;
+        right: 0;
+        margin: 0 auto;
+        overflow: hidden;
+        transform: none !important; /* Override any desktop transforms */
     }
 
     .slide-item {
-        position: absolute; /* Keep absolute for stacking */
-        width: 95%; /* Make slide itself slightly narrower than container */
+        position: absolute;
+        width: 90%; /* Slide item takes 90% of slider width */
         max-width: 400px; /* Cap width for larger phones */
-        height: auto; /* Allow height to adapt to content */
-        min-height: 350px; /* Ensure a base height */
-        padding: 1rem; /* Reduced padding */
-        margin: 0 auto; /* Center the slide within the track */
-        left: 50%;
-        transform: translateX(-50%) !important; /* Center and override any JS transform */
+        height: auto;
+        min-height: 350px;
+        padding: 1rem;
+        left: 50%; /* Position from the left */
+        transform: translateX(-50%) !important; /* Translate back by half its width to center */
         top: 0;
-        
-        /* Remove desktop-specific transitions that conflict */
         transition: opacity 0.5s ease;
-        
-        /* Ensure that only active is visible, others are truly hidden for mobile */
         opacity: 0;
         visibility: hidden;
         pointer-events: none;
-        display: flex; /* Ensure flex for column stacking */
+        display: flex;
         flex-direction: column;
-        justify-content: flex-start; /* Align content to the top */
+        justify-content: flex-start;
         align-items: center;
     }
 
@@ -913,32 +915,29 @@ main {
         opacity: 1;
         visibility: visible;
         pointer-events: auto;
-        transform: translateX(-50%) !important; /* Ensure it stays centered and visible */
+        transform: translateX(-50%) !important;
         z-index: 1;
-        /* Keep border and shadow for active state */
         border-color: var(--primary-accent);
         box-shadow: 0 0 20px var(--shadow-color-strong), 0 0 8px rgba(var(--primary-accent), 0.5);
     }
     
-    /* Crucial: Disable complex slide-in/out animations for mobile */
     .slide-item.slide-in-right,
     .slide-item.slide-in-left,
     .slide-item.slide-out-left,
     .slide-item.slide-out-right {
-        transform: translateX(-50%) !important; /* Keep it centered */
+        transform: translateX(-50%) !important;
         opacity: 0;
         visibility: hidden;
         pointer-events: none;
-        /* No transition for these on mobile, just instant hide/show */
         transition: none; 
     }
 
     .slide-image-wrapper {
-        width: 100%; /* Full width within its parent (.slide-item) */
-        height: 160px; /* Fixed height for mobile images */
-        margin-bottom: 0.8rem; /* Reduced margin */
-        border-width: 2px; /* Thinner border */
-        box-shadow: none; /* Simpler shadows */
+        width: 100%;
+        height: 160px;
+        margin-bottom: 0.8rem;
+        border-width: 2px;
+        box-shadow: none;
     }
     .slide-image-wrapper img,
     .slide-image-wrapper iframe {
@@ -951,33 +950,36 @@ main {
     }
 
     .slide-content h3 {
-        font-size: 1.3rem; /* Smaller heading */
+        font-size: 1.3rem;
         margin-bottom: 0.4rem;
     }
     .slide-content p {
-        font-size: 0.85rem; /* Smaller body text for more content space */
+        font-size: 0.85rem;
     }
 
     .trailer-slider {
-        width: 100%; /* Full width */
-        min-height: 300px; /* Adjusted min-height for video content */
+        width: 100%;
+        min-height: 300px;
         padding-bottom: 30px;
+        left: 0;
+        right: 0;
+        margin: 0 auto;
     }
     .trailer-slider .slide-item {
         min-height: 280px;
     }
     .trailer-slider .slide-item .slide-image-wrapper {
-        height: 140px; /* Video specific height */
+        height: 140px;
     }
 
     .slider-nav-btn {
-        width: 40px; /* Smaller buttons */
+        width: 40px;
         height: 40px;
         font-size: 1.3rem;
-        border-width: 1px; /* Thinner border */
+        border-width: 1px;
     }
-    .slider-nav-btn:hover { /* Simplify hover for mobile */
-        transform: translateY(-50%); /* No scale up */
+    .slider-nav-btn:hover {
+        transform: translateY(-50%);
         box-shadow: 0 0 8px rgba(var(--primary-accent), 0.6);
     }
 
@@ -988,8 +990,8 @@ main {
         right: 0.2rem;
     }
     .slider-dots {
-        bottom: 5px; /* Move dots closer to bottom */
-        gap: 6px; /* Smaller gap */
+        bottom: 5px;
+        gap: 6px;
     }
     .dot {
         width: 10px;
@@ -999,20 +1001,22 @@ main {
     /* Devs Section */
     .dev-grid {
         gap: 1.5rem;
-        flex-direction: column; /* Stack dev cards vertically */
+        flex-direction: column;
         align-items: center;
+        width: 100%; /* Ensure flex container takes full width */
     }
     .dev-card {
         padding: 1.2rem;
-        max-width: 90%; /* Wider card for mobile */
-        box-shadow: 0 3px 10px var(--shadow-color-strong); /* Simpler shadow */
+        max-width: 90%;
+        width: 90%; /* Explicit width for consistency */
+        box-shadow: 0 3px 10px var(--shadow-color-strong);
     }
     .dev-card:hover {
-        transform: none; /* No transform on hover */
-        box-shadow: 0 5px 15px var(--shadow-color-strong); /* Only minor shadow change on hover */
+        transform: none;
+        box-shadow: 0 5px 15px var(--shadow-color-strong);
     }
     .dev-card img {
-        width: 100px; /* Smaller image */
+        width: 100px;
         height: 100px;
         margin-bottom: 0.6rem;
     }
@@ -1026,12 +1030,17 @@ main {
     /* YouTube Content */
     .youtube-content {
         gap: 1.5rem;
+        width: 100%; /* Ensure takes full width */
+        max-width: none;
+        margin: 0 auto;
     }
     .youtube-content h3 {
         font-size: 1.8rem;
     }
     .latest-video {
         padding: 1rem;
+        width: 95%; /* Adjusted width for better fit */
+        margin: 0 auto; /* Center it */
     }
     .video-embed-container {
         margin-bottom: 0.5rem;
@@ -1044,6 +1053,8 @@ main {
     .discord-widget-container {
         padding: 1.5rem;
         max-width: 95%;
+        width: 95%; /* Ensure it's not too narrow */
+        margin: 0 auto; /* Center it */
     }
     .discord-widget-container iframe {
         height: 300px;
@@ -1057,17 +1068,18 @@ main {
         gap: 0.8rem;
         flex-direction: column;
         align-items: center;
+        width: 100%; /* Ensure container takes full width */
     }
     .btn {
         padding: 0.6rem 1.2rem;
         font-size: 0.9rem;
-        width: 95%;
-        max-width: 250px; /* Even tighter max-width for buttons */
-        box-shadow: 0 1px 5px var(--shadow-color-light); /* Even simpler shadow */
+        width: 95%; /* Wider buttons */
+        max-width: 250px;
+        box-shadow: 0 1px 5px var(--shadow-color-light);
     }
     .btn.pulse-btn:hover {
-        animation: none; /* Disable pulse animation on mobile */
-        transform: none; /* No transform on hover */
+        animation: none;
+        transform: none;
     }
 }
 
@@ -1101,6 +1113,7 @@ main {
     .slide-item {
         min-height: 280px;
         padding: 0.8rem;
+        width: 95%; /* Slightly wider for smaller screens */
     }
     .slide-image-wrapper {
         height: 120px;
@@ -1139,6 +1152,7 @@ main {
 
     .dev-card {
         padding: 1rem;
+        width: 95%; /* Wider card for very small screens */
     }
     .dev-card img {
         width: 80px;
@@ -1156,6 +1170,7 @@ main {
     }
     .latest-video {
         padding: 0.8rem;
+        width: 95%;
     }
     .video-caption {
         font-size: 0.75rem;
@@ -1163,6 +1178,7 @@ main {
 
     .discord-widget-container {
         padding: 1rem;
+        width: 95%;
     }
     .discord-widget-container iframe {
         height: 250px;
