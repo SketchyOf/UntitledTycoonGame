@@ -524,7 +524,7 @@ main {
 
 .latest-video h3 {
     text-shadow: 0 0 15px var(--quaternary-accent);
-    color: var(--quaternary-accent); /* Explicitly orange for latest video title */
+    color: var(--quaternary-accent);
 }
 
 .video-embed-container {
@@ -559,10 +559,10 @@ main {
 
 /* Trailer Slider Specific Styles (inherits .coverflow-slider) */
 .trailer-slider {
-    height: 500px; /* Adjust height for trailer videos */
+    height: 500px;
 }
 .trailer-slider .slide-item {
-    height: 400px; /* Adjust height for trailer items */
+    height: 400px;
 }
 .trailer-slider .slide-item .slide-image-wrapper {
     height: 220px;
@@ -789,28 +789,36 @@ main {
   .section-container { padding: 4rem 1rem; }
   .section-title { font-size: 2.5rem; margin-bottom: 3rem; text-shadow: none; }
 
-  /* Coverflow on smaller screens - flattens out and focuses on active slide */
+  /* Coverflow on smaller screens: simplified to single card view */
   .coverflow-slider {
-    height: auto; /* Allow height to adjust to content */
-    min-height: 450px; /* Ensure some minimum height for content */
-    perspective: none; /* REMOVE 3D perspective for mobile for better readability */
+    height: auto; /* Adjust height to content */
+    min-height: 450px; /* Ensure some minimum height */
+    perspective: none; /* Crucial: REMOVE 3D perspective for mobile */
     padding-bottom: 40px;
     width: 100vw; /* Take full viewport width */
+    overflow: visible; /* Allow arrows to be outside if needed */
   }
   .slider-track {
+    position: relative; /* Change to relative for simpler flow */
+    left: 0; /* Reset left position */
     transform-style: flat; /* Ensure no 3D transforms apply to track */
+    width: 100%; /* Track takes full width */
+    display: block; /* Stack items normally in a block flow */
+    height: auto;
   }
   .slide-item {
-    position: relative; /* Change from absolute to relative for easier flow */
+    position: relative; /* Change to relative for normal document flow */
     width: calc(100% - 2rem); /* Full width with 1rem padding on each side */
     margin: 0 auto; /* Center the single active item */
     height: auto; /* Adjust height to content */
     min-height: 350px; /* Min height for consistency */
     padding: 1.5rem; /* Increased padding for better readability */
-    transform: none !important; /* Reset all transforms for active item */
-    opacity: 1 !important; /* Ensure active is visible */
-    filter: brightness(1) !important; /* Ensure active is bright */
+    /* Remove all transform, opacity, filter for active slide here */
+    transform: none !important; 
+    opacity: 1 !important; 
+    filter: brightness(1) !important; 
     z-index: 100 !important;
+    display: flex !important; /* Ensure active item is always visible */
   }
   .slide-item:not(.active) {
     display: none !important; /* Hide inactive slides entirely on mobile */
@@ -842,9 +850,19 @@ main {
   .trailer-slider .slide-item .slide-image-wrapper { height: 150px; }
 
 
-  .slider-nav-btn { width: 40px; height: 40px; font-size: 1.3rem; top: calc(50% - 20px); }
-  .slider-nav-btn.prev-btn { left: 0px; }
-  .slider-nav-btn.next-btn { right: 0px; }
+  /* Slider Navigation Buttons - ensure visible on mobile */
+  .slider-nav-btn {
+    width: 40px;
+    height: 40px;
+    font-size: 1.3rem;
+    top: calc(50% - 20px);
+    /* Position relative to viewport, not parent */
+    position: fixed; /* Make them fixed to viewport */
+    z-index: 1200; /* Ensure they are above everything */
+  }
+  .slider-nav-btn.prev-btn { left: 0.5rem; } /* Keep them slightly in from edge */
+  .slider-nav-btn.next-btn { right: 0.5rem; } /* Keep them slightly in from edge */
+
   .dot { width: 10px; height: 10px; }
 
   .dev-grid { gap: 1.5rem; }
