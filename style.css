@@ -1,14 +1,33 @@
-/* Reset */
+/* Reset & Base Styles */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
+:root {
+  --primary-bg: #0d0d0d;
+  --secondary-bg: #1a1a1a;
+  --accent-color: #4CAF50; /* A nice green for highlights */
+  --text-color: #e0e0e0;
+  --light-text-color: #f0f0f0;
+  --border-color: #333;
+  --button-hover-bg: #5a5a5a;
+  --font-heading: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  --font-body: 'Open Sans', Arial, sans-serif;
+}
+
 body {
-  font-family: Arial, sans-serif;
-  color: #fff;
-  background: #000;
+  font-family: var(--font-body);
+  color: var(--text-color);
+  background: var(--primary-bg);
+  line-height: 1.6;
+  scroll-behavior: smooth;
+}
+
+a {
+  text-decoration: none;
+  color: var(--light-text-color);
 }
 
 /* Navbar */
@@ -17,179 +36,262 @@ body {
   top: 0;
   left: 0;
   width: 100%;
-  background: #111;
-  z-index: 999;
+  background: rgba(17, 17, 17, 0.95); /* Slightly transparent for depth */
+  backdrop-filter: blur(5px); /* Frosted glass effect */
+  z-index: 1000;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
 }
 
 .nav-content {
-  max-width: 1400px; /* Increased for wider PC layout */
+  max-width: 1600px; /* Wider for PC */
   margin: 0 auto;
-  padding: 1.5rem 1rem; /* Slightly more padding for navbar */
+  padding: 1.2rem 2rem;
 }
 
 .nav-links {
   display: flex;
   justify-content: center;
-  gap: 3rem; /* Increased gap for PC */
+  gap: 3.5rem; /* More space for PC */
 }
 
 .nav-links a {
-  color: #fff;
-  text-decoration: none;
-  font-weight: bold;
-  font-size: 1.2rem; /* Slightly larger links */
+  font-weight: 600;
+  font-size: 1.15rem;
+  transition: color 0.3s ease, transform 0.2s ease;
 }
 
-/* Hero */
+.nav-links a:hover {
+  color: var(--accent-color);
+  transform: translateY(-2px);
+}
+
+/* Hero Section */
 .hero {
+  position: relative;
+  width: 100%;
+  height: 100vh; /* Full viewport height */
+  background: url('hero-bg.jpg') no-repeat center center/cover; /* Hero background image */
+  display: flex;
+  align-items: center;
+  justify-content: center;
   text-align: center;
-  padding: 6rem 1rem 4rem; /* More padding for a bigger hero section */
-  background: #000;
+  padding: 0 1rem;
+  color: var(--light-text-color);
+}
+
+.hero-overlay {
+  background: rgba(0, 0, 0, 0.6); /* Dark overlay for text readability */
+  padding: 3rem 4rem;
+  border-radius: 15px;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.6);
+  max-width: 900px;
 }
 
 .hero h1 {
-  font-size: 4rem; /* Much larger for PC */
-  margin-bottom: 0.5rem;
+  font-family: var(--font-heading);
+  font-size: 5rem; /* Large and impactful */
+  margin-bottom: 0.8rem;
+  letter-spacing: 2px;
+  text-shadow: 0 0 15px rgba(0, 255, 0, 0.4); /* Subtle glow */
 }
 
 .hero p {
-  font-size: 1.8rem; /* Larger for PC */
+  font-size: 1.7rem;
+  margin-bottom: 2.5rem;
+  max-width: 700px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
+.hero .btn.play-now {
+  background: var(--accent-color);
+  color: #fff;
+  padding: 1.2rem 3rem;
+  font-size: 1.4rem;
+  border-radius: 50px; /* Pill-shaped button */
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  transition: background 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+  box-shadow: 0 4px 15px rgba(0, 255, 0, 0.3);
+}
+
+.hero .btn.play-now:hover {
+  background: #5cb85c; /* Slightly lighter green */
+  transform: translateY(-5px);
+  box-shadow: 0 8px 25px rgba(0, 255, 0, 0.5);
+}
+
+/* Main Content Sections */
 main {
-  padding-top: 90px; /* Adjusted fixed navbar space */
+  padding-top: 80px; /* Space for fixed navbar */
 }
 
-/* Sections */
 section {
-  padding: 6rem 2rem; /* More padding for all sections on PC */
-  max-width: 1400px; /* Max width for content to prevent being too wide */
+  padding: 6rem 2rem; /* Generous padding for PC */
+  max-width: 1600px; /* Max width for content */
   margin: 0 auto;
+  text-align: center;
 }
 
-#info {
-  background: #1e1e1e;
+.section-bg-dark {
+  background: var(--primary-bg);
 }
 
-#devs {
-  background: #000;
+.section-bg-light {
+  background: var(--secondary-bg);
 }
 
-#links {
-  background: #1e1e1e;
+h2 {
+  font-family: var(--font-heading);
+  font-size: 3.8rem; /* Large section titles */
+  color: var(--light-text-color);
+  margin-bottom: 4rem;
+  text-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
 }
 
-/* Info Blocks (PC) */
-.image-text {
+/* Info Section (Image & Text Blocks) */
+.image-text-block {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 4rem; /* More space between image and text */
-  margin-bottom: 6rem; /* More space between blocks */
+  gap: 5rem; /* More space for PC */
+  margin-bottom: 6rem;
   flex-wrap: wrap; /* Allows wrapping on smaller screens */
+  padding: 2rem 0; /* Add padding for visual separation */
 }
 
-.image-text.reverse {
+.image-text-block.reverse {
   flex-direction: row-reverse;
 }
 
-.image-text img {
-  width: 450px; /* Larger image size for PC */
-  height: 450px;
+.image-text-block img {
+  width: 500px; /* Larger images for PC */
+  height: 300px; /* Maintain aspect ratio or adjust */
   object-fit: cover;
-  border: 6px solid #fff; /* Thicker border */
-  border-radius: 20px; /* Slightly more rounded */
-  transform: rotate(-5deg);
-  flex-shrink: 0; /* Prevents image from shrinking too much on PC */
-}
-
-.image-text.reverse img {
-  transform: rotate(5deg);
-}
-
-.image-text p {
-  max-width: 500px; /* Wider text area for PC */
-  font-size: 1.5rem; /* Larger font size */
-  line-height: 1.6; /* Better readability */
-}
-
-/* Devs Blocks (PC) */
-#devs h2 {
-  text-align: center;
-  margin-bottom: 4rem; /* More space below title */
-  font-size: 3rem; /* Larger heading */
-}
-
-.dev-block {
-  margin-bottom: 4rem; /* More space between dev blocks */
-}
-
-.dev-image-text {
-  display: flex;
-  align-items: center;
-  justify-content: center; /* Center dev blocks on PC */
-  gap: 3rem; /* More space between image and text */
-  flex-wrap: wrap; /* Allows wrapping on smaller screens */
-}
-
-.dev-image-text.reverse {
-  flex-direction: row-reverse;
-}
-
-.dev-image-text img {
-  width: 250px; /* Larger dev image for PC */
-  height: 250px; /* Maintain aspect ratio */
-  object-fit: cover;
-  border-radius: 15px; /* Slightly more rounded */
-  border: 4px solid #fff;
+  border: 8px solid var(--border-color); /* Stronger border */
+  border-radius: 15px;
+  transform: rotate(-3deg); /* Slight rotation */
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5); /* Deep shadow */
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
   flex-shrink: 0;
 }
 
-.dev-text {
-  text-align: left;
-  max-width: 400px; /* Constrain dev text width */
+.image-text-block.reverse img {
+  transform: rotate(3deg);
 }
 
-.dev-name {
+.image-text-block img:hover {
+  transform: scale(1.02) rotate(0deg); /* Slight grow and straighten on hover */
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.7);
+}
+
+.image-text-block .text-content {
+  max-width: 600px; /* Wider text area for PC */
+  text-align: left;
+}
+
+.image-text-block h3 {
+  font-family: var(--font-heading);
+  font-size: 2.5rem; /* Larger subheadings */
+  color: var(--light-text-color);
+  margin-bottom: 1rem;
+}
+
+.image-text-block p {
+  font-size: 1.3rem; /* Larger body text */
+  line-height: 1.8;
+}
+
+/* Devs Section */
+.dev-grid {
+  display: flex;
+  justify-content: center;
+  gap: 4rem; /* Spacing between dev cards */
+  flex-wrap: wrap;
+}
+
+.dev-card {
+  background: var(--primary-bg);
+  border: 3px solid var(--border-color);
+  border-radius: 15px;
+  padding: 2.5rem;
+  text-align: center;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+  max-width: 400px; /* Max width for dev card */
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.dev-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.6);
+}
+
+.dev-card img {
+  width: 180px; /* Good size for dev profile pics */
+  height: 180px;
+  object-fit: cover;
+  border-radius: 50%; /* Circular images */
+  border: 4px solid var(--accent-color); /* Accent border */
+  margin-bottom: 1.5rem;
+  transition: transform 0.3s ease;
+}
+
+.dev-card img:hover {
+  transform: scale(1.05);
+}
+
+.dev-info .dev-name {
+  font-family: var(--font-heading);
+  font-size: 1.9rem;
   font-weight: bold;
-  font-size: 1.8rem; /* Larger dev name */
+  color: var(--light-text-color);
   margin-bottom: 0.5rem;
 }
 
-.dev-text p:last-child {
-  font-size: 1.3rem; /* Larger dev role text */
+.dev-info .dev-role {
+  font-size: 1.2rem;
+  color: var(--text-color);
 }
 
 /* Links Section */
-#links h2 {
-  text-align: center;
-  margin-bottom: 4rem; /* More space below title */
-  font-size: 3rem; /* Larger heading */
-}
-
 .buttons {
   display: flex;
   justify-content: center;
-  gap: 3rem; /* More space between buttons */
+  gap: 3rem;
   flex-wrap: wrap;
 }
 
 .btn {
-  background: #333;
-  color: #fff;
-  padding: 1.5rem 3rem; /* Larger buttons */
-  border-radius: 8px; /* Slightly more rounded */
-  text-decoration: none;
-  font-weight: bold;
-  font-size: 1.3rem; /* Larger button text */
-  transition: background 0.3s ease; /* Smooth hover effect */
+  background: var(--border-color);
+  color: var(--light-text-color);
+  padding: 1.2rem 2.8rem;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 1.25rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px; /* Space for icon */
+  transition: background 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
 }
 
 .btn:hover {
-  background: #555;
+  background: var(--button-hover-bg);
+  transform: translateY(-3px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
 }
 
-/* Fade Animation */
+/* Specific button colors/styles (optional but nice) */
+.btn.discord { background: #7289DA; }
+.btn.discord:hover { background: #677BC4; }
+.btn.youtube { background: #FF0000; }
+.btn.youtube:hover { background: #CC0000; }
+.btn.game { background: #007bff; } /* Roblox-like blue or a custom color */
+.btn.game:hover { background: #0056b3; }
+
+
+/* Fade Animation (keep existing) */
 .fade {
   opacity: 0;
   transform: translateY(40px);
@@ -202,81 +304,113 @@ section {
 }
 
 /* RESPONSIVE FIX (Mobile adjustments) */
-@media (max-width: 768px) {
-  .nav-content {
-    padding: 1rem 0.5rem;
-  }
+@media (max-width: 1024px) { /* Adjust for tablets and smaller desktops */
+  .hero h1 { font-size: 4rem; }
+  .hero p { font-size: 1.5rem; }
+  .image-text-block img { width: 400px; height: 250px; }
+  .image-text-block .text-content { max-width: 500px; }
+  .image-text-block h3 { font-size: 2rem; }
+  .image-text-block p { font-size: 1.2rem; }
+  .dev-card { padding: 2rem; max-width: 350px; }
+  .dev-card img { width: 160px; height: 160px; }
+  .dev-info .dev-name { font-size: 1.6rem; }
+  .dev-info .dev-role { font-size: 1.1rem; }
+  h2 { font-size: 3rem; }
+  .btn { padding: 1rem 2.5rem; font-size: 1.1rem; }
+}
 
-  .nav-links {
-    gap: 1.5rem;
-    font-size: 1rem;
-  }
+@media (max-width: 768px) { /* Mobile specific adjustments */
+  .nav-content { padding: 0.8rem 1rem; }
+  .nav-links { gap: 1.8rem; }
+  .nav-links a { font-size: 1rem; }
 
-  .nav-links a {
-    font-size: 1rem;
+  .hero {
+    height: 80vh; /* Shorter hero on mobile */
   }
-
+  .hero-overlay {
+    padding: 2rem;
+  }
   .hero h1 {
-    font-size: 2.5rem; /* Smaller for mobile */
+    font-size: 2.8rem; /* Smaller for mobile */
+    letter-spacing: 1px;
   }
-
   .hero p {
-    font-size: 1.2rem; /* Smaller for mobile */
+    font-size: 1.1rem; /* Smaller for mobile */
+    margin-bottom: 1.5rem;
+  }
+  .hero .btn.play-now {
+    padding: 0.8rem 2rem;
+    font-size: 1.1rem;
   }
 
   main {
-    padding-top: 70px; /* Adjust for mobile navbar height */
+    padding-top: 60px; /* Adjust for mobile navbar height */
   }
 
   section {
-    padding: 3rem 1rem; /* Less padding for sections on mobile */
+    padding: 3.5rem 1rem; /* Less padding for sections on mobile */
   }
 
-  .image-text,
-  .image-text.reverse,
-  .dev-image-text,
-  .dev-image-text.reverse {
+  h2 {
+    font-size: 2.5rem; /* Smaller headings for mobile */
+    margin-bottom: 3rem;
+  }
+
+  .image-text-block,
+  .image-text-block.reverse {
     flex-direction: column; /* Stack elements vertically on mobile */
-    text-align: center; /* Center text on mobile */
-    align-items: center; /* Center items on mobile */
+    text-align: center;
+    align-items: center; /* Center content */
     gap: 1.5rem; /* Reduced gap for mobile */
-    margin-bottom: 3rem; /* Reduced margin for mobile */
+    margin-bottom: 4rem;
   }
 
-  .image-text img,
-  .image-text.reverse img {
-    width: 280px; /* Optimal size for mobile screenshots */
-    height: 280px;
-    transform: none; /* No rotate on mobile */
-    border-width: 3px; /* Thinner border for mobile */
-    border-radius: 10px; /* Slightly less rounded */
-  }
-
-  .image-text p {
-    max-width: 90%; /* Wider text area for mobile */
-    font-size: 1.1rem; /* Readable font size for mobile */
-    text-align: center; /* Center text */
-  }
-
-  #devs h2,
-  #links h2 {
-    font-size: 2rem; /* Smaller headings for mobile */
-    margin-bottom: 2rem;
-  }
-
-  .dev-image-text img {
-    width: 180px; /* Smaller dev image for mobile */
-    height: 180px;
-    border-width: 3px;
+  .image-text-block img,
+  .image-text-block.reverse img {
+    width: 90%; /* Take up more width */
+    max-width: 320px; /* Max size for mobile images */
+    height: auto; /* Maintain aspect ratio */
+    border-width: 4px; /* Thinner border for mobile */
     border-radius: 10px;
+    transform: none; /* No rotate on mobile */
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.4);
   }
 
-  .dev-name {
-    font-size: 1.4rem; /* Readable dev name for mobile */
+  .image-text-block .text-content {
+    max-width: 90%; /* Wider text area for mobile */
+    text-align: center;
   }
 
-  .dev-text p:last-child {
-    font-size: 1rem; /* Readable dev role text for mobile */
+  .image-text-block h3 {
+    font-size: 1.8rem;
+  }
+
+  .image-text-block p {
+    font-size: 1rem;
+  }
+
+  .dev-grid {
+    gap: 2rem; /* Closer dev cards on mobile */
+  }
+
+  .dev-card {
+    padding: 1.5rem;
+    max-width: 90%;
+  }
+
+  .dev-card img {
+    width: 120px; /* Smaller dev image for mobile */
+    height: 120px;
+    border-width: 3px;
+    margin-bottom: 1rem;
+  }
+
+  .dev-info .dev-name {
+    font-size: 1.3rem;
+  }
+
+  .dev-info .dev-role {
+    font-size: 0.95rem;
   }
 
   .buttons {
@@ -284,7 +418,36 @@ section {
   }
 
   .btn {
-    padding: 1rem 2rem; /* Smaller buttons for mobile */
-    font-size: 1.1rem; /* Smaller button text for mobile */
+    padding: 0.8rem 1.8rem;
+    font-size: 1rem;
+    gap: 8px;
   }
+}
+
+@media (max-width: 480px) { /* Even smaller mobile screens */
+  .hero h1 { font-size: 2.2rem; }
+  .hero p { font-size: 0.9rem; }
+  h2 { font-size: 2rem; }
+  .image-text-block h3 { font-size: 1.5rem; }
+  .image-text-block p { font-size: 0.9rem; }
+  .dev-info .dev-name { font-size: 1.1rem; }
+  .dev-info .dev-role { font-size: 0.85rem; }
+}
+
+/* Custom Scrollbar (optional, but looks professional) */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: #222;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #555;
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #777;
 }
