@@ -6,26 +6,26 @@
 }
 
 :root {
-  /* Vibrant & Modern Color Palette */
-  --main-bg: #0d0d0d; /* Darker base for depth */
-  --secondary-bg: #181818; /* Slightly lighter dark for alternating sections */
+  /* Lumber Tycoon 2 Inspired Color Palette */
+  --main-bg: #1A1C19; /* Deep, muted forest green/charcoal */
+  --secondary-bg: #222420; /* Slightly lighter for alternating sections */
 
-  /* New Dark Background Mood Colors for Animation */
-  --bg-color-mood-1: #0f0d14; /* Very dark blue-purple */
-  --bg-color-mood-2: #140d0f; /* Very dark red-maroon */
-  --bg-color-mood-3: #0d140d; /* Very dark forest green */
-  --bg-color-mood-4: #14140d; /* Very dark gold-brown */
+  /* Dark Background Mood Colors for Animation (Earthy/Natural) */
+  --bg-color-mood-1: #1F221E; /* Very dark forest green */
+  --bg-color-mood-2: #221F1E; /* Very dark earthy brown */
+  --bg-color-mood-3: #1E1F22; /* Very dark deep blue/slate */
+  --bg-color-mood-4: #22221E; /* Very dark muted gold/olive */
 
 
-  --primary-accent: #00bcd4; /* Vibrant Cyan/Aqua (Main highlight) */
-  --secondary-accent: #ff007f; /* Striking Magenta (Complementary highlight) */
-  --tertiary-accent: #00ff88; /* Electric Green (Another complementary) */
-  --quaternary-accent: #ff8c00; /* Bright Orange (Action/Emphasis) */
+  --primary-accent: #4CAF50; /* Muted vibrant green (Foliage/Growth) */
+  --secondary-accent: #E67E22; /* Warm earthy orange (Wood/Craft) */
+  --tertiary-accent: #3498DB; /* Muted sky blue (Tools/Water) */
+  --quaternary-accent: #FFD700; /* Soft gold (Riches/Shine) */
 
-  --text-light: #e0e0e0; /* Bright text for contrast */
-  --text-dim: #b0b0b0; /* Dimmed text for secondary info */
+  --text-light: #E8E8E8; /* Bright text for contrast */
+  --text-dim: #A0A0A0; /* Dimmed text for secondary info */
 
-  --border-color-light: rgba(255, 255, 255, 0.08); /* Subtle borders */
+  --border-color-light: rgba(255, 255, 255, 0.1); /* Subtle borders */
   --shadow-color-light: rgba(0, 0, 0, 0.3); /* Soft shadows */
   --shadow-color-strong: rgba(0, 0, 0, 0.6); /* Stronger shadows for depth */
 
@@ -52,38 +52,23 @@ html {
 body {
   font-family: var(--font-body);
   color: var(--text-light);
-  /* Initial dark base background */
   background-color: var(--main-bg); 
-  /* Animated gradient background */
-  background-image: radial-gradient(circle at 25% 25%, var(--bg-color-mood-1) 0%, var(--main-bg) 75%);
-  background-size: 300% 300%; /* Larger than viewport to allow movement */
-  animation: backgroundShift 25s ease-in-out infinite alternate; /* Slow, smooth shift */
+  
+  /* Animated gradient background - one gradient definition, animated position */
+  background-image: radial-gradient(circle at 50% 50%, var(--bg-color-mood-1) 0%, var(--bg-color-mood-2) 25%, var(--bg-color-mood-3) 50%, var(--bg-color-mood-4) 75%, var(--main-bg) 100%);
+  background-size: 400% 400%; /* Larger than viewport to allow movement and blending */
+  animation: backgroundBlendShift 30s ease-in-out infinite alternate; /* Slower, smoother shift */
   
   line-height: 1.6;
   overflow-x: hidden; /* Prevent horizontal scroll from rotated elements */
 }
 
-@keyframes backgroundShift {
-  0% {
-    background-image: radial-gradient(circle at 25% 25%, var(--bg-color-mood-1) 0%, var(--main-bg) 75%);
-    background-position: 0% 0%;
-  }
-  25% {
-    background-image: radial-gradient(circle at 75% 25%, var(--bg-color-mood-2) 0%, var(--main-bg) 75%);
-    background-position: 100% 0%;
-  }
-  50% {
-    background-image: radial-gradient(circle at 75% 75%, var(--bg-color-mood-3) 0%, var(--main-bg) 75%);
-    background-position: 100% 100%;
-  }
-  75% {
-    background-image: radial-gradient(circle at 25% 75%, var(--bg-color-mood-4) 0%, var(--main-bg) 75%);
-    background-position: 0% 100%;
-  }
-  100% {
-    background-image: radial-gradient(circle at 25% 25%, var(--bg-color-mood-1) 0%, var(--main-bg) 75%);
-    background-position: 0% 0%;
-  }
+@keyframes backgroundBlendShift {
+  0% { background-position: 0% 0%; }
+  25% { background-position: 100% 0%; }
+  50% { background-position: 100% 100%; }
+  75% { background-position: 0% 100%; }
+  100% { background-position: 0% 0%; }
 }
 
 
@@ -583,17 +568,17 @@ main {
     height: 400px; /* Adjust height for trailer items */
 }
 .trailer-slider .slide-item .slide-image-wrapper {
-    height: 220px; /* Adjust video embed height */
+    height: 220px;
 }
 .trailer-slider .slide-image-wrapper iframe {
-    border-color: var(--tertiary-accent); /* Magenta border for trailers */
+    border-color: var(--tertiary-accent); /* Blue border for trailers */
 }
 .trailer-slider .slide-item.active .slide-image-wrapper iframe {
     border-color: var(--tertiary-accent);
 }
 .trailer-slider .slide-content h3 {
     color: var(--text-light); /* Default light text */
-    text-shadow: 0 0 15px var(--tertiary-accent); /* Magenta glow */
+    text-shadow: 0 0 15px var(--tertiary-accent); /* Blue glow */
 }
 .trailer-slider .slider-nav-btn {
     border-color: var(--tertiary-accent);
@@ -672,8 +657,8 @@ main {
 /* Dynamically choose pulse color based on button type */
 .btn.play-now:hover { --button-pulse-color: var(--primary-accent); }
 .social-btn.discord-btn:hover { --button-pulse-color: #5865F2; }
-.social-btn.youtube-btn:hover { --button-pulse-color: #FF0000; }
-.social-btn.game-btn:hover { --button-pulse-color: var(--tertiary-accent); }
+.social-btn.youtube-btn:hover { --button-pulse-color: #FF0000; } /* Keeping YouTube red for brand recognition */
+.social-btn.game-btn:hover { --button-pulse-color: var(--secondary-accent); }
 
 
 @keyframes buttonPulse {
@@ -683,7 +668,7 @@ main {
 
 /* Specific social button colors */
 .btn.play-now { background: var(--primary-accent); border-color: var(--primary-accent); }
-.btn.play-now:hover { background: #008eb7; border-color: #008eb7; }
+.btn.play-now:hover { background: #3c8f3f; border-color: #3c8f3f; }
 
 .social-btn.discord-btn { background: #5865F2; border-color: #5865F2; }
 .social-btn.discord-btn:hover { background: #4752C4; border-color: #4752C4; }
@@ -691,8 +676,8 @@ main {
 .social-btn.youtube-btn { background: #FF0000; border-color: #FF0000; }
 .social-btn.youtube-btn:hover { background: #CC0000; border-color: #CC0000; }
 
-.social-btn.game-btn { background: var(--tertiary-accent); border-color: var(--tertiary-accent); }
-.social-btn.game-btn:hover { background: #00c173; border-color: #00c173; }
+.social-btn.game-btn { background: var(--secondary-accent); border-color: var(--secondary-accent); }
+.social-btn.game-btn:hover { background: #c56515; border-color: #c56515; }
 
 
 /* General Fade Animation */
@@ -807,16 +792,16 @@ main {
   .section-container { padding: 4rem 1rem; }
   .section-title { font-size: 2.5rem; margin-bottom: 3rem; text-shadow: none; }
 
-  /* Coverflow on smaller screens - flattens out */
+  /* Coverflow on smaller screens - flattens out to prioritize readability */
   .coverflow-slider {
     height: 400px; /* Reduced height */
-    perspective: none; /* Remove 3D perspective for mobile */
+    perspective: none; /* REMOVE 3D perspective for mobile for better readability */
     padding-bottom: 40px;
     width: 100vw; /* Take full width on mobile */
   }
   .slide-item {
-    width: 85%; /* Almost full width for active item */
-    max-width: 350px;
+    width: 90%; /* Much wider active slide for mobile readability */
+    max-width: 400px; /* Cap max width */
     height: 350px; /* Adjusted height */
     padding: 0.8rem;
     border-width: 1px;
@@ -824,16 +809,9 @@ main {
     transform-origin: center center; /* Reset origin for simpler transforms */
   }
   .slide-item.side-left, .slide-item.side-right {
-    transform: translateX(var(--coverflow-translate-x-side-mobile)) scale(var(--coverflow-scale-side-mobile)) !important;
-    opacity: var(--coverflow-opacity-side) !important;
-    filter: brightness(var(--coverflow-brightness-side)) !important;
-    pointer-events: none;
-  }
-
-  /* Define mobile specific coverflow values */
-  :root {
-      --coverflow-scale-side-mobile: 0.7; /* Smaller side items */
-      --coverflow-translate-x-side-mobile: 65%; /* Push further */
+    opacity: 0 !important; /* Make side items completely invisible */
+    pointer-events: none; /* Disable interaction with invisible items */
+    transform: translateX(0) scale(0.1) translateZ(-500px) !important; /* Push far away and shrink even if no 3D */
   }
 
   .slide-item.active .slide-image-wrapper img {
