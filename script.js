@@ -42,10 +42,11 @@ class CoverflowSlider {
     this.updateDotActiveState();
     this.setupEventListeners();
     this.updateSliderTransforms(); // Initial positioning
-    
+
     // Set initial content for info slider if it has data
-    if (this.slidesData && this.slidesData.length > 0 && this.container.id === 'info') {
-        this.updateInfoContent(this.currentSlideIndex);
+    // This part is crucial for the info slider as its content is managed by JS data
+    if (this.slidesData && this.slidesData.length > 0 && this.container.classList.contains('info-slider')) {
+        this.updateSlideContent(0); // Update the very first slide's content
     }
     
     // Add click listener to slide items for direct selection
@@ -82,102 +83,52 @@ class CoverflowSlider {
     });
   }
 
-  updateSliderTransforms() {
-    const slideWidth = this.slides[0].offsetWidth; // Get computed width of a slide item
-    const containerWidth = this.container.offsetWidth;
+  // Updates content for the Info slider ONLY (as trailer content is in HTML)
+  updateSlideContent(index) {
+    if (this.container.classList.contains('info-slider') && this.slidesData[index]) {
+      const currentSlideElement = this.slides[index];
+      const data = this.slidesData[index];
 
-    this.slides.forEach((slide, index) => {
-      const offset = index - this.currentSlideIndex;
-      let transformValue = '';
-      let opacity = 1;
-      let brightness = 1;
-      let zIndex = 1;
+      const imgElement = currentSlideElement.querySelector('img');
+      const h3Element = currentSlideElement.querySelector('h3');
+      const pElement = currentSlideElement.querySelector('p');
 
-      // Base transform to center the track
-      // This centers the track, then individual slides are translated relative to this
-      const trackTranslateX = -this.currentSlideIndex * (slideWidth + 30); // 30px is example gap/offset
-      this.sliderTrack.style.transform = `translateX(-50%) translateX(${trackTranslateX}px)`;
-
-
-      if (offset === 0) { // Active slide
-        transformValue = 'scale(1)';
-        opacity = 1;
-        brightness = 1;
-        zIndex = 10;
-        slide.classList.add('active');
-        slide.classList.remove('side-left', 'side-right');
-        slide.style.pointerEvents = 'auto'; // Ensure active is clickable
-      } else if (offset === -1 || (offset === this.slides.length -1 && this.currentSlideIndex === 0)) { // Left side (previous) or wrap-around from last to first
-        transformValue = `translateX(-${slideWidth * 0.5}px) scale(0.8) rotateY(15deg) translateZ(-50px)`; // Adjust these values
-        opacity = 0.5;
-        brightness = 0.6;
-        zIndex = 9;
-        slide.classList.remove('active', 'side-right');
-        slide.classList.add('side-left');
-        slide.style.pointerEvents = 'auto'; // Still clickable to navigate
-      } else if (offset === 1 || (offset === -(this.slides.length -1) && this.currentSlideIndex === this.slides.length -1)) { // Right side (next) or wrap-around from first to last
-        transformValue = `translateX(${slideWidth * 0.5}px) scale(0.8) rotateY(-15deg) translateZ(-50px)`; // Adjust these values
-        opacity = 0.5;
-        brightness = 0.6;
-        zIndex = 9;
-        slide.classList.remove('active', 'side-left');
-        slide.classList.add('side-right');
-        slide.style.pointerEvents = 'auto'; // Still clickable to navigate
-      } else { // Far away slides (hidden)
-        transformValue = `scale(0.6) translateX(${offset * (slideWidth * 0.6)}px) rotateY(${offset > 0 ? -25 : 25}deg) translateZ(-100px)`; // Push far away
-        opacity = 0;
-        brightness = 0.3;
-        zIndex = 0;
-        slide.classList.remove('active', 'side-left', 'side-right');
-        slide.style.pointerEvents = 'none'; // Not clickable when far away
-      }
-
-      // Individual slide positioning relative to its initial flex position
-      // The translateX values here need to be re-evaluated based on the exact overlap desired.
-      // For a true coverflow, they are often percentage based or carefully calculated.
-      // For now, let's keep it simple relative to the offset.
-      slide.style.transform = `translateX(${offset * (slideWidth * 0.6)}px) ${transformValue}`; // Example offset based on slide width
-
-      slide.style.opacity = opacity;
-      slide.style.filter = `brightness(${brightness})`;
-      slide.style.zIndex = zIndex;
-
-      // Adjusting position for coverflow visualization on different screen sizes
-      // This part might need further fine-tuning in CSS media queries
-      if (window.innerWidth < 768) { // Mobile adjustments
-         // Simplified coverflow for smaller screens
-         if (offset === 0) {
-             slide.style.transform = `translateX(0) scale(1)`;
-         } else if (offset === -1 || (offset === this.slides.length -1 && this.currentSlideIndex === 0)) {
-             slide.style.transform = `translateX(-${slideWidth * 0.7}px) scale(0.85)`; // More overlap
-         } else if (offset === 1 || (offset === -(this.slides.length -1) && this.currentSlideIndex === this.slides.length -1)) {
-             slide.style.transform = `translateX(${slideWidth * 0.7}px) scale(0.85)`; // More overlap
-         } else {
-             slide.style.transform = `scale(0.6) translateX(${offset * (slideWidth * 0.5)}px)`;
-         }
-      }
-    });
-
-    // To ensure correct centering after transforms, reposition the track
-    // This part is crucial and tricky: the track's translate needs to counteract the active item's position
-    // and the item's own width to keep the active item visually centered.
-    // Given the complexity of precise coverflow math with multiple transforms,
-    // a simpler flex-based centering with controlled absolute positioning might be more robust.
-    // For now, the `translateX(-50%)` on the track and `position: absolute` on items
-    // combined with the offset logic will provide a "look-alike" coverflow.
-  }
-
-  updateInfoContent(index) {
-    if (this.container.id === 'info') {
-      const activeSlideData = this.slidesData[index];
-      const activeSlideElement = this.slides[index];
-      
-      activeSlideElement.querySelector('h3').textContent = activeSlideData.title;
-      activeSlideElement.querySelector('p').textContent = activeSlideData.description;
-      activeSlideElement.querySelector('img').src = activeSlideData.image; // Update image src
+      if (imgElement) imgElement.src = data.image;
+      if (h3Element) h3Element.textContent = data.title;
+      if (pElement) pElement.textContent = data.description;
     }
   }
 
+
+  updateSliderTransforms() {
+    this.slides.forEach((slide, index) => {
+      // Calculate effective offset, considering wrap-around for visual effect
+      let offset = index - this.currentSlideIndex;
+
+      // Adjust offset for seamless wrap-around visually (e.g., last item looks like it's before first)
+      if (offset > this.slides.length / 2) {
+        offset -= this.slides.length;
+      } else if (offset < -this.slides.length / 2) {
+        offset += this.slides.length;
+      }
+
+      // Base classes for styling
+      slide.classList.remove('active', 'side-left', 'side-right');
+      slide.style.pointerEvents = 'none'; // Default to non-clickable
+
+      if (offset === 0) {
+        slide.classList.add('active');
+        slide.style.pointerEvents = 'auto'; // Active slide is clickable
+      } else if (offset === -1) {
+        slide.classList.add('side-left');
+        slide.style.pointerEvents = 'auto'; // Side slides are clickable for navigation
+      } else if (offset === 1) {
+        slide.classList.add('side-right');
+        slide.style.pointerEvents = 'auto'; // Side slides are clickable for navigation
+      }
+      // CSS handles the actual transform properties via these classes
+    });
+  }
 
   showSlide(index) {
     if (index < 0) {
@@ -191,8 +142,8 @@ class CoverflowSlider {
     this.updateSliderTransforms();
 
     // Update content for info slider
-    if (this.slidesData && this.slidesData.length > 0 && this.container.id === 'info') {
-        this.updateInfoContent(this.currentSlideIndex);
+    if (this.container.classList.contains('info-slider')) {
+        this.updateSlideContent(this.currentSlideIndex);
     }
   }
 
@@ -212,7 +163,7 @@ class CoverflowSlider {
 
 // --- Initialize Sliders ---
 
-// Info Slider Data (same as before)
+// Info Slider Data
 const infoSlidesData = [
     {
         image: 'assets/screenshots/img1.jpg',
@@ -230,7 +181,7 @@ const infoSlidesData = [
         description: 'Cultivate vast fields, grow unique crops, and manage your farms. Turn your harvests into valuable goods that can be sold for profit or used in crafting.'
     },
     {
-        image: 'assets:screenshots/img4.jpg',
+        image: 'assets/screenshots/img4.jpg',
         title: 'Endless Customization',
         description: 'Personalize your tycoon base with a wide array of decorations, buildings, and unique structures. Design a layout that\'s both efficient and visually stunning.'
     }
@@ -239,18 +190,12 @@ const infoSlidesData = [
 // Initialize the Info slider
 const infoSlider = new CoverflowSlider('.info-slider', infoSlidesData);
 
-// Trailer Slider Data (not explicitly needed by JS, but for structure clarity)
-// The HTML already contains the iframe embeds, so JS just manages their display.
+// Trailer Slider Data (not explicitly needed by JS for content, but for total slide count)
+// Make sure this array has the same number of items as your .slide-item divs in HTML for the trailer slider.
+// If you add or remove trailers in HTML, update this array's length.
 const trailerSlidesData = [
-    // This array is not strictly used by JS for content, but for total slide count
-    // to match HTML slide-item count.
-    {}, {}, {} // Placeholders for 3 trailer videos in HTML
+    {}, {}, {}, {} // Placeholders for 4 trailer videos in HTML
 ];
 
 // Initialize the Trailer slider
 const trailerSlider = new CoverflowSlider('.trailer-slider', trailerSlidesData);
-
-
-// Initial update for info slider content (ensure first slide content is set)
-// No longer needed due to updateInfoContent being called in init
-// infoSlider.updateInfoContent(0);
