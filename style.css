@@ -6,7 +6,7 @@
 }
 
 :root {
-  /* Lumber Tycoon 2 Inspired Color Palette */
+  /* Lumber Tycoon 2 Inspired Color Palette (More Vibrant) */
   --main-bg: #1A1A1A; /* Very dark neutral base */
   --secondary-bg: #202020; /* Slightly less dark for alternating sections */
 
@@ -16,17 +16,17 @@
   --bg-color-mood-3: #1E1D1E; /* Extremely dark, hint of blue-grey */
 
 
-  --primary-accent: #3A7F40; /* Muted, dark forest green (Foliage/Growth) */
-  --secondary-accent: #B05D17; /* Muted, earthy brown-orange (Wood/Craft) */
-  --tertiary-accent: #2A6595; /* Muted, deep sky blue (Tools/Water) */
-  --quaternary-accent: #C0A020; /* Muted, antique gold (Riches/Shine) */
+  --primary-accent: #4CAF50; /* More vibrant green */
+  --secondary-accent: #FF9800; /* More vibrant orange */
+  --tertiary-accent: #2196F3; /* More vibrant blue */
+  --quaternary-accent: #FFEB3B; /* More vibrant gold/yellow */
 
   --text-light: #E8E8E8; /* Bright text for contrast */
   --text-dim: #A0A0A0; /* Dimmed text for secondary info */
 
-  --border-color-light: rgba(255, 255, 255, 0.1); /* Subtle borders */
-  --shadow-color-light: rgba(0, 0, 0, 0.3); /* Soft shadows */
-  --shadow-color-strong: rgba(0, 0, 0, 0.6); /* Stronger shadows for depth */
+  --border-color-light: rgba(255, 255, 255, 0.15); /* Slightly more visible subtle borders */
+  --shadow-color-light: rgba(0, 0, 0, 0.4); /* Soft shadows */
+  --shadow-color-strong: rgba(0, 0, 0, 0.7); /* Stronger shadows for depth */
 
   /* Fonts */
   --font-heading: 'Montserrat', sans-serif; /* Modern, bold heading font */
@@ -118,7 +118,7 @@ a {
   width: 0;
   height: 2px;
   background: var(--primary-accent);
-  box-shadow: 0 0 3px rgba(var(--primary-accent), 0.3); /* Muted glow */
+  box-shadow: 0 0 5px rgba(var(--primary-accent), 0.5); /* Slightly more prominent glow */
   transition: width 0.3s ease;
 }
 
@@ -146,17 +146,17 @@ a {
   color: var(--text-light);
   overflow: hidden;
   background-blend-mode: multiply;
-  background-color: rgba(0, 0, 0, 0.5); /* Stronger overlay for image */
+  background-color: rgba(0, 0, 0, 0.6); /* Slightly more transparent overlay to blend */
 }
 
 .hero-overlay {
-  background: rgba(0, 0, 0, 0.7); /* Slightly darker overlay */
+  background: rgba(0, 0, 0, 0.75); /* Slightly more transparent overlay */
   padding: 4rem 5rem;
   border-radius: 20px;
-  box-shadow: 0 0 20px var(--shadow-color-strong), 0 0 8px rgba(var(--primary-accent), 0.2); /* Reduced glow */
-  border: 2px solid rgba(var(--primary-accent), 0.3); /* Accent border */
+  box-shadow: 0 0 25px var(--shadow-color-strong), 0 0 10px rgba(var(--primary-accent), 0.4); /* Increased glow */
+  border: 2px solid rgba(var(--primary-accent), 0.5); /* More prominent accent border */
   max-width: 1000px;
-  backdrop-filter: blur(8px); /* Stronger blur */
+  backdrop-filter: blur(8px);
 }
 
 .hero h1 {
@@ -164,7 +164,7 @@ a {
   font-size: 5.5rem;
   margin-bottom: 0.8rem;
   letter-spacing: 2px;
-  text-shadow: 0 0 10px rgba(0,0,0,0.8), 0 0 2px rgba(var(--primary-accent), 0.2); /* Muted glow, stronger dark shadow */
+  text-shadow: 0 0 12px rgba(0,0,0,0.9), 0 0 4px rgba(var(--primary-accent), 0.4); /* More prominent glow */
   color: var(--text-light);
 }
 
@@ -217,11 +217,11 @@ main {
   font-family: var(--font-heading);
   font-size: 4rem;
   color: var(--text-light);
-  text-shadow: 0 0 8px rgba(0,0,0,0.8), 0 0 2px rgba(var(--primary-accent), 0.2); /* Muted glow, stronger dark shadow */
+  text-shadow: 0 0 10px rgba(0,0,0,0.9), 0 0 4px rgba(var(--primary-accent), 0.4); /* More prominent glow */
   margin-bottom: 5rem;
 }
 
-/* --- Simplified Slider (NOT Coverflow) --- */
+/* --- Simplified Slider --- */
 .coverflow-slider {
   position: relative;
   width: 90vw; /* Almost across entire screen */
@@ -233,59 +233,80 @@ main {
 }
 
 .slider-track {
-  position: relative; /* Changed from absolute */
+  position: relative;
   top: 0;
-  left: 0; /* Reset left */
+  left: 0;
   width: 100%;
   height: 100%;
-  /* No 3D transforms here */
 }
 
 .slide-item {
-  position: absolute; /* Keep absolute within relative track for layering */
+  position: absolute;
   top: 0;
   left: 0;
   width: 100%; /* Make it "fat" - across the screen */
   height: 100%; /* Fill parent height */
-  background: rgba(25, 25, 25, 0.95);
+  background: rgba(25, 25, 25, 0.9); /* Slightly more transparent to blend */
   border: 1px solid var(--border-color-light);
   border-radius: 20px;
-  box-shadow: 0 0 20px var(--shadow-color-strong); /* Stronger dark shadow */
+  box-shadow: 0 0 25px var(--shadow-color-strong); /* Stronger dark shadow */
+  
+  /* Flexbox for content alignment */
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
+  align-items: center; /* Center children horizontally */
+  justify-content: center; /* Center children vertically */
+  
   padding: 2.5rem; /* Increased padding */
   
   /* Animation for new slider */
   opacity: 0;
   visibility: hidden;
   pointer-events: none; /* Make non-active slides unclickable */
-  transform: translateX(100%); /* Start off-screen to the right for entrance */
+  
+  /* Transition for opacity and transform */
   transition: opacity 0.6s ease-out, transform 0.6s ease-out, border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
-/* Active slide specific styles for new slider */
+/* Active slide specific styles */
 .slide-item.active {
     opacity: 1;
     visibility: visible;
     pointer-events: auto;
     transform: translateX(0); /* Slide into view */
     border-color: var(--primary-accent);
-    box-shadow: 0 0 20px var(--shadow-color-strong), 0 0 5px rgba(var(--primary-accent), 0.2); /* Reduced glow for active */
+    box-shadow: 0 0 25px var(--shadow-color-strong), 0 0 8px rgba(var(--primary-accent), 0.4); /* More prominent glow for active */
     z-index: 1; /* Bring active slide to front */
 }
 
-/* Hidden slides (non-active) - no side transform, just hidden */
-.slide-item:not(.active) {
-    /* Styles are already set by default .slide-item */
-    /* If we want a slide-out, JS could set transform: translateX(-100%) on old slide */
+/* Slide in from right */
+.slide-item.slide-in-right {
+    transform: translateX(100%);
+    opacity: 0;
+    visibility: visible; /* Make it visible just before it slides in */
+    pointer-events: none;
 }
 
-/* Hover for non-active slides - not really applicable for single view, but keep for consistency on active if desired */
-.slide-item:not(.active):hover {
-    box-shadow: 0 0 15px var(--shadow-color-strong); /* Only dark shadow for hidden */
-    border-color: var(--border-color-light); /* No accent color on hidden hover */
+/* Slide in from left */
+.slide-item.slide-in-left {
+    transform: translateX(-100%);
+    opacity: 0;
+    visibility: visible; /* Make it visible just before it slides in */
+    pointer-events: none;
+}
+
+/* Slide out to left */
+.slide-item.slide-out-left {
+    transform: translateX(-100%);
+    opacity: 0; /* Fade out as it slides */
+    pointer-events: none;
+}
+
+/* Slide out to right */
+.slide-item.slide-out-right {
+    transform: translateX(100%);
+    opacity: 0; /* Fade out as it slides */
+    pointer-events: none;
 }
 
 
@@ -297,7 +318,7 @@ main {
   overflow: hidden;
   border-radius: 12px;
   margin-bottom: 1.5rem;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.4); /* Muted shadow */
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.5); /* Stronger dark shadow */
 }
 
 .slide-image-wrapper img {
@@ -306,14 +327,13 @@ main {
   object-fit: cover;
   border-radius: 12px;
   border: 5px solid var(--primary-accent);
-  /* No rotation for simplified view */
   transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
 /* Active slide image specific */
 .slide-item.active .slide-image-wrapper img {
     border-color: var(--primary-accent);
-    box-shadow: 0 0 10px rgba(var(--primary-accent), 0.4); /* Muted glow */
+    box-shadow: 0 0 12px rgba(var(--primary-accent), 0.5); /* More prominent glow */
 }
 
 /* For YouTube embeds in trailer slider */
@@ -327,20 +347,21 @@ main {
 }
 .slide-item.active .slide-image-wrapper iframe {
     border-color: var(--primary-accent);
-    box-shadow: 0 0 10px rgba(var(--primary-accent), 0.4); /* Muted glow */
+    box-shadow: 0 0 12px rgba(var(--primary-accent), 0.5); /* More prominent glow */
 }
 
 
 .slide-content {
   text-align: center;
   max-width: 100%; /* Allow content to use full width */
+  /* Remove any conflicting width/margin settings that could cause right shift */
 }
 
 .slide-content h3 {
   font-family: var(--font-heading);
   font-size: 2.2rem;
   color: var(--text-light);
-  text-shadow: 0 0 6px rgba(0,0,0,0.8), 0 0 2px rgba(var(--primary-accent), 0.2); /* Muted glow, stronger dark shadow */
+  text-shadow: 0 0 8px rgba(0,0,0,0.9), 0 0 3px rgba(var(--primary-accent), 0.3); /* More prominent glow */
   margin-bottom: 0.8rem;
   word-wrap: break-word;
   hyphens: auto;
@@ -376,7 +397,7 @@ main {
 .slider-nav-btn:hover {
   background: var(--primary-accent);
   color: var(--main-bg);
-  box-shadow: 0 0 10px rgba(var(--primary-accent), 0.5); /* Muted hover glow */
+  box-shadow: 0 0 12px rgba(var(--primary-accent), 0.6); /* More prominent hover glow */
   transform: translateY(-50%) scale(1.1);
 }
 
@@ -395,7 +416,7 @@ main {
 .dot {
   width: 14px;
   height: 14px;
-  background: rgba(255, 255, 255, 0.3);
+  background: rgba(255, 255, 255, 0.4); /* Slightly more visible dots */
   border-radius: 50%;
   cursor: pointer;
   transition: background 0.3s ease, box-shadow 0.3s ease;
@@ -403,7 +424,7 @@ main {
 
 .dot.active {
   background: var(--primary-accent);
-  box-shadow: 0 0 6px rgba(var(--primary-accent), 0.4); /* Muted dot glow */
+  box-shadow: 0 0 8px rgba(var(--primary-accent), 0.5); /* More prominent dot glow */
 }
 
 /* Devs Section */
@@ -415,12 +436,12 @@ main {
 }
 
 .dev-card {
-  background: rgba(20, 20, 20, 0.8);
+  background: rgba(20, 20, 20, 0.85); /* Slightly more transparent to blend */
   border: 1px solid var(--border-color-light);
   border-radius: 15px;
   padding: 2.5rem;
   text-align: center;
-  box-shadow: 0 5px 10px var(--shadow-color-strong); /* Muted shadow */
+  box-shadow: 0 5px 15px var(--shadow-color-strong); /* Stronger dark shadow */
   max-width: 400px;
   transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
   position: relative;
@@ -429,7 +450,7 @@ main {
 
 .dev-card:hover {
   transform: translateY(-10px);
-  box-shadow: 0 10px 20px var(--shadow-color-strong), 0 0 8px rgba(var(--secondary-accent), 0.3); /* Muted glow on hover */
+  box-shadow: 0 12px 25px var(--shadow-color-strong), 0 0 10px rgba(var(--secondary-accent), 0.4); /* More prominent glow on hover */
   background: rgba(30, 30, 30, 0.9);
 }
 
@@ -440,13 +461,13 @@ main {
   border-radius: 50%;
   border: 4px solid var(--tertiary-accent);
   margin-bottom: 1.5rem;
-  box-shadow: 0 0 8px rgba(var(--tertiary-accent), 0.4); /* Muted glow */
+  box-shadow: 0 0 10px rgba(var(--tertiary-accent), 0.5); /* More prominent glow */
   transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
 }
 
 .dev-card img:hover {
   transform: scale(1.05);
-  box-shadow: 0 0 12px rgba(var(--tertiary-accent), 0.6); /* Muted glow */
+  box-shadow: 0 0 15px rgba(var(--tertiary-accent), 0.7); /* Stronger glow */
   border-color: var(--secondary-accent);
 }
 
@@ -477,21 +498,21 @@ main {
   font-family: var(--font-heading);
   font-size: 2.5rem;
   color: var(--text-light);
-  text-shadow: 0 0 8px rgba(0,0,0,0.8), 0 0 2px rgba(var(--quaternary-accent), 0.2); /* Muted glow */
+  text-shadow: 0 0 10px rgba(0,0,0,0.9), 0 0 3px rgba(var(--quaternary-accent), 0.3); /* More prominent glow */
   margin-bottom: 1.5rem;
 }
 
 .latest-video {
     margin-bottom: 0; /* Removed margin to touch slider */
-    background: rgba(20, 20, 20, 0.8);
+    background: rgba(20, 20, 20, 0.85); /* Slightly more transparent to blend */
     border: 1px solid var(--border-color-light);
     border-radius: 15px;
     padding: 2rem;
-    box-shadow: 0 0 15px var(--shadow-color-strong); /* Muted shadow */
+    box-shadow: 0 0 20px var(--shadow-color-strong); /* Stronger dark shadow */
 }
 
 .latest-video h3 {
-    text-shadow: 0 0 8px rgba(0,0,0,0.8), 0 0 2px rgba(var(--quaternary-accent), 0.2); /* Muted glow */
+    text-shadow: 0 0 8px rgba(0,0,0,0.9), 0 0 3px rgba(var(--quaternary-accent), 0.3); /* More prominent glow */
     color: var(--quaternary-accent);
 }
 
@@ -501,7 +522,7 @@ main {
   height: 0;
   overflow: hidden;
   border-radius: 12px;
-  box-shadow: 0 5px 10px var(--shadow-color-strong); /* Muted shadow */
+  box-shadow: 0 8px 15px var(--shadow-color-strong); /* Stronger dark shadow */
   margin-bottom: 1rem;
 }
 
@@ -540,11 +561,11 @@ main {
 }
 .trailer-slider .slide-item.active .slide-image-wrapper iframe {
     border-color: var(--tertiary-accent);
-    box-shadow: 0 0 10px rgba(var(--tertiary-accent), 0.4); /* Muted glow */
+    box-shadow: 0 0 12px rgba(var(--tertiary-accent), 0.5); /* More prominent glow */
 }
 .trailer-slider .slide-content h3 {
     color: var(--text-light);
-    text-shadow: 0 0 6px rgba(0,0,0,0.8), 0 0 2px rgba(var(--tertiary-accent), 0.2); /* Muted glow */
+    text-shadow: 0 0 8px rgba(0,0,0,0.9), 0 0 3px rgba(var(--tertiary-accent), 0.3); /* More prominent glow */
 }
 .trailer-slider .slider-nav-btn {
     border-color: var(--tertiary-accent);
@@ -553,13 +574,12 @@ main {
 .trailer-slider .slider-nav-btn:hover {
     background: var(--tertiary-accent);
     color: var(--main-bg);
-    box-shadow: 0 0 10px rgba(var(--tertiary-accent), 0.5); /* Muted hover glow */
+    box-shadow: 0 0 12px rgba(var(--tertiary-accent), 0.6); /* More prominent hover glow */
 }
 .trailer-slider .dot.active {
     background: var(--tertiary-accent);
-    box-shadow: 0 0 6px rgba(var(--tertiary-accent), 0.4); /* Muted dot glow */
+    box-shadow: 0 0 8px rgba(var(--tertiary-accent), 0.5); /* More prominent dot glow */
 }
-/* No side item specific styles for simplified slider */
 
 
 /* Discord Community Section */
@@ -568,18 +588,18 @@ main {
   flex-direction: column;
   align-items: center;
   gap: 1.5rem;
-  background: rgba(20, 20, 20, 0.8);
+  background: rgba(20, 20, 20, 0.85); /* Slightly more transparent to blend */
   border: 1px solid var(--border-color-light);
   border-radius: 15px;
   padding: 3rem;
-  box-shadow: 0 5px 15px var(--shadow-color-strong); /* Muted shadow */
+  box-shadow: 0 8px 20px var(--shadow-color-strong); /* Stronger dark shadow */
   max-width: 600px;
   margin: 0 auto;
 }
 
 .discord-widget-container iframe {
   border-radius: 10px;
-  box-shadow: 0 0 8px rgba(88, 101, 242, 0.4); /* Muted Discord blue glow */
+  box-shadow: 0 0 10px rgba(88, 101, 242, 0.5); /* More prominent Discord blue glow */
 }
 
 .join-discord-text {
@@ -609,7 +629,7 @@ main {
   gap: 10px;
   transition: background 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease, color 0.3s ease, border-color 0.3s ease;
   border: 1px solid var(--border-color-light);
-  box-shadow: 0 2px 8px var(--shadow-color-light); /* Muted shadow */
+  box-shadow: 0 2px 10px var(--shadow-color-light); /* Stronger dark shadow */
 }
 
 .btn.pulse-btn:hover {
@@ -626,8 +646,8 @@ main {
 
 
 @keyframes buttonPulse {
-  from { box-shadow: 0 0 5px rgba(var(--button-pulse-color), 0.3), 0 0 0px transparent; } /* More muted pulse */
-  to { box-shadow: 0 0 10px rgba(var(--button-pulse-color), 0.5), 0 0 5px rgba(var(--button-pulse-color), 0.2); } /* More muted pulse */
+  from { box-shadow: 0 0 6px rgba(var(--button-pulse-color), 0.4), 0 0 0px transparent; } /* More prominent pulse */
+  to { box-shadow: 0 0 12px rgba(var(--button-pulse-color), 0.6), 0 0 6px rgba(var(--button-pulse-color), 0.3); } /* More prominent pulse */
 }
 
 /* Specific social button colors */
