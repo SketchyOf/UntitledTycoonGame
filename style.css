@@ -22,56 +22,61 @@ body {
 }
 
 .nav-content {
-  max-width: 1200px;
+  max-width: 1400px; /* Increased for wider PC layout */
   margin: 0 auto;
-  padding: 1rem;
+  padding: 1.5rem 1rem; /* Slightly more padding for navbar */
 }
 
 .nav-links {
   display: flex;
   justify-content: center;
-  gap: 2rem;
+  gap: 3rem; /* Increased gap for PC */
 }
 
 .nav-links a {
   color: #fff;
   text-decoration: none;
   font-weight: bold;
+  font-size: 1.2rem; /* Slightly larger links */
 }
 
 /* Hero */
 .hero {
   text-align: center;
-  padding: 4rem 1rem;
+  padding: 6rem 1rem 4rem; /* More padding for a bigger hero section */
   background: #000;
 }
 
 .hero h1 {
-  font-size: 2.5rem;
+  font-size: 4rem; /* Much larger for PC */
+  margin-bottom: 0.5rem;
 }
 
 .hero p {
-  font-size: 1.2rem;
+  font-size: 1.8rem; /* Larger for PC */
 }
 
 main {
-  padding-top: 80px; /* fixní navbar mezera */
+  padding-top: 90px; /* Adjusted fixed navbar space */
 }
 
 /* Sections */
+section {
+  padding: 6rem 2rem; /* More padding for all sections on PC */
+  max-width: 1400px; /* Max width for content to prevent being too wide */
+  margin: 0 auto;
+}
+
 #info {
   background: #1e1e1e;
-  padding: 4rem 1rem;
 }
 
 #devs {
   background: #000;
-  padding: 4rem 1rem;
 }
 
 #links {
   background: #1e1e1e;
-  padding: 4rem 1rem;
 }
 
 /* Info Blocks (PC) */
@@ -79,9 +84,9 @@ main {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 2rem;
-  margin-bottom: 4rem;
-  flex-wrap: wrap;
+  gap: 4rem; /* More space between image and text */
+  margin-bottom: 6rem; /* More space between blocks */
+  flex-wrap: wrap; /* Allows wrapping on smaller screens */
 }
 
 .image-text.reverse {
@@ -89,12 +94,13 @@ main {
 }
 
 .image-text img {
-  width: 300px;
-  height: 300px;
+  width: 450px; /* Larger image size for PC */
+  height: 450px;
   object-fit: cover;
-  border: 4px solid #fff;
-  border-radius: 15px;
+  border: 6px solid #fff; /* Thicker border */
+  border-radius: 20px; /* Slightly more rounded */
   transform: rotate(-5deg);
+  flex-shrink: 0; /* Prevents image from shrinking too much on PC */
 }
 
 .image-text.reverse img {
@@ -102,26 +108,28 @@ main {
 }
 
 .image-text p {
-  max-width: 300px;
-  font-size: 1.1rem;
+  max-width: 500px; /* Wider text area for PC */
+  font-size: 1.5rem; /* Larger font size */
+  line-height: 1.6; /* Better readability */
 }
 
 /* Devs Blocks (PC) */
 #devs h2 {
   text-align: center;
-  margin-bottom: 2rem;
+  margin-bottom: 4rem; /* More space below title */
+  font-size: 3rem; /* Larger heading */
 }
 
 .dev-block {
-  margin-bottom: 3rem;
+  margin-bottom: 4rem; /* More space between dev blocks */
 }
 
 .dev-image-text {
   display: flex;
   align-items: center;
-  justify-content: flex-start;
-  gap: 2rem;
-  flex-wrap: wrap;
+  justify-content: center; /* Center dev blocks on PC */
+  gap: 3rem; /* More space between image and text */
+  flex-wrap: wrap; /* Allows wrapping on smaller screens */
 }
 
 .dev-image-text.reverse {
@@ -129,39 +137,52 @@ main {
 }
 
 .dev-image-text img {
-  width: 200px;
-  border-radius: 10px;
+  width: 250px; /* Larger dev image for PC */
+  height: 250px; /* Maintain aspect ratio */
+  object-fit: cover;
+  border-radius: 15px; /* Slightly more rounded */
+  border: 4px solid #fff;
+  flex-shrink: 0;
 }
 
 .dev-text {
   text-align: left;
+  max-width: 400px; /* Constrain dev text width */
 }
 
 .dev-name {
   font-weight: bold;
-  font-size: 1.2rem;
+  font-size: 1.8rem; /* Larger dev name */
+  margin-bottom: 0.5rem;
+}
+
+.dev-text p:last-child {
+  font-size: 1.3rem; /* Larger dev role text */
 }
 
 /* Links Section */
 #links h2 {
   text-align: center;
-  margin-bottom: 2rem;
+  margin-bottom: 4rem; /* More space below title */
+  font-size: 3rem; /* Larger heading */
 }
 
 .buttons {
   display: flex;
   justify-content: center;
-  gap: 2rem;
+  gap: 3rem; /* More space between buttons */
   flex-wrap: wrap;
 }
 
 .btn {
   background: #333;
   color: #fff;
-  padding: 1rem 2rem;
-  border-radius: 5px;
+  padding: 1.5rem 3rem; /* Larger buttons */
+  border-radius: 8px; /* Slightly more rounded */
   text-decoration: none;
   font-weight: bold;
+  font-size: 1.3rem; /* Larger button text */
+  transition: background 0.3s ease; /* Smooth hover effect */
 }
 
 .btn:hover {
@@ -180,23 +201,90 @@ main {
   transform: translateY(0);
 }
 
-/* RESPONSIVE FIX */
+/* RESPONSIVE FIX (Mobile adjustments) */
 @media (max-width: 768px) {
+  .nav-content {
+    padding: 1rem 0.5rem;
+  }
+
+  .nav-links {
+    gap: 1.5rem;
+    font-size: 1rem;
+  }
+
+  .nav-links a {
+    font-size: 1rem;
+  }
+
+  .hero h1 {
+    font-size: 2.5rem; /* Smaller for mobile */
+  }
+
+  .hero p {
+    font-size: 1.2rem; /* Smaller for mobile */
+  }
+
+  main {
+    padding-top: 70px; /* Adjust for mobile navbar height */
+  }
+
+  section {
+    padding: 3rem 1rem; /* Less padding for sections on mobile */
+  }
+
   .image-text,
   .image-text.reverse,
   .dev-image-text,
   .dev-image-text.reverse {
-    flex-direction: column;
-    text-align: left;
-    align-items: flex-start;
+    flex-direction: column; /* Stack elements vertically on mobile */
+    text-align: center; /* Center text on mobile */
+    align-items: center; /* Center items on mobile */
+    gap: 1.5rem; /* Reduced gap for mobile */
+    margin-bottom: 3rem; /* Reduced margin for mobile */
   }
 
   .image-text img,
   .image-text.reverse img {
-    transform: none; /* no rotate on mobile */
+    width: 280px; /* Optimal size for mobile screenshots */
+    height: 280px;
+    transform: none; /* No rotate on mobile */
+    border-width: 3px; /* Thinner border for mobile */
+    border-radius: 10px; /* Slightly less rounded */
   }
 
-  .dev-text {
-    text-align: left;
+  .image-text p {
+    max-width: 90%; /* Wider text area for mobile */
+    font-size: 1.1rem; /* Readable font size for mobile */
+    text-align: center; /* Center text */
+  }
+
+  #devs h2,
+  #links h2 {
+    font-size: 2rem; /* Smaller headings for mobile */
+    margin-bottom: 2rem;
+  }
+
+  .dev-image-text img {
+    width: 180px; /* Smaller dev image for mobile */
+    height: 180px;
+    border-width: 3px;
+    border-radius: 10px;
+  }
+
+  .dev-name {
+    font-size: 1.4rem; /* Readable dev name for mobile */
+  }
+
+  .dev-text p:last-child {
+    font-size: 1rem; /* Readable dev role text for mobile */
+  }
+
+  .buttons {
+    gap: 1.5rem; /* Reduced gap for buttons on mobile */
+  }
+
+  .btn {
+    padding: 1rem 2rem; /* Smaller buttons for mobile */
+    font-size: 1.1rem; /* Smaller button text for mobile */
   }
 }
