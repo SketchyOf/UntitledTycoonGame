@@ -37,7 +37,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
 
-    // --- Generic Slider Logic (Now simpler, single-item view) ---
+    // --- Generic Slider Logic (with Slide-in/Slide-out animation) ---
     function initializeSlider(sliderElement) {
         const slides = sliderElement.querySelectorAll('.slide-item');
         const prevBtn = sliderElement.querySelector('.prev-btn');
@@ -51,8 +51,22 @@ document.addEventListener('DOMContentLoaded', () => {
             if (dotsContainer) dotsContainer.style.display = 'none';
             return;
         }
+        if (slides.length === 1) {
+            // If only one slide, show it and hide buttons/dots
+            slides[0].classList.add('active');
+            slides[0].style.opacity = '1';
+            slides[0].style.visibility = 'visible';
+            slides[0].style.pointerEvents = 'auto';
+            slides[0].style.transform = 'translateX(0)';
+            if (prevBtn) prevBtn.style.display = 'none';
+            if (nextBtn) nextBtn.style.display = 'none';
+            if (dotsContainer) dotsContainer.style.display = 'none';
+            return;
+        }
+
 
         let currentIndex = 0;
+        let isAnimating = false; // Prevent multiple clicks during animation
 
         // Create dots
         dotsContainer.innerHTML = ''; // Clear existing dots
@@ -60,37 +74,73 @@ document.addEventListener('DOMContentLoaded', () => {
             const dot = document.createElement('div');
             dot.classList.add('dot');
             if (index === 0) dot.classList.add('active');
-            dot.addEventListener('click', () => showSlide(index));
+            dot.addEventListener('click', () => {
+                if (!isAnimating && index !== currentIndex) {
+                    const direction = (index > currentIndex) ? 'next' : 'prev';
+                    showSlide(index, direction);
+                }
+            });
             dotsContainer.appendChild(dot);
         });
 
         const dots = dotsContainer.querySelectorAll('.dot');
+        const transitionDuration = 600; // Match CSS transition duration
 
-        function showSlide(index, direction = 'next') {
-            // Ensure index wraps around
-            currentIndex = (index + slides.length) % slides.length;
+        function showSlide(newIndex, direction = 'next') {
+            if (isAnimating) return; // Don't animate if already animating
+            isAnimating = true;
 
-            slides.forEach((slide, i) => {
-                slide.classList.remove('active');
-                // Immediately hide non-active slides (opacity 0, transform 100% or -100%)
-                // This ensures they are ready to slide in from the correct direction if they become active
-                if (i !== currentIndex) {
-                    slide.style.opacity = '0';
-                    slide.style.visibility = 'hidden';
-                    slide.style.pointerEvents = 'none';
-                    // Set transform to prepare for entry or to hide (off-screen)
-                    slide.style.transform = (direction === 'next') ? 'translateX(100%)' : 'translateX(-100%)';
-                }
+            const oldIndex = currentIndex;
+            currentIndex = (newIndex + slides.length) % slides.length;
+
+            const oldSlide = slides[oldIndex];
+            const newSlide = slides[currentIndex];
+
+            // Determine slide-out direction for the old slide
+            let oldSlideOutClass = '';
+            let newSlideInClass = '';
+
+            if (direction === 'next') { // New slide comes from right, old slides out left
+                oldSlideOutClass = 'slide-out-left';
+                newSlideInClass = 'slide-in-right';
+            } else { // New slide comes from left, old slides out right
+                oldSlideOutClass = 'slide-out-right';
+                newSlideInClass = 'slide-in-left';
+            }
+
+            // Apply exit animation to old slide
+            if (oldSlide && oldSlide !== newSlide) {
+                oldSlide.classList.remove('active');
+                oldSlide.classList.add(oldSlideOutClass);
+                oldSlide.style.pointerEvents = 'none'; // Disable interaction while sliding out
+            }
+
+            // Prepare new slide for entry animation (remove active, apply entry class, make visible)
+            newSlide.classList.remove('active'); // Ensure no lingering active class
+            newSlide.classList.add(newSlideInClass);
+            newSlide.style.visibility = 'visible';
+            newSlide.style.pointerEvents = 'auto';
+
+            // Force reflow to ensure the initial transform is applied before transition
+            requestAnimationFrame(() => {
+                requestAnimationFrame(() => {
+                    newSlide.classList.add('active'); // Add active class to trigger the transition to transform: translateX(0)
+                    newSlide.classList.remove(newSlideInClass); // Remove initial positioning class
+                    newSlide.style.opacity = '1'; // Ensure it fades in
+                });
             });
 
-            // Activate the current slide
-            const activeSlide = slides[currentIndex];
-            activeSlide.classList.add('active');
-            activeSlide.style.visibility = 'visible';
-            activeSlide.style.pointerEvents = 'auto';
-            // Trigger the transition from off-screen to 0
-            activeSlide.style.transform = 'translateX(0)';
-            activeSlide.style.opacity = '1';
+            // Clean up old slide after animation
+            setTimeout(() => {
+                if (oldSlide && oldSlide !== newSlide) {
+                    oldSlide.classList.remove(oldSlideOutClass);
+                    oldSlide.style.opacity = '0';
+                    oldSlide.style.visibility = 'hidden';
+                    oldSlide.style.transform = ''; // Reset transform for next use
+                }
+                isAnimating = false;
+            }, transitionDuration);
+
 
             // Update dots
             dots.forEach((dot, i) => {
@@ -101,13 +151,17 @@ document.addEventListener('DOMContentLoaded', () => {
         // Navigation buttons
         if (prevBtn) {
             prevBtn.addEventListener('click', () => {
-                showSlide(currentIndex - 1, 'prev');
+                if (!isAnimating) {
+                    showSlide(currentIndex - 1, 'prev');
+                }
             });
         }
 
         if (nextBtn) {
             nextBtn.addEventListener('click', () => {
-                showSlide(currentIndex + 1, 'next');
+                if (!isAnimating) {
+                    showSlide(currentIndex + 1, 'next');
+                }
             });
         }
 
