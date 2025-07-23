@@ -686,13 +686,13 @@ footer {
 @media (max-width: 1024px) {
   /* Navbar */
   .nav-content {
-    padding: 1rem 1.5rem; /* Reduced padding */
+    padding: 1rem 1.5rem; /* Reduced padding for medium screens */
   }
   .nav-links {
-    gap: 2rem; /* Reduced gap */
+    gap: 2rem; /* Reduced gap for medium screens */
   }
   .nav-links a.nav-link-item {
-    font-size: 1rem; /* Slightly smaller font */
+    font-size: 1rem; /* Slightly smaller font for medium screens */
   }
 
   /* Hero */
@@ -764,51 +764,48 @@ footer {
   .section-container { padding: 4rem 1rem; }
   .section-title { font-size: 2.5rem; margin-bottom: 3rem; text-shadow: none; }
 
-  /* Sliders */
+  /* Sliders - Adjusted values to give more room for content */
   .coverflow-slider {
     width: 95vw;
     margin: 0 auto;
-    height: auto; /* Let content define height */
-    min-height: 380px; /* Minimum height for screenshots slider */
+    height: auto;
+    min-height: 360px; /* Slightly reduced min-height for the overall slider */
     padding-bottom: 40px;
     overflow: hidden;
   }
   .slide-item {
     width: 100%;
     height: 100%;
-    min-height: 300px; /* Minimum height for individual slide item */
-    padding: 1.5rem;
+    min-height: 280px; /* Slightly reduced min-height for individual slide item */
+    padding: 1.2rem; /* Reduced padding inside the slide item */
   }
   .slide-image-wrapper {
       width: 95%;
       max-width: none;
       height: auto;
-      min-height: 100px;
-      margin: 0 auto 1rem auto;
+      min-height: 90px; /* Adjusted to be slightly smaller, allowing more room for text */
+      margin: 0 auto 0.8rem auto; /* Reduced bottom margin */
   }
   .slide-image-wrapper img,
   .slide-image-wrapper iframe {
-      border-width: 3px; /* Slightly thinner border */
+      border-width: 3px;
   }
   .trailer-slider {
     width: 95vw;
     margin: 0 auto;
     height: auto;
-    min-height: 320px; /* Minimum height for trailers slider */
+    min-height: 300px; /* Slightly reduced min-height for trailers slider */
   }
-  .trailer-slider .slide-item { height: 100%; min-height: 280px; }
+  .trailer-slider .slide-item { height: 100%; min-height: 260px; } /* Slightly reduced min-height for trailer slide item */
   .trailer-slider .slide-item .slide-image-wrapper {
       height: auto;
-      min-height: 80px;
+      min-height: 70px; /* Adjusted for trailer iframe */
   }
   .slider-nav-btn {
-    position: absolute; /* Kept absolute, but can consider fixed for tiny screens */
-    /* top: calc(50% - 20px); - Removed this to let top: 50% work with translateY correctly */
-    z-index: 1200;
     width: 40px;
     height: 40px;
     font-size: 1.3rem;
-    transform: translateY(-50%); /* Ensures perfect vertical centering */
+    transform: translateY(-50%);
   }
   .slider-nav-btn.prev-btn { left: 0.5rem; }
   .slider-nav-btn.next-btn { right: 0.5rem; }
@@ -842,13 +839,13 @@ footer {
 @media (max-width: 480px) {
   /* Navbar */
   .nav-content {
-    padding: 0.6rem 0.5rem; /* Even smaller padding */
+    padding: 0.6rem 0.5rem;
   }
   .nav-links {
-    gap: 0.5rem; /* Minimal gap */
+    gap: 0.5rem;
   }
   .nav-links a.nav-link-item {
-    font-size: 0.75rem; /* Smallest font size */
+    font-size: 0.75rem;
   }
 
   /* Hero */
@@ -858,24 +855,22 @@ footer {
   /* Sections */
   .section-title { font-size: 2rem; }
 
-  /* Sliders */
+  /* Sliders - Further adjustments for very small screens */
   .coverflow-slider {
-    width: 98vw;
-    margin: 0 auto;
-    min-height: 280px;
+    min-height: 250px; /* Reduced overall slider height */
   }
-  .slide-item { padding: 1rem; }
+  .slide-item { padding: 0.8rem; min-height: 220px; } /* Reduced padding and min-height */
   .slide-image-wrapper {
-    min-height: 80px;
+    min-height: 70px; /* Further reduced min-height for image wrapper */
+    margin-bottom: 0.5rem; /* Reduced margin */
   }
-  .slide-content h3 { font-size: 1.2rem; }
+  .slide-content h3 { font-size: 1.2rem; margin-bottom: 0.5rem; } /* Smaller font and reduced margin */
   .slide-content p { font-size: 0.8rem; }
   .trailer-slider {
-    width: 98vw;
-    margin: 0 auto;
-    min-height: 260px;
+    min-height: 220px; /* Reduced overall trailer slider height */
   }
-  .trailer-slider .slide-item .slide-image-wrapper { min-height: 60px; }
+  .trailer-slider .slide-item { min-height: 180px; } /* Reduced trailer slide item height */
+  .trailer-slider .slide-item .slide-image-wrapper { min-height: 50px; } /* Further reduced min-height for trailer iframe */
 
   /* YouTube */
   .youtube-content h3 { font-size: 1.8rem; }
