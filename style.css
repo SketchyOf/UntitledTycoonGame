@@ -31,7 +31,7 @@ body {
     font-family: var(--font-body);
     color: var(--text-light);
     line-height: 1.6;
-    overflow-x: hidden;
+    overflow-x: hidden; /* Keep this to prevent horizontal scroll */
     background-color: var(--main-bg);
     animation: backgroundFade 30s ease-in-out infinite alternate;
 }
@@ -171,7 +171,7 @@ a {
     color: var(--text-dim);
 }
 
-/* --- Fade In Animations --- */
+/* --- Fade In Animations (still defined, but removed from button in HTML) --- */
 .fade-in-up {
     opacity: 0;
     transform: translateY(20px);
@@ -226,7 +226,7 @@ main {
     margin: 0 auto;
     overflow: hidden;
     padding-bottom: 50px;
-    touch-action: pan-y;
+    touch-action: pan-y; /* Allows vertical scrolling on touch devices */
 }
 
 .slider-track {
@@ -269,6 +269,7 @@ main {
     z-index: 1;
 }
 
+/* These classes are for the desktop coverflow animation */
 .slide-item.slide-in-right {
     transform: translateX(100%);
     opacity: 0;
@@ -612,12 +613,23 @@ main {
     transition: background 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease, color 0.3s ease, border-color 0.3s ease;
     border: 1px solid var(--border-color-light);
     box-shadow: 0 2px 12px var(--shadow-color-light);
-    /* Fix for disappearing button: Ensure initial state is visible */
-    opacity: 1;
-    visibility: visible;
-    position: relative; /* Ensure z-index works */
-    z-index: 1; /* Make sure it's above other potential elements */
+    /* Ensure button is always visible, overriding any potential animation issues */
+    opacity: 1 !important; /* Added !important for certainty */
+    visibility: visible !important; /* Added !important for certainty */
+    position: relative;
+    z-index: 1;
 }
+
+/* For the pulse-btn, ensure opacity/visibility is not touched by the animation itself */
+@keyframes buttonPulse {
+    from {
+        box-shadow: 0 0 8px rgba(var(--button-pulse-color), 0.5), 0 0 0px transparent;
+    }
+    to {
+        box-shadow: 0 0 15px rgba(var(--button-pulse-color), 0.7), 0 0 8px rgba(var(--button-pulse-color), 0.4);
+    }
+}
+
 
 .btn.pulse-btn:hover {
     animation: buttonPulse 1s infinite alternate;
@@ -640,18 +652,6 @@ main {
     --button-pulse-color: var(--quaternary-accent);
 }
 
-@keyframes buttonPulse {
-    from {
-        box-shadow: 0 0 8px rgba(var(--button-pulse-color), 0.5), 0 0 0px transparent;
-        opacity: 1; /* Ensure opacity remains 1 during animation */
-        visibility: visible; /* Ensure visibility remains visible during animation */
-    }
-    to {
-        box-shadow: 0 0 15px rgba(var(--button-pulse-color), 0.7), 0 0 8px rgba(var(--button-pulse-color), 0.4);
-        opacity: 1; /* Ensure opacity remains 1 during animation */
-        visibility: visible; /* Ensure visibility remains visible during animation */
-    }
-}
 
 .btn.play-now {
     background: var(--primary-accent);
@@ -699,6 +699,7 @@ main {
 }
 
 /* --- Visibility Fade (Intersection Observer) --- */
+/* These styles remain as they are for other elements that use `fade` */
 .fade {
     opacity: 0;
     transform: translateY(40px);
@@ -810,19 +811,19 @@ main {
     }
 }
 
-/* Main Mobile Breakpoint (Phones, Portrait) */
+/* Main Mobile Breakpoint (Phones, Portrait) - Significant changes for distinct mobile look */
 @media (max-width: 768px) {
     /* Navbar Adjustments */
     .navbar .nav-content {
-        padding: 0.8rem 0.5rem; /* Reduced padding */
+        padding: 0.8rem 0.5rem;
     }
     .nav-links {
-        gap: 0.5rem; /* Tighter spacing for links */
-        flex-wrap: wrap; /* Allow links to wrap if too many */
+        gap: 0.5rem;
+        flex-wrap: wrap;
         justify-content: center;
     }
     .nav-links a.nav-link-item {
-        font-size: 0.8rem; /* Smaller font size */
+        font-size: 0.8rem;
         padding-left: 0.5rem;
         padding-right: 0.5rem;
     }
@@ -832,341 +833,347 @@ main {
 
     /* Hero Section Adjustments */
     .hero {
-        height: 75vh; /* Slightly taller hero to accommodate content */
+        height: 70vh; /* Reduced height to push content up more */
+        padding: 0 0.5rem; /* Less horizontal padding */
     }
     .hero-overlay {
-        padding: 2.5rem 1.5rem; /* Adjusted padding */
+        padding: 2rem 1rem; /* Even tighter padding */
         border-radius: 10px;
     }
     .hero h1 {
-        font-size: 2.8rem; /* Smaller heading */
-        letter-spacing: 0.5px;
-        text-shadow: none; /* Less intense shadow on mobile */
+        font-size: 2.5rem; /* Smaller heading for mobile */
+        letter-spacing: 0; /* Remove letter spacing */
+        line-height: 1.2;
     }
     .hero p {
-        font-size: 1.1rem;
-        margin-bottom: 2rem;
+        font-size: 1rem; /* Smaller body text */
+        margin-bottom: 1.5rem; /* Reduced margin */
     }
     .hero .btn.play-now {
-        padding: 0.8rem 1.8rem;
-        font-size: 1rem;
-        gap: 8px;
-        box-shadow: none; /* Less shadow for cleaner look */
+        padding: 0.7rem 1.5rem; /* Smaller button */
+        font-size: 0.9rem;
     }
 
     /* Main Content Sections */
     main {
-        padding-top: 60px; /* Adjust for fixed navbar height */
+        padding-top: 50px; /* Adjust for potentially shorter navbar */
     }
     .section-container {
-        padding: 3rem 1rem; /* Reduced vertical padding */
+        padding: 2.5rem 0.8rem; /* Significantly reduced vertical and horizontal padding */
     }
     .section-title {
-        font-size: 2.5rem;
-        margin-bottom: 2.5rem;
-        text-shadow: none;
+        font-size: 2rem; /* Consistent smaller title */
+        margin-bottom: 2rem;
     }
 
-    /* Slider Specific Mobile Improvements */
+    /* Slider Specific Mobile Layout - More distinct and simplified */
     .coverflow-slider {
-        width: 95vw; /* Almost full width */
-        margin: 0 auto;
-        height: auto; /* IMPORTANT: Height becomes fluid */
-        min-height: 420px; /* Minimum height to avoid collapse */
-        padding-bottom: 40px;
-        overflow: hidden; /* Ensure content doesn't overflow */
+        width: 100%; /* Full width for the slider container */
+        max-width: none; /* No max width */
+        height: auto;
+        min-height: 380px; /* Maintain a reasonable minimum height */
+        padding-bottom: 30px; /* Reduced padding for dots */
+        margin: 0; /* No auto margin, let parents handle alignment if needed */
+        overflow: hidden; /* Ensure content stays within bounds */
+        /* Removed complex transforms that might cause cutoff */
+        transform: none !important;
     }
+
+    .slider-track {
+        /* On mobile, we only want one slide visible at a time */
+        /* JS handles the 'active' class, CSS simply styles it */
+    }
+
     .slide-item {
-        position: absolute; /* Keep absolute for transition logic */
+        position: absolute; /* Keep absolute for stacking */
+        width: 95%; /* Make slide itself slightly narrower than container */
+        max-width: 400px; /* Cap width for larger phones */
+        height: auto; /* Allow height to adapt to content */
+        min-height: 350px; /* Ensure a base height */
+        padding: 1rem; /* Reduced padding */
+        margin: 0 auto; /* Center the slide within the track */
+        left: 50%;
+        transform: translateX(-50%) !important; /* Center and override any JS transform */
         top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%; /* Fill the auto-sized parent */
-        min-height: 380px; /* Ensure slides have a minimum height */
-        padding: 1.5rem;
-        /* Remove or reduce complex 3D transforms if they cause issues */
-        flex-direction: column; /* Stack image and text vertically */
-        justify-content: flex-start; /* Align content from top */
-        /* Ensure mobile transition is simple, not trying to do 3D coverflow */
-        transform: none !important; /* Override desktop transforms */
+        
+        /* Remove desktop-specific transitions that conflict */
+        transition: opacity 0.5s ease;
+        
+        /* Ensure that only active is visible, others are truly hidden for mobile */
         opacity: 0;
         visibility: hidden;
         pointer-events: none;
-        transition: opacity 0.6s ease-out, visibility 0.6s ease-out; /* Simpler transition */
+        display: flex; /* Ensure flex for column stacking */
+        flex-direction: column;
+        justify-content: flex-start; /* Align content to the top */
+        align-items: center;
     }
 
-    /* Mobile specific slide animations (override original for simplicity) */
     .slide-item.active {
         opacity: 1;
         visibility: visible;
         pointer-events: auto;
-        transform: none !important; /* Ensure no residual transform */
+        transform: translateX(-50%) !important; /* Ensure it stays centered and visible */
+        z-index: 1;
+        /* Keep border and shadow for active state */
+        border-color: var(--primary-accent);
+        box-shadow: 0 0 20px var(--shadow-color-strong), 0 0 8px rgba(var(--primary-accent), 0.5);
     }
+    
+    /* Crucial: Disable complex slide-in/out animations for mobile */
     .slide-item.slide-in-right,
     .slide-item.slide-in-left,
     .slide-item.slide-out-left,
     .slide-item.slide-out-right {
-        transform: none !important; /* No horizontal movement on mobile */
+        transform: translateX(-50%) !important; /* Keep it centered */
         opacity: 0;
         visibility: hidden;
+        pointer-events: none;
+        /* No transition for these on mobile, just instant hide/show */
+        transition: none; 
     }
 
     .slide-image-wrapper {
-        width: 100%; /* Full width within slide */
-        max-width: none; /* Remove max-width constraint */
-        height: 180px; /* Fixed height for mobile images */
-        margin: 0 auto 1rem auto; /* Center and add bottom margin */
-        box-shadow: none; /* Simplify shadows for mobile */
+        width: 100%; /* Full width within its parent (.slide-item) */
+        height: 160px; /* Fixed height for mobile images */
+        margin-bottom: 0.8rem; /* Reduced margin */
+        border-width: 2px; /* Thinner border */
+        box-shadow: none; /* Simpler shadows */
     }
     .slide-image-wrapper img,
     .slide-image-wrapper iframe {
-        border-width: 3px;
-        box-shadow: none; /* Simplify shadows for mobile */
+        border-width: 2px;
+        box-shadow: none;
     }
     .slide-item.active .slide-image-wrapper img,
     .slide-item.active .slide-image-wrapper iframe {
-        box-shadow: 0 0 10px rgba(var(--primary-accent), 0.5); /* Re-add a subtle active shadow */
+        box-shadow: 0 0 8px rgba(var(--primary-accent), 0.4);
     }
 
-    .slide-content {
-        text-align: center;
-        max-width: 100%;
-    }
     .slide-content h3 {
-        font-size: 1.5rem; /* Smaller heading */
-        margin-bottom: 0.5rem;
-        text-shadow: none;
+        font-size: 1.3rem; /* Smaller heading */
+        margin-bottom: 0.4rem;
     }
     .slide-content p {
-        font-size: 0.9rem; /* Slightly larger body text for readability */
+        font-size: 0.85rem; /* Smaller body text for more content space */
     }
 
     .trailer-slider {
-        width: 95vw;
-        height: auto;
-        min-height: 350px; /* Adjust min-height for video content */
+        width: 100%; /* Full width */
+        min-height: 300px; /* Adjusted min-height for video content */
+        padding-bottom: 30px;
     }
     .trailer-slider .slide-item {
-        min-height: 320px; /* Min height for video slides */
-    }
-    .trailer-slider .slide-item .slide-image-wrapper {
-        height: 160px; /* Video specific height */
-    }
-
-    .slider-nav-btn {
-        position: absolute; /* Keep absolute */
-        top: 50%;
-        transform: translateY(-50%);
-        width: 45px; /* Slightly smaller buttons */
-        height: 45px;
-        font-size: 1.5rem;
-        background: rgba(0, 0, 0, 0.8); /* Slightly darker background */
-        box-shadow: 0 0 8px rgba(0, 0, 0, 0.7); /* Subtle shadow */
-    }
-    .slider-nav-btn.prev-btn {
-        left: 0.5rem;
-    }
-    .slider-nav-btn.next-btn {
-        right: 0.5rem;
-    }
-    .slider-nav-btn:hover { /* Simplify hover for mobile (no scale up) */
-        transform: translateY(-50%);
-        box-shadow: 0 0 10px rgba(var(--primary-accent), 0.7);
-    }
-
-    .slider-dots {
-        bottom: 10px; /* Move dots slightly up from bottom */
-        gap: 8px; /* Slightly less gap */
-    }
-    .dot {
-        width: 12px;
-        height: 12px;
-    }
-
-    /* Devs Section */
-    .dev-grid {
-        gap: 1.5rem;
-        flex-direction: column; /* Stack dev cards vertically */
-        align-items: center; /* Center them */
-    }
-    .dev-card {
-        padding: 1.5rem;
-        max-width: 90%; /* Allow cards to take more width */
-        border-width: 1px;
-        box-shadow: none; /* Remove complex shadows */
-    }
-    .dev-card:hover {
-        transform: none; /* No translateY on hover for mobile */
-        box-shadow: none; /* No complex shadow on hover for mobile */
-    }
-    .dev-card img {
-        width: 120px; /* Smaller image */
-        height: 120px;
-        border-width: 2px;
-        margin-bottom: 0.8rem;
-        box-shadow: none;
-    }
-    .dev-card img:hover {
-        transform: none; /* No scale up on hover for mobile */
-        box-shadow: none;
-    }
-    .dev-info .dev-name {
-        font-size: 1.3rem; /* Adjusted font size */
-    }
-    .dev-info .dev-role {
-        font-size: 0.85rem;
-    }
-
-    /* YouTube Content */
-    .youtube-content {
-        gap: 2rem;
-    }
-    .youtube-content h3 {
-        font-size: 2rem;
-    }
-    .latest-video {
-        padding: 1.5rem;
-    }
-    .video-embed-container {
-        margin-bottom: 0.8rem;
-    }
-    .video-caption {
-        font-size: 0.9rem;
-    }
-
-    /* Discord Widget */
-    .discord-widget-container {
-        padding: 2rem;
-        max-width: 95%;
-    }
-    .discord-widget-container iframe {
-        width: 100%;
-        height: 400px;
-    }
-    .join-discord-text {
-        font-size: 1rem;
-    }
-
-    /* Buttons */
-    .buttons {
-        gap: 1rem;
-        flex-direction: column; /* Stack buttons vertically */
-        align-items: center;
-    }
-    .btn {
-        padding: 0.8rem 1.6rem;
-        font-size: 1rem; /* Slightly larger button text for touch */
-        gap: 8px;
-        width: 90%; /* Make buttons take more width */
-        max-width: 300px; /* But not too wide */
-        box-shadow: none; /* No shadow */
-    }
-    .btn.pulse-btn:hover {
-        animation: none; /* Disable animation on mobile for performance/simplicity */
-        transform: translateY(-3px) scale(1.01); /* Keep a subtle visual feedback */
-    }
-}
-
-/* Very Small Phones (e.g., iPhone 5/SE, older Androids) */
-@media (max-width: 480px) {
-    .nav-links {
-        gap: 0.3rem;
-        padding-left: 0.2rem;
-        padding-right: 0.2rem;
-    }
-    .nav-links a.nav-link-item {
-        font-size: 0.75rem;
-        padding: 5px 3px; /* Smaller padding for links */
-    }
-
-    .hero h1 {
-        font-size: 2.2rem;
-    }
-    .hero p {
-        font-size: 0.9rem;
-    }
-
-    .section-title {
-        font-size: 2rem;
-        margin-bottom: 2rem;
-    }
-
-    .coverflow-slider {
-        width: 100vw; /* Even wider for tiny screens */
-        min-height: 360px; /* Maintain a reasonable height */
-    }
-    .slide-item {
-        padding: 1rem;
-        min-height: 320px;
-    }
-    .slide-image-wrapper {
-        height: 140px; /* Adjust image height for very small screens */
-    }
-    .slide-content h3 {
-        font-size: 1.2rem;
-    }
-    .slide-content p {
-        font-size: 0.85rem;
-    }
-
-    .trailer-slider {
-        width: 100vw;
         min-height: 280px;
     }
-    .trailer-slider .slide-item {
-        min-height: 260px;
-    }
     .trailer-slider .slide-item .slide-image-wrapper {
-        height: 110px;
+        height: 140px; /* Video specific height */
     }
 
     .slider-nav-btn {
-        width: 40px;
+        width: 40px; /* Smaller buttons */
         height: 40px;
-        font-size: 1.2rem;
+        font-size: 1.3rem;
+        border-width: 1px; /* Thinner border */
     }
+    .slider-nav-btn:hover { /* Simplify hover for mobile */
+        transform: translateY(-50%); /* No scale up */
+        box-shadow: 0 0 8px rgba(var(--primary-accent), 0.6);
+    }
+
     .slider-nav-btn.prev-btn {
         left: 0.2rem;
     }
     .slider-nav-btn.next-btn {
         right: 0.2rem;
     }
+    .slider-dots {
+        bottom: 5px; /* Move dots closer to bottom */
+        gap: 6px; /* Smaller gap */
+    }
+    .dot {
+        width: 10px;
+        height: 10px;
+    }
 
+    /* Devs Section */
+    .dev-grid {
+        gap: 1.5rem;
+        flex-direction: column; /* Stack dev cards vertically */
+        align-items: center;
+    }
     .dev-card {
         padding: 1.2rem;
-        width: 95%; /* Wider card for very small screens */
+        max-width: 90%; /* Wider card for mobile */
+        box-shadow: 0 3px 10px var(--shadow-color-strong); /* Simpler shadow */
+    }
+    .dev-card:hover {
+        transform: none; /* No transform on hover */
+        box-shadow: 0 5px 15px var(--shadow-color-strong); /* Only minor shadow change on hover */
     }
     .dev-card img {
-        width: 100px;
+        width: 100px; /* Smaller image */
         height: 100px;
+        margin-bottom: 0.6rem;
     }
     .dev-info .dev-name {
-        font-size: 1.1rem;
+        font-size: 1.2rem;
     }
     .dev-info .dev-role {
         font-size: 0.8rem;
     }
 
+    /* YouTube Content */
+    .youtube-content {
+        gap: 1.5rem;
+    }
     .youtube-content h3 {
-        font-size: 1.6rem;
+        font-size: 1.8rem;
     }
     .latest-video {
         padding: 1rem;
     }
+    .video-embed-container {
+        margin-bottom: 0.5rem;
+    }
+    .video-caption {
+        font-size: 0.8rem;
+    }
 
+    /* Discord Widget */
     .discord-widget-container {
         padding: 1.5rem;
+        max-width: 95%;
     }
     .discord-widget-container iframe {
-        height: 300px; /* Smaller discord widget */
+        height: 300px;
     }
     .join-discord-text {
         font-size: 0.9rem;
     }
 
+    /* Buttons */
+    .buttons {
+        gap: 0.8rem;
+        flex-direction: column;
+        align-items: center;
+    }
     .btn {
-        padding: 0.7rem 1.4rem;
+        padding: 0.6rem 1.2rem;
         font-size: 0.9rem;
         width: 95%;
+        max-width: 250px; /* Even tighter max-width for buttons */
+        box-shadow: 0 1px 5px var(--shadow-color-light); /* Even simpler shadow */
+    }
+    .btn.pulse-btn:hover {
+        animation: none; /* Disable pulse animation on mobile */
+        transform: none; /* No transform on hover */
+    }
+}
+
+/* Very Small Phones (e.g., iPhone 5/SE, older Androids) */
+@media (max-width: 480px) {
+    .nav-links {
+        gap: 0.2rem;
+        padding-left: 0.1rem;
+        padding-right: 0.1rem;
+    }
+    .nav-links a.nav-link-item {
+        font-size: 0.7rem;
+        padding: 4px 2px;
+    }
+
+    .hero h1 {
+        font-size: 2rem;
+    }
+    .hero p {
+        font-size: 0.8rem;
+    }
+
+    .section-title {
+        font-size: 1.8rem;
+        margin-bottom: 1.8rem;
+    }
+
+    .coverflow-slider {
+        min-height: 320px;
+    }
+    .slide-item {
+        min-height: 280px;
+        padding: 0.8rem;
+    }
+    .slide-image-wrapper {
+        height: 120px;
+        margin-bottom: 0.6rem;
+    }
+    .slide-content h3 {
+        font-size: 1.1rem;
+    }
+    .slide-content p {
+        font-size: 0.8rem;
+    }
+
+    .trailer-slider {
+        min-height: 250px;
+    }
+    .trailer-slider .slide-item {
+        min-height: 230px;
+    }
+    .trailer-slider .slide-item .slide-image-wrapper {
+        height: 100px;
+    }
+
+    .slider-nav-btn {
+        width: 35px;
+        height: 35px;
+        font-size: 1rem;
+    }
+    .slider-dots {
+        bottom: 2px;
+        gap: 4px;
+    }
+    .dot {
+        width: 8px;
+        height: 8px;
+    }
+
+    .dev-card {
+        padding: 1rem;
+    }
+    .dev-card img {
+        width: 80px;
+        height: 80px;
+    }
+    .dev-info .dev-name {
+        font-size: 1rem;
+    }
+    .dev-info .dev-role {
+        font-size: 0.75rem;
+    }
+
+    .youtube-content h3 {
+        font-size: 1.5rem;
+    }
+    .latest-video {
+        padding: 0.8rem;
+    }
+    .video-caption {
+        font-size: 0.75rem;
+    }
+
+    .discord-widget-container {
+        padding: 1rem;
+    }
+    .discord-widget-container iframe {
+        height: 250px;
+    }
+    .join-discord-text {
+        font-size: 0.8rem;
+    }
+
+    .btn {
+        padding: 0.5rem 1rem;
+        font-size: 0.8rem;
+        max-width: 220px;
     }
 }
