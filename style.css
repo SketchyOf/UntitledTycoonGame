@@ -7,20 +7,19 @@
 
 :root {
   /* Lumber Tycoon 2 Inspired Color Palette */
-  --main-bg: #1A1C19; /* Deep, muted forest green/charcoal */
-  --secondary-bg: #222420; /* Slightly lighter for alternating sections */
+  --main-bg: #1A1A1A; /* Very dark neutral base */
+  --secondary-bg: #202020; /* Slightly less dark for alternating sections */
 
-  /* Dark Background Mood Colors for Animation (Earthy/Natural) */
-  --bg-color-mood-1: #1F221E; /* Very dark forest green */
-  --bg-color-mood-2: #221F1E; /* Very dark earthy brown */
-  --bg-color-mood-3: #1E1F22; /* Very dark deep blue/slate */
-  --bg-color-mood-4: #22221E; /* Very dark muted gold/olive */
+  /* Dark Background Mood Colors for Smooth Animation (Very subtle, desaturated) */
+  --bg-color-mood-1: #1E1E1D; /* Extremely dark, hint of green-grey */
+  --bg-color-mood-2: #1D1E1E; /* Extremely dark, hint of brown-grey */
+  --bg-color-mood-3: #1E1D1E; /* Extremely dark, hint of blue-grey */
 
 
-  --primary-accent: #4CAF50; /* Muted vibrant green (Foliage/Growth) */
-  --secondary-accent: #E67E22; /* Warm earthy orange (Wood/Craft) */
-  --tertiary-accent: #3498DB; /* Muted sky blue (Tools/Water) */
-  --quaternary-accent: #FFD700; /* Soft gold (Riches/Shine) */
+  --primary-accent: #3A7F40; /* Muted, dark forest green (Foliage/Growth) */
+  --secondary-accent: #B05D17; /* Muted, earthy brown-orange (Wood/Craft) */
+  --tertiary-accent: #2A6595; /* Muted, deep sky blue (Tools/Water) */
+  --quaternary-accent: #C0A020; /* Muted, antique gold (Riches/Shine) */
 
   --text-light: #E8E8E8; /* Bright text for contrast */
   --text-dim: #A0A0A0; /* Dimmed text for secondary info */
@@ -35,14 +34,14 @@
 
   /* Coverflow specific values (Desktop) */
   --coverflow-scale-active: 1;
-  --coverflow-scale-side: 0.5; /* More aggressive scaling for sides */
+  --coverflow-scale-side: 0.5;
   --coverflow-opacity-active: 1;
-  --coverflow-opacity-side: 0.2; /* Much lower opacity for sides */
+  --coverflow-opacity-side: 0.2;
   --coverflow-brightness-active: 1;
-  --coverflow-brightness-side: 0.3; /* Much darker sides */
-  --coverflow-rotate-y-side: 20deg; /* Slight 3D rotation */
-  --coverflow-translate-z-side: -150px; /* Push sides back in 3D space */
-  --coverflow-translate-x-side: 75%; /* Percentage of slide width for side translation */
+  --coverflow-brightness-side: 0.3;
+  --coverflow-rotate-y-side: 20deg;
+  --coverflow-translate-z-side: -150px;
+  --coverflow-translate-x-side: 75%;
 }
 
 html {
@@ -52,23 +51,19 @@ html {
 body {
   font-family: var(--font-body);
   color: var(--text-light);
-  background-color: var(--main-bg); 
-  
-  /* Animated gradient background - one gradient definition, animated position */
-  background-image: radial-gradient(circle at 50% 50%, var(--bg-color-mood-1) 0%, var(--bg-color-mood-2) 25%, var(--bg-color-mood-3) 50%, var(--bg-color-mood-4) 75%, var(--main-bg) 100%);
-  background-size: 400% 400%; /* Larger than viewport to allow movement and blending */
-  animation: backgroundBlendShift 30s ease-in-out infinite alternate; /* Slower, smoother shift */
+  /* Smooth background color blending */
+  background-color: var(--main-bg); /* Initial base color */
+  animation: backgroundFade 30s ease-in-out infinite alternate; /* Slow, smooth color shift */
   
   line-height: 1.6;
   overflow-x: hidden; /* Prevent horizontal scroll from rotated elements */
 }
 
-@keyframes backgroundBlendShift {
-  0% { background-position: 0% 0%; }
-  25% { background-position: 100% 0%; }
-  50% { background-position: 100% 100%; }
-  75% { background-position: 0% 100%; }
-  100% { background-position: 0% 0%; }
+@keyframes backgroundFade {
+  0% { background-color: var(--main-bg); }
+  33% { background-color: var(--bg-color-mood-1); }
+  66% { background-color: var(--bg-color-mood-2); }
+  100% { background-color: var(--main-bg); }
 }
 
 
@@ -381,11 +376,13 @@ main {
   color: var(--text-light); /* Default light text, glow from accent */
   text-shadow: 0 0 15px var(--primary-accent);
   margin-bottom: 0.8rem;
+  word-wrap: break-word; /* Ensure long titles break properly */
 }
 
 .slide-content p {
   font-size: 1rem;
   color: var(--text-dim);
+  word-wrap: break-word; /* Ensure long descriptions break properly */
 }
 
 /* Slider Navigation Buttons */
@@ -464,7 +461,7 @@ main {
 
 .dev-card:hover {
   transform: translateY(-10px);
-  box-shadow: 0 10px 25px var(--shadow-color-strong), 0 0 15px var(--secondary-accent); /* Green accent glow */
+  box-shadow: 0 10px 25px var(--shadow-color-strong), 0 0 15px var(--secondary-accent);
   background: rgba(30, 30, 30, 0.9);
 }
 
@@ -473,16 +470,16 @@ main {
   height: 180px;
   object-fit: cover;
   border-radius: 50%;
-  border: 4px solid var(--tertiary-accent); /* Magenta accent border */
+  border: 4px solid var(--tertiary-accent);
   margin-bottom: 1.5rem;
-  box-shadow: 0 0 15px var(--tertiary-accent); /* Magenta glow */
+  box-shadow: 0 0 15px var(--tertiary-accent);
   transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
 }
 
 .dev-card img:hover {
   transform: scale(1.05);
   box-shadow: 0 0 25px var(--tertiary-accent);
-  border-color: var(--secondary-accent); /* Change border color on hover */
+  border-color: var(--secondary-accent);
 }
 
 .dev-info .dev-name {
@@ -511,8 +508,8 @@ main {
 .youtube-content h3 {
   font-family: var(--font-heading);
   font-size: 2.5rem;
-  color: var(--text-light); /* Default light text, glow from accent */
-  text-shadow: 0 0 15px var(--quaternary-accent); /* Orange accent for YouTube titles */
+  color: var(--text-light);
+  text-shadow: 0 0 15px var(--quaternary-accent);
   margin-bottom: 1.5rem;
 }
 
@@ -546,7 +543,7 @@ main {
   left: 0;
   width: 100%;
   height: 100%;
-  border: 3px solid var(--quaternary-accent); /* Orange border for latest video */
+  border: 3px solid var(--quaternary-accent);
   border-radius: 12px;
 }
 
@@ -571,14 +568,14 @@ main {
     height: 220px;
 }
 .trailer-slider .slide-image-wrapper iframe {
-    border-color: var(--tertiary-accent); /* Blue border for trailers */
+    border-color: var(--tertiary-accent);
 }
 .trailer-slider .slide-item.active .slide-image-wrapper iframe {
     border-color: var(--tertiary-accent);
 }
 .trailer-slider .slide-content h3 {
-    color: var(--text-light); /* Default light text */
-    text-shadow: 0 0 15px var(--tertiary-accent); /* Blue glow */
+    color: var(--text-light);
+    text-shadow: 0 0 15px var(--tertiary-accent);
 }
 .trailer-slider .slider-nav-btn {
     border-color: var(--tertiary-accent);
@@ -724,11 +721,11 @@ main {
   .section-title { font-size: 3.5rem; margin-bottom: 4rem;}
 
   .coverflow-slider {
-    height: 500px; /* Adjusted height */
-    perspective: 800px; /* Reduced perspective for smaller screens */
+    height: 500px;
+    perspective: 800px;
   }
   .slide-item {
-    width: 60%; /* Wider active slide for smaller screens */
+    width: 60%;
     max-width: 450px;
     height: 420px;
     padding: 1rem;
@@ -741,12 +738,12 @@ main {
 
   /* Adjust coverflow values for tablets */
   :root {
-    --coverflow-scale-side: 0.7; /* Side items a bit larger */
+    --coverflow-scale-side: 0.7;
     --coverflow-opacity-side: 0.3;
     --coverflow-brightness-side: 0.5;
-    --coverflow-rotate-y-side: 10deg; /* Less rotation */
+    --coverflow-rotate-y-side: 10deg;
     --coverflow-translate-z-side: -100px;
-    --coverflow-translate-x-side: 45%; /* Less side translation (closer) */
+    --coverflow-translate-x-side: 45%;
   }
 
   .trailer-slider {
@@ -792,43 +789,56 @@ main {
   .section-container { padding: 4rem 1rem; }
   .section-title { font-size: 2.5rem; margin-bottom: 3rem; text-shadow: none; }
 
-  /* Coverflow on smaller screens - flattens out to prioritize readability */
+  /* Coverflow on smaller screens - flattens out and focuses on active slide */
   .coverflow-slider {
-    height: 400px; /* Reduced height */
+    height: auto; /* Allow height to adjust to content */
+    min-height: 450px; /* Ensure some minimum height for content */
     perspective: none; /* REMOVE 3D perspective for mobile for better readability */
     padding-bottom: 40px;
-    width: 100vw; /* Take full width on mobile */
+    width: 100vw; /* Take full viewport width */
+  }
+  .slider-track {
+    transform-style: flat; /* Ensure no 3D transforms apply to track */
   }
   .slide-item {
-    width: 90%; /* Much wider active slide for mobile readability */
-    max-width: 400px; /* Cap max width */
-    height: 350px; /* Adjusted height */
-    padding: 0.8rem;
-    border-width: 1px;
-    box-shadow: 0 2px 10px var(--shadow-color-light);
-    transform-origin: center center; /* Reset origin for simpler transforms */
+    position: relative; /* Change from absolute to relative for easier flow */
+    width: calc(100% - 2rem); /* Full width with 1rem padding on each side */
+    margin: 0 auto; /* Center the single active item */
+    height: auto; /* Adjust height to content */
+    min-height: 350px; /* Min height for consistency */
+    padding: 1.5rem; /* Increased padding for better readability */
+    transform: none !important; /* Reset all transforms for active item */
+    opacity: 1 !important; /* Ensure active is visible */
+    filter: brightness(1) !important; /* Ensure active is bright */
+    z-index: 100 !important;
   }
-  .slide-item.side-left, .slide-item.side-right {
-    opacity: 0 !important; /* Make side items completely invisible */
-    pointer-events: none; /* Disable interaction with invisible items */
-    transform: translateX(0) scale(0.1) translateZ(-500px) !important; /* Push far away and shrink even if no 3D */
-  }
-
-  .slide-item.active .slide-image-wrapper img {
-      transform: none; /* No rotation on mobile for cleaner look */
+  .slide-item:not(.active) {
+    display: none !important; /* Hide inactive slides entirely on mobile */
+    opacity: 0 !important;
+    pointer-events: none !important; /* Disable interaction with invisible items */
+    transform: none !important; /* Reset any lingering transforms */
   }
 
   .slide-image-wrapper {
-      height: 180px;
+      width: 100%; /* Image wrapper takes full width of the slide */
+      max-width: none; /* Remove max-width constraint */
+      height: 180px; /* Fixed height for consistency */
   }
-  .slide-image-wrapper img { border-width: 3px; }
-  .slide-image-wrapper iframe { border-width: 3px; }
+  .slide-image-wrapper img,
+  .slide-image-wrapper iframe {
+      border-width: 3px;
+  }
 
-  .slide-content h3 { font-size: 1.3rem; margin-bottom: 0.5rem; }
-  .slide-content p { font-size: 0.85rem; }
+  .slide-content h3 {
+      font-size: 1.5rem; /* Bigger title on mobile */
+      margin-bottom: 0.7rem;
+  }
+  .slide-content p {
+      font-size: 0.95rem; /* Bigger description on mobile */
+  }
 
-  .trailer-slider { height: 350px; }
-  .trailer-slider .slide-item { height: 300px; }
+  .trailer-slider { height: auto; min-height: 350px; }
+  .trailer-slider .slide-item { height: auto; min-height: 300px; }
   .trailer-slider .slide-item .slide-image-wrapper { height: 150px; }
 
 
@@ -861,13 +871,13 @@ main {
   .hero h1 { font-size: 2.2rem; }
   .hero p { font-size: 0.9rem; }
   .section-title { font-size: 2rem; }
-  .coverflow-slider { height: 320px; }
-  .slide-item { height: 280px; }
+  .coverflow-slider { height: auto; min-height: 320px; }
+  .slide-item { height: auto; min-height: 280px; padding: 1rem; }
   .slide-image-wrapper { height: 130px; }
-  .slide-content h3 { font-size: 1.1rem; }
-  .slide-content p { font-size: 0.75rem; }
+  .slide-content h3 { font-size: 1.3rem; }
+  .slide-content p { font-size: 0.85rem; }
   .youtube-content h3 { font-size: 1.8rem; }
-  .trailer-slider { height: 280px; }
-  .trailer-slider .slide-item { height: 250px; }
+  .trailer-slider { height: auto; min-height: 280px; }
+  .trailer-slider .slide-item { height: auto; min-height: 250px; }
   .trailer-slider .slide-item .slide-image-wrapper { height: 120px; }
 }
