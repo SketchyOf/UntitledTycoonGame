@@ -6,32 +6,43 @@
 }
 
 :root {
-  /* Refined Color Palette - Vibrant Gaming */
-  --main-bg: #0c0c0c; /* Deep dark background */
-  --secondary-bg: #1a1a1a; /* Slightly lighter dark for alternating sections */
-  --primary-accent: #0088ff; /* A vibrant blue for main highlights, slightly less harsh than previous */
-  --secondary-accent: #32cd32; /* Lime green for secondary highlights */
-  --tertiary-accent: #ff4500; /* Orange-red for action/emphasis */
-  --text-light: #e0e0e0; /* Bright text */
-  --text-dim: #b0b0b0; /* Dimmed text */
-  --border-color-light: rgba(255, 255, 255, 0.1);
-  --shadow-color-light: rgba(0, 0, 0, 0.4);
-  --shadow-color-strong: rgba(0, 0, 0, 0.7);
+  /* Vibrant & Modern Color Palette */
+  --main-bg: #0d0d0d; /* Darker base for depth */
+  --secondary-bg: #181818; /* Slightly lighter dark for alternating sections */
+
+  /* New Dark Background Mood Colors for Animation */
+  --bg-color-mood-1: #0f0d14; /* Very dark blue-purple */
+  --bg-color-mood-2: #140d0f; /* Very dark red-maroon */
+  --bg-color-mood-3: #0d140d; /* Very dark forest green */
+  --bg-color-mood-4: #14140d; /* Very dark gold-brown */
+
+
+  --primary-accent: #00bcd4; /* Vibrant Cyan/Aqua (Main highlight) */
+  --secondary-accent: #ff007f; /* Striking Magenta (Complementary highlight) */
+  --tertiary-accent: #00ff88; /* Electric Green (Another complementary) */
+  --quaternary-accent: #ff8c00; /* Bright Orange (Action/Emphasis) */
+
+  --text-light: #e0e0e0; /* Bright text for contrast */
+  --text-dim: #b0b0b0; /* Dimmed text for secondary info */
+
+  --border-color-light: rgba(255, 255, 255, 0.08); /* Subtle borders */
+  --shadow-color-light: rgba(0, 0, 0, 0.3); /* Soft shadows */
+  --shadow-color-strong: rgba(0, 0, 0, 0.6); /* Stronger shadows for depth */
 
   /* Fonts */
   --font-heading: 'Montserrat', sans-serif; /* Modern, bold heading font */
   --font-body: 'Open Sans', sans-serif; /* Clean, readable body font */
 
-  /* Coverflow specific values */
+  /* Coverflow specific values (Desktop) */
   --coverflow-scale-active: 1;
-  --coverflow-scale-side: 0.8;
+  --coverflow-scale-side: 0.5; /* More aggressive scaling for sides */
   --coverflow-opacity-active: 1;
-  --coverflow-opacity-side: 0.4;
+  --coverflow-opacity-side: 0.2; /* Much lower opacity for sides */
   --coverflow-brightness-active: 1;
-  --coverflow-brightness-side: 0.4;
-  --coverflow-rotate-y: 0deg; /* No Y rotation for a flat coverflow, adjust for 3D */
-  --coverflow-translate-z: 0px; /* Adjust for 3D perspective */
-  --coverflow-translate-x-side: 30%; /* Percentage of slide width for side translation */
+  --coverflow-brightness-side: 0.3; /* Much darker sides */
+  --coverflow-rotate-y-side: 20deg; /* Slight 3D rotation */
+  --coverflow-translate-z-side: -150px; /* Push sides back in 3D space */
+  --coverflow-translate-x-side: 75%; /* Percentage of slide width for side translation */
 }
 
 html {
@@ -41,10 +52,40 @@ html {
 body {
   font-family: var(--font-body);
   color: var(--text-light);
-  background: var(--main-bg);
+  /* Initial dark base background */
+  background-color: var(--main-bg); 
+  /* Animated gradient background */
+  background-image: radial-gradient(circle at 25% 25%, var(--bg-color-mood-1) 0%, var(--main-bg) 75%);
+  background-size: 300% 300%; /* Larger than viewport to allow movement */
+  animation: backgroundShift 25s ease-in-out infinite alternate; /* Slow, smooth shift */
+  
   line-height: 1.6;
   overflow-x: hidden; /* Prevent horizontal scroll from rotated elements */
 }
+
+@keyframes backgroundShift {
+  0% {
+    background-image: radial-gradient(circle at 25% 25%, var(--bg-color-mood-1) 0%, var(--main-bg) 75%);
+    background-position: 0% 0%;
+  }
+  25% {
+    background-image: radial-gradient(circle at 75% 25%, var(--bg-color-mood-2) 0%, var(--main-bg) 75%);
+    background-position: 100% 0%;
+  }
+  50% {
+    background-image: radial-gradient(circle at 75% 75%, var(--bg-color-mood-3) 0%, var(--main-bg) 75%);
+    background-position: 100% 100%;
+  }
+  75% {
+    background-image: radial-gradient(circle at 25% 75%, var(--bg-color-mood-4) 0%, var(--main-bg) 75%);
+    background-position: 0% 100%;
+  }
+  100% {
+    background-image: radial-gradient(circle at 25% 25%, var(--bg-color-mood-1) 0%, var(--main-bg) 75%);
+    background-position: 0% 0%;
+  }
+}
+
 
 a {
   text-decoration: none;
@@ -75,7 +116,7 @@ a {
   background: rgba(12, 12, 12, 0.95);
   backdrop-filter: blur(8px);
   z-index: 1000;
-  box-shadow: 0 2px 10px var(--shadow-color-light);
+  box-shadow: 0 2px 10px var(--shadow-color-strong);
   border-bottom: 1px solid var(--border-color-light);
 }
 
@@ -108,7 +149,7 @@ a {
   width: 0;
   height: 2px;
   background: var(--primary-accent);
-  box-shadow: 0 0 8px rgba(0, 136, 255, 0.6);
+  box-shadow: 0 0 8px var(--primary-accent);
   transition: width 0.3s ease;
 }
 
@@ -136,17 +177,17 @@ a {
   color: var(--text-light);
   overflow: hidden;
   background-blend-mode: multiply;
-  background-color: rgba(0, 0, 0, 0.4);
+  background-color: rgba(0, 0, 0, 0.5); /* Stronger overlay for image */
 }
 
 .hero-overlay {
-  background: rgba(0, 0, 0, 0.6);
+  background: rgba(0, 0, 0, 0.7); /* Slightly darker overlay */
   padding: 4rem 5rem;
   border-radius: 20px;
-  box-shadow: 0 0 30px var(--shadow-color-strong);
-  border: 2px solid rgba(255, 255, 255, 0.15);
+  box-shadow: 0 0 40px var(--shadow-color-strong), 0 0 15px var(--primary-accent); /* Added accent glow */
+  border: 2px solid rgba(var(--primary-accent), 0.3); /* Accent border */
   max-width: 1000px;
-  backdrop-filter: blur(5px);
+  backdrop-filter: blur(8px); /* Stronger blur */
 }
 
 .hero h1 {
@@ -154,7 +195,7 @@ a {
   font-size: 5.5rem;
   margin-bottom: 0.8rem;
   letter-spacing: 2px;
-  text-shadow: 0 0 15px rgba(0, 136, 255, 0.6);
+  text-shadow: 0 0 20px var(--primary-accent), 0 0 5px rgba(0,0,0,0.5); /* Stronger glow, subtle dark shadow */
   color: var(--text-light);
 }
 
@@ -192,7 +233,7 @@ main {
 
 .section-container {
   padding: 8rem 2rem;
-  max-width: 1600px;
+  max-width: 1800px; /* Wider section containers */
   margin: 0 auto;
   text-align: center;
   position: relative;
@@ -208,18 +249,18 @@ main {
   font-size: 4rem;
   color: var(--text-light);
   margin-bottom: 5rem;
-  text-shadow: 2px 2px 8px var(--shadow-color-light);
+  text-shadow: 0 0 15px var(--primary-accent); /* Accent glow for titles */
 }
 
 /* Coverflow Sliders (General Styles) */
 .coverflow-slider {
   position: relative;
-  width: 100%;
-  max-width: 1200px; /* Increased max-width for coverflow */
-  height: 600px; /* Height of the slider container */
+  width: 90vw; /* Almost across entire screen */
+  max-width: 1800px; /* Max width constraint */
+  height: 650px; /* Height of the slider container */
   margin: 0 auto;
   overflow: hidden; /* Hide parts of side items */
-  perspective: 1200px; /* For 3D transform perspective */
+  perspective: 1500px; /* Stronger 3D perspective */
   padding-bottom: 50px; /* Space for dots */
 }
 
@@ -229,77 +270,118 @@ main {
   left: 50%; /* Center the track */
   height: 100%;
   transform-style: preserve-3d;
-  transition: transform 0.6s cubic-bezier(0.25, 0.8, 0.25, 1); /* Smooth animation */
-  display: flex; /* Use flexbox for layout, JS handles positions */
+  transition: transform 0.8s cubic-bezier(0.25, 0.8, 0.25, 1); /* Smoother animation */
+  display: flex;
   align-items: center;
   justify-content: center;
-  /* Adjust initial positioning based on actual item width in JS */
+  /* Actual transform will be set by JS */
 }
 
 .slide-item {
-  position: absolute; /* Absolute positioning for precise control */
-  width: 45%; /* Relative width of each slide item */
-  max-width: 550px; /* Max width for larger screens */
-  height: 500px; /* Fixed height for each item */
-  background: rgba(20, 20, 20, 0.9);
+  position: absolute;
+  width: 40%; /* Relative width of each slide item */
+  max-width: 650px; /* Max width for larger screens */
+  height: 550px; /* Fixed height for each item */
+  background: rgba(25, 25, 25, 0.95); /* Slightly lighter for active */
   border: 1px solid var(--border-color-light);
-  border-radius: 15px;
-  box-shadow: 0 0 20px var(--shadow-color-light);
+  border-radius: 20px;
+  box-shadow: 0 0 25px var(--shadow-color-strong);
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 1.5rem;
-  transition: transform 0.6s cubic-bezier(0.25, 0.8, 0.25, 1),
-              opacity 0.6s ease,
-              filter 0.6s ease,
-              z-index 0.6s ease,
+  padding: 2rem;
+  transition: transform 0.8s cubic-bezier(0.25, 0.8, 0.25, 1),
+              opacity 0.8s ease,
+              filter 0.8s ease,
+              z-index 0.01s linear 0.4s, /* Delay z-index change */
               box-shadow 0.3s ease;
   cursor: pointer;
-  transform-origin: center center; /* Ensure transforms are centered */
+  transform-origin: center center;
 }
 
-.slide-item:hover {
-    box-shadow: 0 0 25px var(--primary-accent), 0 0 40px rgba(0, 136, 255, 0.4);
+/* Active slide specific styles */
+.slide-item.active {
+    transform: translateX(0) scale(var(--coverflow-scale-active)) rotateY(0deg) translateZ(0px) !important;
+    opacity: var(--coverflow-opacity-active) !important;
+    filter: brightness(var(--coverflow-brightness-active)) !important;
+    z-index: 100 !important;
+    box-shadow: 0 0 40px var(--primary-accent), 0 0 15px var(--primary-accent) inset; /* Stronger glow for active */
+    border-color: var(--primary-accent);
 }
 
+/* Side slide specific styles */
+.slide-item.side-left {
+    transform: translateX(calc(-1 * var(--coverflow-translate-x-side))) scale(var(--coverflow-scale-side)) rotateY(var(--coverflow-rotate-y-side)) translateZ(var(--coverflow-translate-z-side)) !important;
+    opacity: var(--coverflow-opacity-side) !important;
+    filter: brightness(var(--coverflow-brightness-side)) !important;
+    z-index: 50 !important;
+    border-color: var(--secondary-accent); /* Different color for side borders */
+}
+
+.slide-item.side-right {
+    transform: translateX(var(--coverflow-translate-x-side)) scale(var(--coverflow-scale-side)) rotateY(calc(-1 * var(--coverflow-rotate-y-side))) translateZ(var(--coverflow-translate-z-side)) !important;
+    opacity: var(--coverflow-opacity-side) !important;
+    filter: brightness(var(--coverflow-brightness-side)) !important;
+    z-index: 50 !important;
+    border-color: var(--secondary-accent); /* Different color for side borders */
+}
+
+/* Hidden slides (far away) */
+.slide-item:not(.active):not(.side-left):not(.side-right) {
+    opacity: 0 !important;
+    filter: brightness(0.1) !important;
+    transform: translateX(0) scale(0.1) translateZ(-500px) !important; /* Push far away and shrink */
+    z-index: 1 !important;
+    pointer-events: none; /* Make completely hidden slides not clickable */
+}
+
+/* Hover for non-active slides */
+.slide-item:not(.active):hover {
+    box-shadow: 0 0 25px var(--secondary-accent), 0 0 10px rgba(0,0,0,0.5); /* Subtle hover glow for sides */
+    border-color: var(--secondary-accent);
+}
 
 .slide-image-wrapper {
   position: relative;
   width: 90%;
-  max-width: 500px;
-  height: 250px; /* Fixed height for consistency */
+  max-width: 550px;
+  height: 300px; /* Fixed height for consistency */
   overflow: hidden;
-  border-radius: 10px;
+  border-radius: 12px;
   margin-bottom: 1.5rem;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.4);
 }
 
 .slide-image-wrapper img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  border-radius: 10px;
-  border: 4px solid var(--primary-accent);
+  border-radius: 12px;
+  border: 5px solid var(--primary-accent);
   transform: rotate(-3deg); /* Rotated frame */
-  transition: transform 0.3s ease, border-color 0.3s ease;
+  transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
+/* Active slide image specific */
 .slide-item.active .slide-image-wrapper img {
     transform: rotate(0deg); /* Straighten when active */
     border-color: var(--primary-accent); /* Active highlight */
+    box-shadow: 0 0 20px var(--primary-accent);
 }
 
-.slide-image-wrapper iframe { /* For YouTube embeds in trailer slider */
+/* For YouTube embeds in trailer slider */
+.slide-image-wrapper iframe {
   width: 100%;
   height: 100%;
   border: none;
-  border-radius: 10px;
-  border: 4px solid var(--primary-accent);
-  transition: border-color 0.3s ease;
+  border-radius: 12px;
+  border: 5px solid var(--primary-accent); /* Default border for iframes */
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
 .slide-item.active .slide-image-wrapper iframe {
     border-color: var(--primary-accent);
+    box-shadow: 0 0 20px var(--primary-accent);
 }
 
 
@@ -310,9 +392,9 @@ main {
 
 .slide-content h3 {
   font-family: var(--font-heading);
-  font-size: 1.8rem;
-  color: var(--primary-accent);
-  text-shadow: 0 0 8px rgba(0, 136, 255, 0.4);
+  font-size: 2.2rem;
+  color: var(--text-light); /* Default light text, glow from accent */
+  text-shadow: 0 0 15px var(--primary-accent);
   margin-bottom: 0.8rem;
 }
 
@@ -326,25 +408,25 @@ main {
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
-  background: rgba(0, 0, 0, 0.6);
+  background: rgba(0, 0, 0, 0.7);
   border: 2px solid var(--primary-accent);
   border-radius: 50%;
-  width: 55px;
-  height: 55px;
-  font-size: 1.8rem;
+  width: 60px;
+  height: 60px;
+  font-size: 2rem;
   color: var(--primary-accent);
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
   transition: background 0.3s ease, color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
-  z-index: 50; /* Above slider items */
+  z-index: 110; /* Above slider items and track */
 }
 
 .slider-nav-btn:hover {
   background: var(--primary-accent);
   color: var(--main-bg);
-  box-shadow: 0 0 15px var(--primary-accent);
+  box-shadow: 0 0 20px var(--primary-accent);
   transform: translateY(-50%) scale(1.1);
 }
 
@@ -353,7 +435,7 @@ main {
 
 .slider-dots {
   position: absolute;
-  bottom: 0px; /* Position at the bottom of the slider container */
+  bottom: 0px;
   left: 50%;
   transform: translateX(-50%);
   display: flex;
@@ -361,8 +443,8 @@ main {
 }
 
 .dot {
-  width: 12px;
-  height: 12px;
+  width: 14px;
+  height: 14px;
   background: rgba(255, 255, 255, 0.3);
   border-radius: 50%;
   cursor: pointer;
@@ -371,7 +453,7 @@ main {
 
 .dot.active {
   background: var(--primary-accent);
-  box-shadow: 0 0 8px var(--primary-accent);
+  box-shadow: 0 0 10px var(--primary-accent);
 }
 
 /* Devs Section */
@@ -397,7 +479,7 @@ main {
 
 .dev-card:hover {
   transform: translateY(-10px);
-  box-shadow: 0 10px 25px var(--shadow-color-strong);
+  box-shadow: 0 10px 25px var(--shadow-color-strong), 0 0 15px var(--secondary-accent); /* Green accent glow */
   background: rgba(30, 30, 30, 0.9);
 }
 
@@ -406,15 +488,16 @@ main {
   height: 180px;
   object-fit: cover;
   border-radius: 50%;
-  border: 4px solid var(--secondary-accent);
+  border: 4px solid var(--tertiary-accent); /* Magenta accent border */
   margin-bottom: 1.5rem;
-  box-shadow: 0 0 10px rgba(50, 205, 50, 0.6);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 0 15px var(--tertiary-accent); /* Magenta glow */
+  transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
 }
 
 .dev-card img:hover {
   transform: scale(1.05);
-  box-shadow: 0 0 20px rgba(50, 205, 50, 0.8);
+  box-shadow: 0 0 25px var(--tertiary-accent);
+  border-color: var(--secondary-accent); /* Change border color on hover */
 }
 
 .dev-info .dev-name {
@@ -436,20 +519,30 @@ main {
   display: flex;
   flex-direction: column;
   gap: 5rem;
-  max-width: 1000px;
+  max-width: 1000px; /* Constrain latest video */
   margin: 0 auto;
 }
 
 .youtube-content h3 {
   font-family: var(--font-heading);
   font-size: 2.5rem;
-  color: var(--tertiary-accent); /* Red accent for YouTube */
+  color: var(--text-light); /* Default light text, glow from accent */
+  text-shadow: 0 0 15px var(--quaternary-accent); /* Orange accent for YouTube titles */
   margin-bottom: 1.5rem;
-  text-shadow: 0 0 8px rgba(255, 69, 0, 0.4);
 }
 
 .latest-video {
     margin-bottom: 3rem;
+    background: rgba(20, 20, 20, 0.8);
+    border: 1px solid var(--border-color-light);
+    border-radius: 15px;
+    padding: 2rem;
+    box-shadow: 0 0 20px var(--shadow-color-light);
+}
+
+.latest-video h3 {
+    text-shadow: 0 0 15px var(--quaternary-accent);
+    color: var(--quaternary-accent); /* Explicitly orange for latest video title */
 }
 
 .video-embed-container {
@@ -457,8 +550,8 @@ main {
   padding-bottom: 56.25%; /* 16:9 aspect ratio */
   height: 0;
   overflow: hidden;
-  border-radius: 10px;
-  box-shadow: 0 5px 15px var(--shadow-color-light);
+  border-radius: 12px;
+  box-shadow: 0 5px 15px var(--shadow-color-strong);
   margin-bottom: 1rem;
 }
 
@@ -468,8 +561,8 @@ main {
   left: 0;
   width: 100%;
   height: 100%;
-  border: 2px solid var(--tertiary-accent); /* Red border for latest video */
-  border-radius: 10px;
+  border: 3px solid var(--quaternary-accent); /* Orange border for latest video */
+  border-radius: 12px;
 }
 
 .video-caption {
@@ -479,29 +572,28 @@ main {
 }
 
 .trailer-section {
-    margin-top: 5rem; /* Space between latest video and trailer slider */
+    margin-top: 5rem;
 }
+
 /* Trailer Slider Specific Styles (inherits .coverflow-slider) */
 .trailer-slider {
-    height: 450px; /* Adjust height for trailer videos if needed */
+    height: 500px; /* Adjust height for trailer videos */
 }
 .trailer-slider .slide-item {
-    width: 40%; /* Adjust width for trailer items */
-    max-width: 450px;
-    height: 380px; /* Adjust height for trailer items */
+    height: 400px; /* Adjust height for trailer items */
 }
 .trailer-slider .slide-item .slide-image-wrapper {
-    height: 200px; /* Adjust video embed height */
+    height: 220px; /* Adjust video embed height */
 }
-.trailer-slider .slide-item .slide-image-wrapper iframe {
-    border-color: var(--tertiary-accent); /* Red border for trailers */
+.trailer-slider .slide-image-wrapper iframe {
+    border-color: var(--tertiary-accent); /* Magenta border for trailers */
 }
 .trailer-slider .slide-item.active .slide-image-wrapper iframe {
     border-color: var(--tertiary-accent);
 }
 .trailer-slider .slide-content h3 {
-    color: var(--tertiary-accent);
-    text-shadow: 0 0 8px rgba(255, 69, 0, 0.4);
+    color: var(--text-light); /* Default light text */
+    text-shadow: 0 0 15px var(--tertiary-accent); /* Magenta glow */
 }
 .trailer-slider .slider-nav-btn {
     border-color: var(--tertiary-accent);
@@ -510,12 +602,17 @@ main {
 .trailer-slider .slider-nav-btn:hover {
     background: var(--tertiary-accent);
     color: var(--main-bg);
-    box-shadow: 0 0 15px var(--tertiary-accent);
+    box-shadow: 0 0 20px var(--tertiary-accent);
 }
 .trailer-slider .dot.active {
     background: var(--tertiary-accent);
-    box-shadow: 0 0 8px var(--tertiary-accent);
+    box-shadow: 0 0 10px var(--tertiary-accent);
 }
+/* Side item colors for trailer slider */
+.trailer-slider .slide-item.side-left { border-color: var(--quaternary-accent); }
+.trailer-slider .slide-item.side-right { border-color: var(--quaternary-accent); }
+.trailer-slider .slide-item:not(.active):hover { border-color: var(--quaternary-accent); box-shadow: 0 0 25px var(--quaternary-accent), 0 0 10px rgba(0,0,0,0.5); }
+
 
 /* Discord Community Section */
 .discord-widget-container {
@@ -527,14 +624,14 @@ main {
   border: 1px solid var(--border-color-light);
   border-radius: 15px;
   padding: 3rem;
-  box-shadow: 0 5px 20px var(--shadow-color-light);
+  box-shadow: 0 5px 20px var(--shadow-color-strong);
   max-width: 600px;
   margin: 0 auto;
 }
 
 .discord-widget-container iframe {
   border-radius: 10px;
-  box-shadow: 0 0 15px rgba(88, 101, 242, 0.6); /* Discord blue glow */
+  box-shadow: 0 0 15px #5865F2; /* Discord blue glow */
 }
 
 .join-discord-text {
@@ -562,7 +659,7 @@ main {
   display: inline-flex;
   align-items: center;
   gap: 10px;
-  transition: background 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease, color 0.3s ease;
+  transition: background 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease, color 0.3s ease, border-color 0.3s ease;
   border: 1px solid var(--border-color-light);
   box-shadow: 0 2px 10px var(--shadow-color-light);
 }
@@ -572,18 +669,30 @@ main {
   transform: translateY(-5px) scale(1.02);
 }
 
+/* Dynamically choose pulse color based on button type */
+.btn.play-now:hover { --button-pulse-color: var(--primary-accent); }
+.social-btn.discord-btn:hover { --button-pulse-color: #5865F2; }
+.social-btn.youtube-btn:hover { --button-pulse-color: #FF0000; }
+.social-btn.game-btn:hover { --button-pulse-color: var(--tertiary-accent); }
+
+
 @keyframes buttonPulse {
-  from { box-shadow: 0 0 10px var(--primary-accent), 0 0 0px transparent; }
-  to { box-shadow: 0 0 20px var(--primary-accent), 0 0 10px var(--primary-accent); }
+  from { box-shadow: 0 0 10px var(--button-pulse-color), 0 0 0px transparent; }
+  to { box-shadow: 0 0 20px var(--button-pulse-color), 0 0 10px var(--button-pulse-color); }
 }
 
 /* Specific social button colors */
+.btn.play-now { background: var(--primary-accent); border-color: var(--primary-accent); }
+.btn.play-now:hover { background: #008eb7; border-color: #008eb7; }
+
 .social-btn.discord-btn { background: #5865F2; border-color: #5865F2; }
-.social-btn.discord-btn:hover { background: #4752C4; border-color: #4752C4; box-shadow: 0 0 20px #5865F2; }
+.social-btn.discord-btn:hover { background: #4752C4; border-color: #4752C4; }
+
 .social-btn.youtube-btn { background: #FF0000; border-color: #FF0000; }
-.social-btn.youtube-btn:hover { background: #CC0000; border-color: #CC0000; box-shadow: 0 0 20px #FF0000; }
-.social-btn.game-btn { background: #007bff; border-color: #007bff; }
-.social-btn.game-btn:hover { background: #0056b3; border-color: #0056b3; box-shadow: 0 0 20px #007bff; }
+.social-btn.youtube-btn:hover { background: #CC0000; border-color: #CC0000; }
+
+.social-btn.game-btn { background: var(--tertiary-accent); border-color: var(--tertiary-accent); }
+.social-btn.game-btn:hover { background: #00c173; border-color: #00c173; }
 
 
 /* General Fade Animation */
@@ -600,47 +709,92 @@ main {
 
 
 /* RESPONSIVE DESIGN */
-@media (max-width: 1200px) {
+@media (max-width: 1400px) {
+    .coverflow-slider {
+        width: 95vw;
+    }
+    .slide-item {
+        width: 45%;
+        max-width: 580px;
+        height: 520px;
+    }
+    .slide-image-wrapper {
+        height: 280px;
+    }
+    .trailer-slider {
+        height: 480px;
+    }
+    .trailer-slider .slide-item {
+        height: 380px;
+    }
+    .trailer-slider .slide-item .slide-image-wrapper {
+        height: 200px;
+    }
+}
+
+
+@media (max-width: 1024px) {
   .hero h1 { font-size: 4.5rem; }
   .hero p { font-size: 1.6rem; }
   .section-title { font-size: 3.5rem; margin-bottom: 4rem;}
 
   .coverflow-slider {
-    height: 550px; /* Adjust height */
+    height: 500px; /* Adjusted height */
+    perspective: 800px; /* Reduced perspective for smaller screens */
   }
   .slide-item {
-    width: 50%; /* Adjust width for smaller screens */
-    max-width: 500px;
-    height: 480px;
+    width: 60%; /* Wider active slide for smaller screens */
+    max-width: 450px;
+    height: 420px;
+    padding: 1rem;
   }
   .slide-image-wrapper {
       height: 220px;
   }
-  .slide-content h3 { font-size: 1.6rem; }
-  .slide-content p { font-size: 0.95rem; }
+  .slide-content h3 { font-size: 1.8rem; }
+  .slide-content p { font-size: 0.9rem; }
+
+  /* Adjust coverflow values for tablets */
+  :root {
+    --coverflow-scale-side: 0.7; /* Side items a bit larger */
+    --coverflow-opacity-side: 0.3;
+    --coverflow-brightness-side: 0.5;
+    --coverflow-rotate-y-side: 10deg; /* Less rotation */
+    --coverflow-translate-z-side: -100px;
+    --coverflow-translate-x-side: 45%; /* Less side translation (closer) */
+  }
+
+  .trailer-slider {
+      height: 400px;
+  }
+  .trailer-slider .slide-item {
+      height: 350px;
+  }
+  .trailer-slider .slide-item .slide-image-wrapper {
+      height: 180px;
+  }
 
   .slider-nav-btn { width: 50px; height: 50px; font-size: 1.6rem; }
   .slider-nav-btn.prev-btn { left: 0.5rem; }
   .slider-nav-btn.next-btn { right: 0.5rem; }
 
   .dev-grid { gap: 3rem; }
-  .dev-card { padding: 2.2rem; max-width: 380px; }
-  .dev-card img { width: 160px; height: 160px; margin-bottom: 1.2rem; }
-  .dev-info .dev-name { font-size: 1.7rem; }
-  .dev-info .dev-role { font-size: 1rem; }
+  .dev-card { padding: 2rem; max-width: 380px; }
+  .dev-card img { width: 160px; height: 160px; margin-bottom: 1rem; }
+  .dev-info .dev-name { font-size: 1.5rem; }
+  .dev-info .dev-role { font-size: 0.95rem; }
 
+  .youtube-content { gap: 3rem; }
   .youtube-content h3 { font-size: 2.2rem; }
-  .trailer-slider { height: 400px; }
-  .trailer-slider .slide-item { width: 45%; max-width: 400px; height: 350px;}
-  .trailer-slider .slide-item .slide-image-wrapper { height: 180px; }
+  .latest-video { padding: 1.5rem; }
 
   .btn { padding: 1rem 2.2rem; font-size: 1.1rem; }
 }
 
 @media (max-width: 768px) {
   .navbar .nav-content { padding: 0.8rem 1rem; }
-  .nav-links { gap: 1.2rem; }
-  .nav-links a.nav-link-item { font-size: 0.9rem; }
+  .nav-links { gap: 1rem; }
+  .nav-links a.nav-link-item { font-size: 0.85rem; }
   .nav-links a.nav-link-item::after { height: 1px; }
 
   .hero { height: 70vh; }
@@ -653,42 +807,52 @@ main {
   .section-container { padding: 4rem 1rem; }
   .section-title { font-size: 2.5rem; margin-bottom: 3rem; text-shadow: none; }
 
-  /* Coverflow on smaller screens - simplified to nearly flat */
+  /* Coverflow on smaller screens - flattens out */
   .coverflow-slider {
-    height: 450px; /* Reduced height */
+    height: 400px; /* Reduced height */
     perspective: none; /* Remove 3D perspective for mobile */
     padding-bottom: 40px;
+    width: 100vw; /* Take full width on mobile */
   }
   .slide-item {
-    width: 80%; /* Almost full width for active item */
-    max-width: 400px;
-    height: 380px; /* Adjusted height */
-    padding: 1rem;
+    width: 85%; /* Almost full width for active item */
+    max-width: 350px;
+    height: 350px; /* Adjusted height */
+    padding: 0.8rem;
     border-width: 1px;
     box-shadow: 0 2px 10px var(--shadow-color-light);
-  }
-  .slide-item .slide-image-wrapper {
-      height: 180px; /* Adjusted image height */
+    transform-origin: center center; /* Reset origin for simpler transforms */
   }
   .slide-item.side-left, .slide-item.side-right {
-    transform: translateX(var(--coverflow-translate-x-side-mobile)) scale(var(--coverflow-scale-side-mobile)) !important; /* Specific mobile transforms */
+    transform: translateX(var(--coverflow-translate-x-side-mobile)) scale(var(--coverflow-scale-side-mobile)) !important;
     opacity: var(--coverflow-opacity-side) !important;
     filter: brightness(var(--coverflow-brightness-side)) !important;
-    pointer-events: none; /* Make side items not clickable */
+    pointer-events: none;
   }
 
   /* Define mobile specific coverflow values */
   :root {
-      --coverflow-scale-side-mobile: 0.85; /* Slightly larger side items */
-      --coverflow-translate-x-side-mobile: 60%; /* More overlap */
+      --coverflow-scale-side-mobile: 0.7; /* Smaller side items */
+      --coverflow-translate-x-side-mobile: 65%; /* Push further */
   }
 
   .slide-item.active .slide-image-wrapper img {
       transform: none; /* No rotation on mobile for cleaner look */
   }
 
-  .slide-content h3 { font-size: 1.5rem; margin-bottom: 0.5rem; }
-  .slide-content p { font-size: 0.9rem; }
+  .slide-image-wrapper {
+      height: 180px;
+  }
+  .slide-image-wrapper img { border-width: 3px; }
+  .slide-image-wrapper iframe { border-width: 3px; }
+
+  .slide-content h3 { font-size: 1.3rem; margin-bottom: 0.5rem; }
+  .slide-content p { font-size: 0.85rem; }
+
+  .trailer-slider { height: 350px; }
+  .trailer-slider .slide-item { height: 300px; }
+  .trailer-slider .slide-item .slide-image-wrapper { height: 150px; }
+
 
   .slider-nav-btn { width: 40px; height: 40px; font-size: 1.3rem; top: calc(50% - 20px); }
   .slider-nav-btn.prev-btn { left: 0px; }
@@ -705,10 +869,6 @@ main {
   .youtube-content h3 { font-size: 2rem; }
   .video-embed-container { margin-bottom: 0.8rem; }
   .video-caption { font-size: 0.9rem; }
-  .trailer-slider { height: 350px; }
-  .trailer-slider .slide-item { width: 85%; max-width: 350px; height: 300px; }
-  .trailer-slider .slide-item .slide-image-wrapper { height: 150px; }
-
 
   .discord-widget-container { padding: 2rem; max-width: 95%; }
   .discord-widget-container iframe { width: 100%; height: 400px; }
@@ -723,10 +883,11 @@ main {
   .hero h1 { font-size: 2.2rem; }
   .hero p { font-size: 0.9rem; }
   .section-title { font-size: 2rem; }
-  .slide-item { height: 320px; }
-  .slide-image-wrapper { height: 150px; }
-  .slide-content h3 { font-size: 1.3rem; }
-  .slide-content p { font-size: 0.8rem; }
+  .coverflow-slider { height: 320px; }
+  .slide-item { height: 280px; }
+  .slide-image-wrapper { height: 130px; }
+  .slide-content h3 { font-size: 1.1rem; }
+  .slide-content p { font-size: 0.75rem; }
   .youtube-content h3 { font-size: 1.8rem; }
   .trailer-slider { height: 280px; }
   .trailer-slider .slide-item { height: 250px; }
