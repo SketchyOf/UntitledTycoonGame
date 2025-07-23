@@ -6,87 +6,94 @@
   <title>Untitled Tycoon Game</title>
   <link rel="stylesheet" href="style.css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
 </head>
 <body>
 
   <nav class="navbar">
     <div class="nav-content">
       <div class="nav-links">
-        <a href="#info">Info</a>
-        <a href="#devs">Devs</a>
-        <a href="#links">Links</a>
+        <a href="#info" class="nav-link-glow">Info</a>
+        <a href="#devs" class="nav-link-glow">Devs</a>
+        <a href="#media" class="nav-link-glow">Media</a>
+        <a href="#links" class="nav-link-glow">Links</a>
       </div>
     </div>
   </nav>
 
   <header class="hero">
     <div class="hero-overlay">
-      <h1>Untitled Tycoon Game</h1>
-      <p>A Roblox Tycoon Experience</p>
-      <a href="https://roblox.com/games/TVUJ-ID" class="btn play-now fade" target="_blank">Play Now! <i class="fas fa-play"></i></a>
+      <h1 class="fade-in-up">Untitled Tycoon Game</h1>
+      <p class="fade-in-up delay-1">A Roblox Tycoon Experience</p>
+      <a href="https://roblox.com/games/TVUJ-ID" class="btn play-now neon-glow-btn fade-in-up delay-2" target="_blank">
+        Play Now! <i class="fas fa-play"></i>
+      </a>
     </div>
   </header>
 
   <main>
-    <section id="info" class="section-bg-dark">
-      <h2>Game Highlights</h2>
-      <div class="image-text-block fade">
-        <img src="main/img1.jpg" alt="Game Screenshot 1">
-        <div class="text-content">
-          <h3>Build Your Empire</h3>
-          <p>Start from humble beginnings and grow your base into a massive, automated production powerhouse. Collect resources, upgrade your machinery, and expand your territory.</p>
+    <section id="info" class="section-container">
+      <h2 class="neon-text fade">Game Highlights</h2>
+      <div class="slider-container fade">
+        <div class="slider-image-wrapper">
+          <img id="slider-image" src="" alt="Game Screenshot">
         </div>
-      </div>
-      <div class="image-text-block fade reverse">
-        <img src="main/img2.jpg" alt="Game Screenshot 2">
-        <div class="text-content">
-          <h3>Mine for Riches</h3>
-          <p>Delve deep into the earth to discover rare ores and precious gems. Unlock advanced mining drills and forge powerful tools to maximize your yield.</p>
+        <div class="slider-content">
+          <h3 id="slider-title"></h3>
+          <p id="slider-description"></p>
         </div>
-      </div>
-      <div class="image-text-block fade">
-        <img src="main/img3.jpg" alt="Game Screenshot 3">
-        <div class="text-content">
-          <h3>Harvest & Prosper</h3>
-          <p>Cultivate vast fields, grow unique crops, and manage your farms. Turn your harvests into valuable goods that can be sold for profit or used in crafting.</p>
-        </div>
-      </div>
-      <div class="image-text-block fade reverse">
-        <img src="main/img4.jpg" alt="Game Screenshot 4">
-        <div class="text-content">
-          <h3>Endless Customization</h3>
-          <p>Personalize your tycoon base with a wide array of decorations, buildings, and unique structures. Design a layout that's both efficient and visually stunning.</p>
+        <button id="prev-slide" class="slider-nav-btn prev-btn neon-glow-btn"><i class="fas fa-chevron-left"></i></button>
+        <button id="next-slide" class="slider-nav-btn next-btn neon-glow-btn"><i class="fas fa-chevron-right"></i></button>
+        <div class="slider-dots">
+          <span class="dot active" data-slide="0"></span>
+          <span class="dot" data-slide="1"></span>
+          <span class="dot" data-slide="2"></span>
+          <span class="dot" data-slide="3"></span>
         </div>
       </div>
     </section>
 
-    <section id="devs" class="section-bg-light">
-      <h2>Meet The Devs</h2>
+    <section id="devs" class="section-container section-bg-alt">
+      <h2 class="neon-text fade">Meet The Devs</h2>
       <div class="dev-grid">
         <div class="dev-card fade">
-          <img src="sketchy.jpg" alt="Sketchy Profile">
+          <img src="assets/devs/sketchy.jpg" alt="Sketchy Profile">
           <div class="dev-info">
-            <p class="dev-name">Sketchy (@jachym_cz128)</p>
+            <p class="dev-name neon-text">Sketchy (@jachym_cz128)</p>
             <p class="dev-role">Owner, Scripter, Music, SFX, UI, Animator</p>
           </div>
         </div>
 
         <div class="dev-card fade">
-          <img src="rassros.jpg" alt="Rassros Profile">
+          <img src="assets/devs/rassros.jpg" alt="Rassros Profile">
           <div class="dev-info">
-            <p class="dev-name">Rassros (@Benras1234)</p>
+            <p class="dev-name neon-text">Rassros (@Benras1234)</p>
             <p class="dev-role">Co-Owner, Builder</p>
           </div>
         </div>
       </div>
     </section>
 
-    <section id="links" class="section-bg-dark">
-      <h2>Connect With Us</h2>
+    <section id="media" class="section-container">
+      <h2 class="neon-text fade">Media & Gallery</h2>
+      <div class="media-grid fade">
+        <div class="media-item">
+          <iframe width="560" height="315" src="https://www.youtube.com/embed/dQw4w9WgXcQ?si=abcdef" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+          <p class="media-caption">Official Game Trailer (Placeholder)</p>
+        </div>
+        <div class="media-item">
+          <iframe width="560" height="315" src="https://www.youtube.com/embed/dQw4w9WgXcQ?si=abcdef" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+          <p class="media-caption">Gameplay Showcase (Placeholder)</p>
+        </div>
+        </div>
+    </section>
+
+    <section id="links" class="section-container section-bg-alt">
+      <h2 class="neon-text fade">Connect With Us</h2>
       <div class="buttons fade">
-        <a href="https://discord.gg/TZuT3pKywV" class="btn discord" target="_blank"><i class="fab fa-discord"></i> Discord</a>
-        <a href="https://youtube.com/@SSketchy" class="btn youtube" target="_blank"><i class="fab fa-youtube"></i> YouTube</a>
-        <a href="https://roblox.com/games/TVUJ-ID" class="btn game" target="_blank"><i class="fas fa-gamepad"></i> Play Game</a>
+        <a href="https://discord.gg/TZuT3pKywV" class="btn social-btn discord-btn neon-glow-btn" target="_blank"><i class="fab fa-discord"></i> Discord</a>
+        <a href="https://youtube.com/@SSketchy" class="btn social-btn youtube-btn neon-glow-btn" target="_blank"><i class="fab fa-youtube"></i> YouTube</a>
+        <a href="https://roblox.com/games/TVUJ-ID" class="btn social-btn game-btn neon-glow-btn" target="_blank"><i class="fas fa-gamepad"></i> Play Game</a>
       </div>
     </section>
   </main>
