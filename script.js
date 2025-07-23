@@ -1,5 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
 
+    // Smooth Scrolling for Navigation Links
     document.querySelectorAll('.nav-links a').forEach(anchor => {
         anchor.addEventListener('click', function (e) {
             e.preventDefault();
@@ -8,7 +9,9 @@ document.addEventListener('DOMContentLoaded', () => {
             const targetElement = document.getElementById(targetId);
 
             if (targetElement) {
-                const scrollToPosition = targetId ? targetElement.offsetTop - 70 : 0;
+                // Adjust scroll position to account for fixed navbar height
+                const navHeight = document.querySelector('.navbar').offsetHeight;
+                const scrollToPosition = targetElement.offsetTop - navHeight; // Use dynamic nav height
                 window.scrollTo({
                     top: scrollToPosition,
                     behavior: 'smooth'
@@ -17,6 +20,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
+    // Scroll-Triggered Fade Animations
     const faders = document.querySelectorAll('.fade');
 
     const appearOptions = {
@@ -39,6 +43,7 @@ document.addEventListener('DOMContentLoaded', () => {
         appearOnScroll.observe(fader);
     });
 
+    // Coverflow Slider Initialization and Logic
     function initializeSlider(sliderElement) {
         const slides = sliderElement.querySelectorAll('.slide-item');
         const prevBtn = sliderElement.querySelector('.prev-btn');
@@ -71,7 +76,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const dot = document.createElement('div');
             dot.classList.add('dot');
             if (index === 0) dot.classList.add('active');
-            
+
             dot.addEventListener('click', () => {
                 if (!isAnimating && index !== currentIndex) {
                     const direction = (index > currentIndex) ? 'next' : 'prev';
@@ -82,7 +87,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
 
         const dots = dotsContainer.querySelectorAll('.dot');
-        const transitionDuration = 600;
+        const transitionDuration = 600; // Match CSS transition duration
 
         function showSlide(newIndex, direction = 'next') {
             if (isAnimating) return;
@@ -111,15 +116,20 @@ document.addEventListener('DOMContentLoaded', () => {
                 oldSlide.style.pointerEvents = 'none';
             }
 
+            // Prepare new slide for animation
             newSlide.classList.remove('active');
+            newSlide.classList.remove(oldSlideOutClass, newSlideInClass); // Ensure no old animation classes remain
             newSlide.classList.add(newSlideInClass);
             newSlide.style.visibility = 'visible';
             newSlide.style.pointerEvents = 'auto';
+            newSlide.style.opacity = '0'; // Start invisible for fade-in
 
             requestAnimationFrame(() => {
+                // Force reflow by accessing offsetHeight before adding 'active'
+                newSlide.offsetHeight;
                 requestAnimationFrame(() => {
-                    newSlide.classList.add('active');
                     newSlide.classList.remove(newSlideInClass);
+                    newSlide.classList.add('active'); // This triggers the final transform/opacity
                     newSlide.style.opacity = '1';
                 });
             });
@@ -129,7 +139,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     oldSlide.classList.remove(oldSlideOutClass);
                     oldSlide.style.opacity = '0';
                     oldSlide.style.visibility = 'hidden';
-                    oldSlide.style.transform = '';
+                    oldSlide.style.transform = ''; // Clear transform
                 }
                 isAnimating = false;
             }, transitionDuration);
@@ -155,9 +165,10 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         }
 
-        showSlide(currentIndex);
+        showSlide(currentIndex); // Initialize first slide
     }
 
+    // Initialize all sliders on the page
     document.querySelectorAll('.coverflow-slider').forEach(slider => {
         initializeSlider(slider);
     });
