@@ -31,17 +31,6 @@
   /* Fonts */
   --font-heading: 'Montserrat', sans-serif; /* Modern, bold heading font */
   --font-body: 'Open Sans', sans-serif; /* Clean, readable body font */
-
-  /* Coverflow specific values (Desktop) */
-  --coverflow-scale-active: 1;
-  --coverflow-scale-side: 0.5;
-  --coverflow-opacity-active: 1;
-  --coverflow-opacity-side: 0.1; /* Even less opaque for sides */
-  --coverflow-brightness-active: 1;
-  --coverflow-brightness-side: 0.3;
-  --coverflow-rotate-y-side: 20deg;
-  --coverflow-translate-z-side: -150px;
-  --coverflow-translate-x-side: 75%;
 }
 
 html {
@@ -56,7 +45,7 @@ body {
   animation: backgroundFade 30s ease-in-out infinite alternate; /* Slow, smooth color shift */
   
   line-height: 1.6;
-  overflow-x: hidden; /* Prevent horizontal scroll from rotated elements */
+  overflow-x: hidden; /* Prevent horizontal scroll from any stray elements */
 }
 
 @keyframes backgroundFade {
@@ -129,7 +118,7 @@ a {
   width: 0;
   height: 2px;
   background: var(--primary-accent);
-  box-shadow: 0 0 5px rgba(var(--primary-accent), 0.5); /* Reduced glow */
+  box-shadow: 0 0 3px rgba(var(--primary-accent), 0.3); /* Muted glow */
   transition: width 0.3s ease;
 }
 
@@ -164,7 +153,7 @@ a {
   background: rgba(0, 0, 0, 0.7); /* Slightly darker overlay */
   padding: 4rem 5rem;
   border-radius: 20px;
-  box-shadow: 0 0 20px var(--shadow-color-strong), 0 0 10px rgba(var(--primary-accent), 0.3); /* Reduced glow */
+  box-shadow: 0 0 20px var(--shadow-color-strong), 0 0 8px rgba(var(--primary-accent), 0.2); /* Reduced glow */
   border: 2px solid rgba(var(--primary-accent), 0.3); /* Accent border */
   max-width: 1000px;
   backdrop-filter: blur(8px); /* Stronger blur */
@@ -175,7 +164,7 @@ a {
   font-size: 5.5rem;
   margin-bottom: 0.8rem;
   letter-spacing: 2px;
-  text-shadow: 0 0 10px rgba(0,0,0,0.8), 0 0 3px rgba(var(--primary-accent), 0.3); /* Muted glow, stronger dark shadow */
+  text-shadow: 0 0 10px rgba(0,0,0,0.8), 0 0 2px rgba(var(--primary-accent), 0.2); /* Muted glow, stronger dark shadow */
   color: var(--text-light);
 }
 
@@ -228,41 +217,37 @@ main {
   font-family: var(--font-heading);
   font-size: 4rem;
   color: var(--text-light);
-  text-shadow: 0 0 8px rgba(0,0,0,0.8), 0 0 3px rgba(var(--primary-accent), 0.3); /* Muted glow, stronger dark shadow */
+  text-shadow: 0 0 8px rgba(0,0,0,0.8), 0 0 2px rgba(var(--primary-accent), 0.2); /* Muted glow, stronger dark shadow */
   margin-bottom: 5rem;
 }
 
-/* Coverflow Sliders (General Styles) */
+/* --- Simplified Slider (NOT Coverflow) --- */
 .coverflow-slider {
   position: relative;
   width: 90vw; /* Almost across entire screen */
-  max-width: 1600px; /* Increased max width for "fat" */
-  height: 550px; /* Adjusted height for "square-like" */
+  max-width: 1600px;
+  height: 500px; /* Adjusted for "wider rectangle" / "square-like" */
   margin: 0 auto;
-  overflow: hidden; /* Hide parts of side items */
-  perspective: 1500px; /* Stronger 3D perspective */
+  overflow: hidden; /* Keep overflow hidden for smooth transitions */
   padding-bottom: 50px; /* Space for dots */
 }
 
 .slider-track {
-  position: absolute;
+  position: relative; /* Changed from absolute */
   top: 0;
-  left: 50%; /* Center the track */
+  left: 0; /* Reset left */
+  width: 100%;
   height: 100%;
-  transform-style: preserve-3d;
-  transition: transform 0.8s cubic-bezier(0.25, 0.8, 0.25, 1); /* Smoother animation */
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  /* Actual transform will be set by JS */
+  /* No 3D transforms here */
 }
 
 .slide-item {
-  position: absolute;
-  width: 55%; /* Increased width for "fat" */
-  max-width: 850px; /* Increased max width for larger screens */
-  height: 450px; /* Fixed height for each item (adjusted for "square-like") */
-  background: rgba(25, 25, 25, 0.95); /* Slightly lighter for active */
+  position: absolute; /* Keep absolute within relative track for layering */
+  top: 0;
+  left: 0;
+  width: 100%; /* Make it "fat" - across the screen */
+  height: 100%; /* Fill parent height */
+  background: rgba(25, 25, 25, 0.95);
   border: 1px solid var(--border-color-light);
   border-radius: 20px;
   box-shadow: 0 0 20px var(--shadow-color-strong); /* Stronger dark shadow */
@@ -271,66 +256,48 @@ main {
   align-items: center;
   justify-content: center;
   padding: 2.5rem; /* Increased padding */
-  transition: transform 0.8s cubic-bezier(0.25, 0.8, 0.25, 1),
-              opacity 0.8s ease,
-              filter 0.8s ease,
-              z-index 0.01s linear 0.4s, /* Delay z-index change */
-              box-shadow 0.3s ease;
-  cursor: pointer;
-  transform-origin: center center;
+  
+  /* Animation for new slider */
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none; /* Make non-active slides unclickable */
+  transform: translateX(100%); /* Start off-screen to the right for entrance */
+  transition: opacity 0.6s ease-out, transform 0.6s ease-out, border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
-/* Active slide specific styles */
+/* Active slide specific styles for new slider */
 .slide-item.active {
-    transform: translateX(0) scale(var(--coverflow-scale-active)) rotateY(0deg) translateZ(0px) !important;
-    opacity: var(--coverflow-opacity-active) !important;
-    filter: brightness(var(--coverflow-brightness-active)) !important;
-    z-index: 100 !important;
-    box-shadow: 0 0 30px rgba(var(--primary-accent), 0.4), 0 0 10px rgba(var(--primary-accent), 0.2) inset; /* Muted glow for active */
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+    transform: translateX(0); /* Slide into view */
     border-color: var(--primary-accent);
+    box-shadow: 0 0 20px var(--shadow-color-strong), 0 0 5px rgba(var(--primary-accent), 0.2); /* Reduced glow for active */
+    z-index: 1; /* Bring active slide to front */
 }
 
-/* Side slide specific styles */
-.slide-item.side-left {
-    transform: translateX(calc(-1 * var(--coverflow-translate-x-side))) scale(var(--coverflow-scale-side)) rotateY(var(--coverflow-rotate-y-side)) translateZ(var(--coverflow-translate-z-side)) !important;
-    opacity: var(--coverflow-opacity-side) !important;
-    filter: brightness(var(--coverflow-brightness-side)) !important;
-    z-index: 50 !important;
-    border-color: var(--secondary-accent); /* Different color for side borders */
+/* Hidden slides (non-active) - no side transform, just hidden */
+.slide-item:not(.active) {
+    /* Styles are already set by default .slide-item */
+    /* If we want a slide-out, JS could set transform: translateX(-100%) on old slide */
 }
 
-.slide-item.side-right {
-    transform: translateX(var(--coverflow-translate-x-side)) scale(var(--coverflow-scale-side)) rotateY(calc(-1 * var(--coverflow-rotate-y-side))) translateZ(var(--coverflow-translate-z-side)) !important;
-    opacity: var(--coverflow-opacity-side) !important;
-    filter: brightness(var(--coverflow-brightness-side)) !important;
-    z-index: 50 !important;
-    border-color: var(--secondary-accent); /* Different color for side borders */
-}
-
-/* Hidden slides (far away) */
-.slide-item:not(.active):not(.side-left):not(.side-right) {
-    opacity: 0 !important;
-    filter: brightness(0.1) !important;
-    transform: translateX(0) scale(0.1) translateZ(-500px) !important; /* Push far away and shrink */
-    z-index: 1 !important;
-    pointer-events: none; /* Make completely hidden slides not clickable */
-}
-
-/* Hover for non-active slides */
+/* Hover for non-active slides - not really applicable for single view, but keep for consistency on active if desired */
 .slide-item:not(.active):hover {
-    box-shadow: 0 0 15px var(--shadow-color-strong), 0 0 8px rgba(var(--secondary-accent), 0.3); /* Subtle hover glow for sides */
-    border-color: var(--secondary-accent);
+    box-shadow: 0 0 15px var(--shadow-color-strong); /* Only dark shadow for hidden */
+    border-color: var(--border-color-light); /* No accent color on hidden hover */
 }
+
 
 .slide-image-wrapper {
   position: relative;
-  width: 90%;
-  max-width: 600px;
-  height: 250px; /* Adjusted height for "square-like" */
+  width: 90%; /* Take up most of the slide item width */
+  max-width: 700px; /* Max width for consistency */
+  height: 250px; /* Adjusted height for "wider rectangle" */
   overflow: hidden;
   border-radius: 12px;
   margin-bottom: 1.5rem;
-  box-shadow: 0 0 15px rgba(0, 0, 0, 0.4);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.4); /* Muted shadow */
 }
 
 .slide-image-wrapper img {
@@ -339,15 +306,14 @@ main {
   object-fit: cover;
   border-radius: 12px;
   border: 5px solid var(--primary-accent);
-  transform: rotate(-3deg); /* Rotated frame */
-  transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+  /* No rotation for simplified view */
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
 /* Active slide image specific */
 .slide-item.active .slide-image-wrapper img {
-    transform: rotate(0deg); /* Straighten when active */
-    border-color: var(--primary-accent); /* Active highlight */
-    box-shadow: 0 0 15px rgba(var(--primary-accent), 0.5); /* Muted glow */
+    border-color: var(--primary-accent);
+    box-shadow: 0 0 10px rgba(var(--primary-accent), 0.4); /* Muted glow */
 }
 
 /* For YouTube embeds in trailer slider */
@@ -361,7 +327,7 @@ main {
 }
 .slide-item.active .slide-image-wrapper iframe {
     border-color: var(--primary-accent);
-    box-shadow: 0 0 15px rgba(var(--primary-accent), 0.5); /* Muted glow */
+    box-shadow: 0 0 10px rgba(var(--primary-accent), 0.4); /* Muted glow */
 }
 
 
@@ -374,17 +340,17 @@ main {
   font-family: var(--font-heading);
   font-size: 2.2rem;
   color: var(--text-light);
-  text-shadow: 0 0 8px rgba(0,0,0,0.8), 0 0 3px rgba(var(--primary-accent), 0.3); /* Muted glow, stronger dark shadow */
+  text-shadow: 0 0 6px rgba(0,0,0,0.8), 0 0 2px rgba(var(--primary-accent), 0.2); /* Muted glow, stronger dark shadow */
   margin-bottom: 0.8rem;
-  word-wrap: break-word; /* Ensure long titles break properly */
-  hyphens: auto; /* Allow hyphenation for better text flow */
+  word-wrap: break-word;
+  hyphens: auto;
 }
 
 .slide-content p {
   font-size: 1rem;
   color: var(--text-dim);
-  word-wrap: break-word; /* Ensure long descriptions break properly */
-  hyphens: auto; /* Allow hyphenation for better text flow */
+  word-wrap: break-word;
+  hyphens: auto;
 }
 
 /* Slider Navigation Buttons */
@@ -410,7 +376,7 @@ main {
 .slider-nav-btn:hover {
   background: var(--primary-accent);
   color: var(--main-bg);
-  box-shadow: 0 0 15px rgba(var(--primary-accent), 0.6); /* Muted hover glow */
+  box-shadow: 0 0 10px rgba(var(--primary-accent), 0.5); /* Muted hover glow */
   transform: translateY(-50%) scale(1.1);
 }
 
@@ -437,7 +403,7 @@ main {
 
 .dot.active {
   background: var(--primary-accent);
-  box-shadow: 0 0 8px rgba(var(--primary-accent), 0.5); /* Muted dot glow */
+  box-shadow: 0 0 6px rgba(var(--primary-accent), 0.4); /* Muted dot glow */
 }
 
 /* Devs Section */
@@ -463,7 +429,7 @@ main {
 
 .dev-card:hover {
   transform: translateY(-10px);
-  box-shadow: 0 10px 20px var(--shadow-color-strong), 0 0 10px rgba(var(--secondary-accent), 0.4); /* Muted glow on hover */
+  box-shadow: 0 10px 20px var(--shadow-color-strong), 0 0 8px rgba(var(--secondary-accent), 0.3); /* Muted glow on hover */
   background: rgba(30, 30, 30, 0.9);
 }
 
@@ -474,13 +440,13 @@ main {
   border-radius: 50%;
   border: 4px solid var(--tertiary-accent);
   margin-bottom: 1.5rem;
-  box-shadow: 0 0 10px rgba(var(--tertiary-accent), 0.5); /* Muted glow */
+  box-shadow: 0 0 8px rgba(var(--tertiary-accent), 0.4); /* Muted glow */
   transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
 }
 
 .dev-card img:hover {
   transform: scale(1.05);
-  box-shadow: 0 0 15px rgba(var(--tertiary-accent), 0.7); /* Muted glow */
+  box-shadow: 0 0 12px rgba(var(--tertiary-accent), 0.6); /* Muted glow */
   border-color: var(--secondary-accent);
 }
 
@@ -502,8 +468,8 @@ main {
 .youtube-content {
   display: flex;
   flex-direction: column;
-  gap: 5rem;
-  max-width: 1000px; /* Constrain latest video */
+  gap: 3rem; /* Reduced gap between elements in this section */
+  max-width: 1000px;
   margin: 0 auto;
 }
 
@@ -511,7 +477,7 @@ main {
   font-family: var(--font-heading);
   font-size: 2.5rem;
   color: var(--text-light);
-  text-shadow: 0 0 8px rgba(0,0,0,0.8), 0 0 3px rgba(var(--quaternary-accent), 0.3); /* Muted glow */
+  text-shadow: 0 0 8px rgba(0,0,0,0.8), 0 0 2px rgba(var(--quaternary-accent), 0.2); /* Muted glow */
   margin-bottom: 1.5rem;
 }
 
@@ -525,7 +491,7 @@ main {
 }
 
 .latest-video h3 {
-    text-shadow: 0 0 8px rgba(0,0,0,0.8), 0 0 3px rgba(var(--quaternary-accent), 0.3); /* Muted glow */
+    text-shadow: 0 0 8px rgba(0,0,0,0.8), 0 0 2px rgba(var(--quaternary-accent), 0.2); /* Muted glow */
     color: var(--quaternary-accent);
 }
 
@@ -564,21 +530,21 @@ main {
     height: 450px; /* Adjusted height for trailer videos (more square-like) */
 }
 .trailer-slider .slide-item {
-    height: 350px; /* Adjusted height for trailer items */
+    height: 100%; /* Fill parent height */
 }
 .trailer-slider .slide-item .slide-image-wrapper {
-    height: 180px; /* Adjusted height */
+    height: 220px; /* Adjusted height */
 }
 .trailer-slider .slide-image-wrapper iframe {
     border-color: var(--tertiary-accent);
 }
 .trailer-slider .slide-item.active .slide-image-wrapper iframe {
     border-color: var(--tertiary-accent);
-    box-shadow: 0 0 15px rgba(var(--tertiary-accent), 0.5); /* Muted glow */
+    box-shadow: 0 0 10px rgba(var(--tertiary-accent), 0.4); /* Muted glow */
 }
 .trailer-slider .slide-content h3 {
     color: var(--text-light);
-    text-shadow: 0 0 8px rgba(0,0,0,0.8), 0 0 3px rgba(var(--tertiary-accent), 0.3); /* Muted glow */
+    text-shadow: 0 0 6px rgba(0,0,0,0.8), 0 0 2px rgba(var(--tertiary-accent), 0.2); /* Muted glow */
 }
 .trailer-slider .slider-nav-btn {
     border-color: var(--tertiary-accent);
@@ -587,16 +553,13 @@ main {
 .trailer-slider .slider-nav-btn:hover {
     background: var(--tertiary-accent);
     color: var(--main-bg);
-    box-shadow: 0 0 15px rgba(var(--tertiary-accent), 0.6); /* Muted hover glow */
+    box-shadow: 0 0 10px rgba(var(--tertiary-accent), 0.5); /* Muted hover glow */
 }
 .trailer-slider .dot.active {
     background: var(--tertiary-accent);
-    box-shadow: 0 0 8px rgba(var(--tertiary-accent), 0.5); /* Muted dot glow */
+    box-shadow: 0 0 6px rgba(var(--tertiary-accent), 0.4); /* Muted dot glow */
 }
-/* Side item colors for trailer slider */
-.trailer-slider .slide-item.side-left { border-color: var(--quaternary-accent); }
-.trailer-slider .slide-item.side-right { border-color: var(--quaternary-accent); }
-.trailer-slider .slide-item:not(.active):hover { border-color: var(--quaternary-accent); box-shadow: 0 0 15px var(--shadow-color-strong), 0 0 8px rgba(var(--quaternary-accent), 0.3); }
+/* No side item specific styles for simplified slider */
 
 
 /* Discord Community Section */
@@ -616,7 +579,7 @@ main {
 
 .discord-widget-container iframe {
   border-radius: 10px;
-  box-shadow: 0 0 10px rgba(88, 101, 242, 0.5); /* Muted Discord blue glow */
+  box-shadow: 0 0 8px rgba(88, 101, 242, 0.4); /* Muted Discord blue glow */
 }
 
 .join-discord-text {
@@ -663,8 +626,8 @@ main {
 
 
 @keyframes buttonPulse {
-  from { box-shadow: 0 0 8px rgba(var(--button-pulse-color), 0.5), 0 0 0px transparent; } /* Muted pulse */
-  to { box-shadow: 0 0 15px rgba(var(--button-pulse-color), 0.7), 0 0 8px rgba(var(--button-pulse-color), 0.4); } /* Muted pulse */
+  from { box-shadow: 0 0 5px rgba(var(--button-pulse-color), 0.3), 0 0 0px transparent; } /* More muted pulse */
+  to { box-shadow: 0 0 10px rgba(var(--button-pulse-color), 0.5), 0 0 5px rgba(var(--button-pulse-color), 0.2); } /* More muted pulse */
 }
 
 /* Specific social button colors */
@@ -702,24 +665,19 @@ main {
 @media (max-width: 1400px) {
     .coverflow-slider {
         width: 95vw;
-        height: 500px; /* Adjusted height */
+        height: 480px; /* Adjusted height */
     }
     .slide-item {
-        width: 60%; /* Increased width */
-        max-width: 750px;
-        height: 400px; /* Adjusted height */
+        padding: 2rem;
     }
     .slide-image-wrapper {
-        height: 220px; /* Adjusted height */
+        height: 200px; /* Adjusted height */
     }
     .trailer-slider {
         height: 400px; /* Adjusted height */
     }
-    .trailer-slider .slide-item {
-        height: 320px; /* Adjusted height */
-    }
     .trailer-slider .slide-item .slide-image-wrapper {
-        height: 160px; /* Adjusted height */
+        height: 180px; /* Adjusted height */
     }
 }
 
@@ -730,14 +688,10 @@ main {
   .section-title { font-size: 3.5rem; margin-bottom: 4rem;}
 
   .coverflow-slider {
-    height: 450px; /* Further adjusted height */
-    perspective: 800px;
+    height: 420px; /* Further adjusted height */
   }
   .slide-item {
-    width: 70%; /* Increased width */
-    max-width: 550px;
-    height: 380px; /* Further adjusted height */
-    padding: 1.5rem;
+    padding: 1.8rem;
   }
   .slide-image-wrapper {
       height: 180px; /* Further adjusted height */
@@ -745,24 +699,11 @@ main {
   .slide-content h3 { font-size: 1.8rem; }
   .slide-content p { font-size: 0.9rem; }
 
-  /* Adjust coverflow values for tablets */
-  :root {
-    --coverflow-scale-side: 0.7;
-    --coverflow-opacity-side: 0.1; /* Even less opaque */
-    --coverflow-brightness-side: 0.5;
-    --coverflow-rotate-y-side: 10deg;
-    --coverflow-translate-z-side: -100px;
-    --coverflow-translate-x-side: 45%;
-  }
-
   .trailer-slider {
       height: 350px; /* Adjusted height */
   }
-  .trailer-slider .slide-item {
-      height: 280px; /* Adjusted height */
-  }
   .trailer-slider .slide-item .slide-image-wrapper {
-      height: 140px; /* Adjusted height */
+      height: 150px; /* Adjusted height */
   }
 
   .slider-nav-btn { width: 50px; height: 50px; font-size: 1.6rem; }
@@ -775,7 +716,7 @@ main {
   .dev-info .dev-name { font-size: 1.5rem; }
   .dev-info .dev-role { font-size: 0.95rem; }
 
-  .youtube-content { gap: 3rem; }
+  .youtube-content { gap: 2.5rem; }
   .youtube-content h3 { font-size: 2.2rem; }
   .latest-video { padding: 1.5rem; }
 
@@ -798,48 +739,30 @@ main {
   .section-container { padding: 4rem 1rem; }
   .section-title { font-size: 2.5rem; margin-bottom: 3rem; text-shadow: none; }
 
-  /* Coverflow on smaller screens: simplified to single card view */
+  /* Simplified Slider on mobile */
   .coverflow-slider {
-    height: auto; /* Adjust height to content */
-    min-height: 400px; /* Ensure some minimum height for content */
-    perspective: none; /* Crucial: REMOVE 3D perspective for mobile */
+    height: auto;
+    min-height: 350px; /* Adjusted minimum height for mobile */
     padding-bottom: 40px;
-    width: 100vw; /* Take full viewport width */
-    overflow: visible; /* Allow arrows to be outside if needed */
+    width: 100vw;
+    overflow: hidden;
   }
   .slider-track {
-    position: relative; /* Change to relative for simpler flow */
-    left: 0; /* Reset left position */
-    transform-style: flat; /* Ensure no 3D transforms apply to track */
-    width: 100%; /* Track takes full width */
-    display: block; /* Stack items normally in a block flow */
-    height: auto;
+    width: 100%;
+    height: 100%;
   }
   .slide-item {
-    position: relative; /* Change to relative for normal document flow */
-    width: calc(100% - 2rem); /* NOW MUCH WIDER: Almost full screen with 1rem padding on each side */
-    margin: 0 auto; /* Center the single active item */
-    height: auto; /* Adjust height to content */
-    min-height: 300px; /* Min height for consistency */
-    padding: 1.5rem; /* Increased padding for better readability */
-    /* Remove all transform, opacity, filter for active slide here */
-    transform: none !important; 
-    opacity: 1 !important; 
-    filter: brightness(1) !important; 
-    z-index: 100 !important;
-    display: flex !important; /* Ensure active item is always visible */
-  }
-  .slide-item:not(.active) {
-    display: none !important; /* Hide inactive slides entirely on mobile */
-    opacity: 0 !important;
-    pointer-events: none !important; /* Disable interaction with invisible items */
-    transform: none !important; /* Reset any lingering transforms */
+    width: calc(100% - 2rem); /* Full width with 1rem padding on each side */
+    margin: 0 auto;
+    height: 100%; /* Fill parent height */
+    min-height: 300px;
+    padding: 1.5rem;
   }
 
   .slide-image-wrapper {
-      width: 100%; /* Image wrapper takes full width of the slide */
-      max-width: none; /* Remove max-width constraint */
-      height: 160px; /* Adjusted height for mobile "square" */
+      width: 100%;
+      max-width: none;
+      height: 150px; /* Adjusted height for mobile "wider rectangle" */
   }
   .slide-image-wrapper img,
   .slide-image-wrapper iframe {
@@ -847,30 +770,29 @@ main {
   }
 
   .slide-content h3 {
-      font-size: 1.4rem; /* Adjusted title size for mobile */
+      font-size: 1.4rem;
       margin-bottom: 0.7rem;
   }
   .slide-content p {
-      font-size: 0.9rem; /* Adjusted description size for mobile */
+      font-size: 0.9rem;
   }
 
-  .trailer-slider { height: auto; min-height: 320px; }
-  .trailer-slider .slide-item { height: auto; min-height: 280px; }
-  .trailer-slider .slide-item .slide-image-wrapper { height: 140px; }
+  .trailer-slider { height: auto; min-height: 300px; }
+  .trailer-slider .slide-item { height: 100%; min-height: 250px; }
+  .trailer-slider .slide-item .slide-image-wrapper { height: 130px; }
 
 
-  /* Slider Navigation Buttons - ensure visible on mobile */
+  /* Slider Navigation Buttons - fixed to viewport on mobile */
   .slider-nav-btn {
     width: 40px;
     height: 40px;
     font-size: 1.3rem;
     top: calc(50% - 20px);
-    /* Position relative to viewport, not parent */
-    position: fixed; /* Make them fixed to viewport */
-    z-index: 1200; /* Ensure they are above everything */
+    position: fixed;
+    z-index: 1200;
   }
-  .slider-nav-btn.prev-btn { left: 0.5rem; } /* Keep them slightly in from edge */
-  .slider-nav-btn.next-btn { right: 0.5rem; } /* Keep them slightly in from edge */
+  .slider-nav-btn.prev-btn { left: 0.5rem; }
+  .slider-nav-btn.next-btn { right: 0.5rem; }
 
   .dot { width: 10px; height: 10px; }
 
@@ -880,7 +802,7 @@ main {
   .dev-info .dev-name { font-size: 1.2rem; }
   .dev-info .dev-role { font-size: 0.85rem; }
 
-  .youtube-content { gap: 2rem; } /* Reduced gap */
+  .youtube-content { gap: 2rem; }
   .youtube-content h3 { font-size: 2rem; }
   .latest-video { padding: 1.5rem; }
   .video-embed-container { margin-bottom: 0.8rem; }
@@ -900,12 +822,11 @@ main {
   .hero p { font-size: 0.9rem; }
   .section-title { font-size: 2rem; }
   .coverflow-slider { height: auto; min-height: 280px; }
-  .slide-item { height: auto; min-height: 250px; padding: 1rem; }
-  .slide-image-wrapper { height: 110px; } /* Adjusted height */
+  .slide-item { padding: 1rem; }
+  .slide-image-wrapper { height: 100px; } /* Adjusted height */
   .slide-content h3 { font-size: 1.2rem; }
   .slide-content p { font-size: 0.8rem; }
   .youtube-content h3 { font-size: 1.8rem; }
   .trailer-slider { height: auto; min-height: 260px; }
-  .trailer-slider .slide-item { height: auto; min-height: 220px; }
-  .trailer-slider .slide-item .slide-image-wrapper { height: 100px; } /* Adjusted height */
+  .trailer-slider .slide-item .slide-image-wrapper { height: 90px; } /* Adjusted height */
 }
